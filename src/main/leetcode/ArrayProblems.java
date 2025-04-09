@@ -1,13 +1,15 @@
 package main.leetcode;
 
 import java.util.*;
+import java.util.HashMap;
 
 public class ArrayProblems {
     public static void main(String[] args) {
         //System.out.println(Arrays.toString(moveZeroes(new int[]{0, 1, 0, 3, 12})));
         //System.out.println(maxProfit_with1dayhold(new int[]{7,1,5,3,6,4}));
         //System.out.println(isSubsequence("axc", "ahbgdc"));
-        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+        //System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+        System.out.println(convert("PAYPALISHIRING", 3));
     }
 
     /*
@@ -39,7 +41,7 @@ public class ArrayProblems {
      */
 
     public static int majorityElement(int[] nums) {
-        Map<Integer, Integer> majorityMap = new HashMap<>();
+        Map<Integer, Integer> majorityMap = new java.util.HashMap<>();
         for (Integer num: nums) {
             majorityMap.put(num, 1 + majorityMap.getOrDefault(num, 0));
         }
@@ -334,6 +336,43 @@ public class ArrayProblems {
             }
         }
         return stringBuilder.toString();
+    }
+
+    /*
+    6. Zigzag Conversion
+
+    Input: s = "PAYPALISHIRING", numRows = 3
+    Output: "PAHNAPLSIIGYIR"
+     */
+    public static String convert(String s, int numRows) {
+        if (numRows == 1 || numRows >= s.length()) {
+            return s;
+        }
+        // Create an array of StringBuilder for each row.
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
+        }
+
+        int row = 0;
+        int step = 0;
+        // Traverse the string character by character.
+        for (char c : s.toCharArray()) {
+            rows[row].append(c);
+            if (row == 0) {
+                step = 1;
+            } else if (row == numRows - 1) {
+                step = -1;
+            }
+            row += step;
+        }
+
+        // Build the final result by concatenating all rows.
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder sb : rows) {
+            result.append(sb);
+        }
+        return result.toString();
     }
 
 }
