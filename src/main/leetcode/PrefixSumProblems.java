@@ -83,4 +83,29 @@ public class PrefixSumProblems {
         }
         return false;
     }
+
+    /*
+    525. Contiguous Array
+
+    Input: nums = [0,1]
+    Output: 2
+    Explanation: [0, 1] is the longest contiguous subarray with an equal number of 0 and 1.
+     */
+
+    public int findMaxLength(int[] nums) {
+        Map<Integer, Integer> prefixSumMap = new HashMap<>();
+        prefixSumMap.put(0, -1);
+        int res = 0;
+        int prefixSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i] == 0 ? -1: 1;
+            prefixSum += num;
+            if (prefixSumMap.containsKey(prefixSum)) {
+                res = Math.max(res, i - prefixSumMap.get((prefixSum)));
+            } else {
+                prefixSumMap.put(prefixSum, i);
+            }
+        }
+        return res;
+    }
 }
