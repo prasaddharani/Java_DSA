@@ -1,9 +1,7 @@
 package main.leetcode;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class QueueProblems {
     public static void main(String[] args) {
@@ -144,4 +142,130 @@ public class QueueProblems {
         }
         return res;
     }
+
+    /*
+    Monotonic Queue Problems
+     */
+
+    /*
+    239. Sliding Window Maximum
+
+    Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+    Output: [3,3,5,5,6,7]
+    Explanation:
+    Window position                Max
+    ---------------               -----
+    [1  3  -1] -3  5  3  6  7       3
+     1 [3  -1  -3] 5  3  6  7       3
+     1  3 [-1  -3  5] 3  6  7       5
+     1  3  -1 [-3  5  3] 6  7       5
+     1  3  -1  -3 [5  3  6] 7       6
+     1  3  -1  -3  5 [3  6  7]      7
+     */
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> queue = new LinkedList<>();
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        int ri = 0; // result index
+
+        for (int i = 0; i < n; i++) {
+            // Remove indices out of window
+            if (!queue.isEmpty() && queue.peekFirst() < i - k + 1) {
+                queue.pollFirst();
+            }
+
+            // Remove smaller values from the back
+            while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
+                queue.pollLast();
+            }
+
+            queue.offerLast(i);
+
+            // Start filling result when window hits size k
+            if (i >= k - 1) {
+                res[ri++] = nums[queue.peekFirst()];
+            }
+        }
+
+        return res;
+    }
+
+    /*
+    1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+
+    Input: nums = [8,2,4,7], limit = 4
+    Output: 2
+    Explanation: All subarrays are:
+    [8] with maximum absolute diff |8-8| = 0 <= 4.
+    [8,2] with maximum absolute diff |8-2| = 6 > 4.
+    [8,2,4] with maximum absolute diff |8-2| = 6 > 4.
+    [8,2,4,7] with maximum absolute diff |8-2| = 6 > 4.
+    [2] with maximum absolute diff |2-2| = 0 <= 4.
+    [2,4] with maximum absolute diff |2-4| = 2 <= 4.
+    [2,4,7] with maximum absolute diff |2-7| = 5 > 4.
+    [4] with maximum absolute diff |4-4| = 0 <= 4.
+    [4,7] with maximum absolute diff |4-7| = 3 <= 4.
+    [7] with maximum absolute diff |7-7| = 0 <= 4.
+    Therefore, the size of the longest subarray is 2.
+     */
+
+    public int longestSubarray(int[] nums, int limit) {
+        Deque<Integer> maxQueue = new LinkedList<>();
+        Deque<Integer> minQueue = new LinkedList<>();
+        int maxRes = 0;
+        int left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            while (!maxQueue.isEmpty() && nums[maxQueue.peekLast()] < nums[right]) {
+                maxQueue.pollLast();
+            }
+
+            while (!minQueue.isEmpty() && nums[minQueue.peekLast()] > nums[right]) {
+                minQueue.pollLast();
+            }
+            maxQueue.offer(right);
+            minQueue.offer(right);
+
+            while (nums[maxQueue.peekFirst()] - nums[minQueue.peekFirst()] > limit) {
+                left++;
+                if (maxQueue.peekFirst() < left) {
+                    maxQueue.pollFirst();
+                }
+
+                if (minQueue.peekFirst() < left) {
+                    minQueue.pollFirst();
+                }
+            }
+            maxRes = Math.max(maxRes, right - left + 1);
+        }
+        return maxRes;
+    }
+
+    /*
+    1696. Jump Game VI
+
+    Input: nums = [1,-1,-2,4,-7,3], k = 2
+    Output: 7
+    Explanation: You can choose your jumps forming the subsequence [1,-1,4,3]
+    (underlined above). The sum is 7.
+     */
+
+    public int maxResult(int[] nums, int k) {
+        Deque<Integer> deque = new LinkedList<>();
+        deque.offer(0);
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += nums[deque.peekFirst()];
+
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) {
+                deque.pollLast();
+            }
+            deque.offer(i);
+        }
+        return nums[nums.length - 1];
+    }
+
 }
