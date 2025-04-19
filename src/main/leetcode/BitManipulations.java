@@ -109,4 +109,38 @@ public class BitManipulations {
         }
         return a;
     }
+
+    /*
+    260. Single Number III
+
+    Input: nums = [1,2,1,3,2,5]
+    Output: [3,5]
+    Explanation:  [5, 3] is also a valid answer.
+     */
+
+    public int[] singleNumber3(int[] nums) {
+        int xor = 0;
+
+        // Step 1: XOR all numbers to get the XOR of the two unique numbers
+        for (Integer num : nums) {
+            xor = xor ^ num;
+        }
+
+        // Step 2: Find the rightmost differing bit
+        int diffBit = 1;
+        while ((diffBit & xor) == 0) { // Fix: Check for the first differing bit
+            diffBit = diffBit << 1;
+        }
+
+        // Step 3: Separate numbers into two groups and XOR within each group
+        int a = 0, b = 0;
+        for (Integer num : nums) {
+            if ((diffBit & num) != 0) { // Fix: Use AND to check the differing bit
+                a = a ^ num;
+            } else {
+                b = b ^ num;
+            }
+        }
+        return new int[]{a, b};
+    }
 }
