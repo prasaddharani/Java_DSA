@@ -254,4 +254,90 @@ public class SortingProblems {
             }
         }
     }
+
+    /* Quick Select Sort */
+
+    /*
+    215. Kth Largest Element in an Array
+     */
+
+    /*
+    Input: nums = [3,2,1,5,6,4], k = 2
+    Output: 5
+     */
+
+    public int findKthLargest(int[] nums, int k) {
+        k = nums.length - k;
+        return quickSelect(nums, 0, nums.length - 1, k);
+    }
+
+    public int quickSelect(int[] nums, int left, int right, int k) {
+        int pivot = nums[right];
+        int p = left;
+        for (int i = left; i < right; i++) {
+            if (nums[i] <= pivot) {
+                int temp = nums[p];
+                nums[p] = nums[i];
+                nums[i] = temp;
+                p++;
+            }
+        }
+        int temp = nums[right];
+        nums[right] = nums[p];
+        nums[p] = temp;
+        if (p == k) {
+            return nums[p];
+        } else if (p > k) {
+            return quickSelect(nums, left, p - 1, k);
+        } else {
+            return quickSelect(nums, p + 1, right, k);
+        }
+    }
+
+    public int findKthLargest1(int[] nums, int k) {
+            k = nums.length - k;  // Adjust k for zero-indexing
+            return quickSelect1(nums, 0, nums.length - 1, k);
+    }
+
+    private int quickSelect1(int[] nums, int left, int right, int k) {
+        int pivot = nums[right];
+        int low = left;
+        int high = right;
+
+        while(low <= high) {
+            while(low <= high && nums[low] < pivot) {
+                low++;
+            }
+            while(low <= high && nums[high] > pivot) {
+                high--;
+            }
+            if(low <= high) {
+                int temp = nums[low];
+                nums[low] = nums[high];
+                nums[high] = temp;
+                low++;
+                high--;
+            }
+        }
+
+        if(k <= high) {
+            return quickSelect1(nums, left, high, k);
+        } else if(k >= low) {
+            return quickSelect1(nums, low, right, k);
+        } else {
+            return nums[k];
+        }
+    }
+
+    public int findKthLargest2(int[] nums, int k) {
+        PriorityQueue<Integer> maxHeap=new PriorityQueue<>((a,b)->b-a);
+        int val=0;
+        for(int num:nums){
+            maxHeap.add(num);
+        }
+        for(int i=1;i<=k;i++){
+            val=maxHeap.remove();
+        }
+        return val;
+    }
 }
