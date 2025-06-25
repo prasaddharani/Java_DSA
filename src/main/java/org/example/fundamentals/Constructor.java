@@ -1,7 +1,7 @@
 package org.example.fundamentals;
 
 public class Constructor {
-    private string field1;
+    private String field1;
     private String field2;
     Constructor() {}
     Constructor(String field1, String field2) {
@@ -9,6 +9,13 @@ public class Constructor {
         this.field2 = field2;
     }
 
+    @Override
+    public String toString() {
+        return "Constructor{" +
+                "field1='" + field1 + '\'' +
+                ", field2='" + field2 + '\'' +
+                '}';
+    }
 
     public static void main(String[] args) {
         Constructor defaultConstructor = new Constructor();
