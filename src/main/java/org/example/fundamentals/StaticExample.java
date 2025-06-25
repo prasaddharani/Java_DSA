@@ -14,9 +14,21 @@ public class StaticExample {
     }
 }
 
+class OverrideStatic extends StaticExample {
+    // @Override is not possible
+    public static void staticMethod() {
+        System.out.println("Static methods belong to the class, not to instances (objects).\n" +
+                "\n" +
+                "Method overriding is an instance-level (runtime) behavior — only applicable to non-static methods.\n" +
+                "\n" +
+                "When a subclass defines a static method with the same signature as the parent, it's called method hiding, not overriding.");
+    }
+}
+
 class App {
     public static void main(String[] args) {
         StaticExample.staticMethod();
         new StaticExample().instanceMethod();
+        OverrideStatic.staticMethod();
     }
 }
