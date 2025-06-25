@@ -1,4 +1,4 @@
-package main.leetcode;
+package org.example.leetcode;
 
 public class KadaneAlgorithm {
 

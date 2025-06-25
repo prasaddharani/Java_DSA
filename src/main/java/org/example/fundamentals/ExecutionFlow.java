@@ -1,4 +1,4 @@
-package main.resources.fundamentals;
+package org.example.fundamentals;
 
 public class ExecutionFlow {
     static {

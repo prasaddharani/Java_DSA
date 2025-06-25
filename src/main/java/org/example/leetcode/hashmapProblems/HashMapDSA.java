@@ -1,4 +1,4 @@
-package main.leetcode.hashmapProblems;
+package org.example.leetcode.hashmapProblems;
 
 import java.util.*;
 import java.util.stream.Collectors;

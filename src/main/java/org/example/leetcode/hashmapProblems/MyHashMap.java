@@ -1,4 +1,4 @@
-package main.leetcode.hashmapProblems;
+package org.example.leetcode.hashmapProblems;
 
 public class MyHashMap {
 
