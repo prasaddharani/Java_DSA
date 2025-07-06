@@ -18,6 +18,17 @@ public class ScheduledThreadPoolExecutorService {
             System.out.println("Repeating task executed at " + System.currentTimeMillis() + " on " + Thread.currentThread().getName());
         }, 1, 3, TimeUnit.SECONDS);
 
+        // Task to run repeatedly with a fixed delay of 3 seconds after the previous execution completes, after an initial 1-second delay
+        scheduledExecutor.scheduleWithFixedDelay(() -> {
+            System.out.println("Fixed delay task started at " + System.currentTimeMillis() + " on " + Thread.currentThread().getName());
+            try {
+                Thread.sleep(2000); // Simulate work taking 2 seconds
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            System.out.println("Fixed delay task ended at " + System.currentTimeMillis() + " on " + Thread.currentThread().getName());
+        }, 1, 3, TimeUnit.SECONDS);
+
         // Let the main thread sleep for 10 seconds to observe scheduled tasks
         try {
             Thread.sleep(10000);
