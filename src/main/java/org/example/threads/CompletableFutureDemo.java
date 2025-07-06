@@ -42,6 +42,31 @@ public class CompletableFutureDemo {
         userProfileFuture.thenCombine(orderHistoryFuture, (profile, orders) -> profile + ", " + orders)
                 .thenAccept(summary -> System.out.println("Summary: " + summary));
 
+        // Advanced real-world example: Chaining async calls with error handling
+        CompletableFuture<String> chainedExample = CompletableFuture.supplyAsync(() -> {
+            // Simulate fetching user profile
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            return "User: Bob";
+        }).thenCompose(profile -> CompletableFuture.supplyAsync(() -> {
+            // Simulate fetching recommendations based on profile
+            if (profile.contains("Bob")) {
+                // Simulate an error for demonstration
+                throw new RuntimeException("Failed to fetch recommendations for Bob");
+            }
+            return "Recommendations: [Laptop, Mouse]";
+        })).exceptionally(ex -> {
+            // Handle any exception in the chain
+            System.err.println("Error in chained async call: " + ex.getMessage());
+            return "No recommendations available";
+        });
+
+        // Print the final result of the chained example
+        chainedExample.thenAccept(result -> System.out.println("Chained result: " + result));
+
         // Keep the main thread alive to see the result
         try {
             Thread.sleep(3000); // Wait for the CompletableFuture to complete
