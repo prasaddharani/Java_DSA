@@ -1,4 +1,4 @@
-package org.example.threads;
+package org.example.threads.java8Parallelism;
 
 import java.util.List;
 import java.util.stream.IntStream;
