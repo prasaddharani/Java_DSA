@@ -1,5 +1,6 @@
 package org.example.java8.lambdaExpression;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.function.BiFunction;
 
@@ -21,6 +22,20 @@ public class LambdaDemo {
             return a + b;
         };
         System.out.println("BiFunction: " + biFunction.apply(2, 3));
+
+        // can throw unchecked exception without handling
+        Runnable r1 = () -> {
+            throw new RuntimeException();
+        };
+
+        // however need to handle explicitly for checked exception either via try/catch
+        Runnable r2 = () -> {
+            try {
+                throw new IOException();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
 
     }
 }
