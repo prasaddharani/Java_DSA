@@ -1,4 +1,4 @@
-package org.example.fundamentals;
+package org.example.java8;
 
 import java.util.function.*;
 
