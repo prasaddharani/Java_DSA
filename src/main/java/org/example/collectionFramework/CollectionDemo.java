@@ -1,8 +1,12 @@
 package org.example.collectionFramework;
 
+import jdk.jfr.Event;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class CollectionDemo {
@@ -34,5 +38,21 @@ public class CollectionDemo {
         productCatalog.put(1002, "Charger");
         productCatalog.put(1003, "Headphones");
         log.info("Product Catalog in Map {}", productCatalog);
+
+        String paragraph = "Hi Hello How are you? Hi I am Good";
+        Map<String, Long> countingWords = Arrays.stream(paragraph.split(" "))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        log.info("Counting words {}", countingWords);
+
+        NavigableMap<LocalDateTime, Event> events = new TreeMap<>();
+        // Query between two times
+        events.subMap(LocalDateTime.now(), true, LocalDateTime.now(), true);
+        log.info("NavigableMap {}", events);
+
+        enum Status { NEW, IN_PROGRESS, DONE }
+
+        Map<Status, String> map = new EnumMap<>(Status.class);
+        log.info(map.get(Status.NEW));
+
     }
 }
