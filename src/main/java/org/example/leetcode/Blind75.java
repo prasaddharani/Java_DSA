@@ -1,7 +1,10 @@
 package org.example.leetcode;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.max;
 
 class Array {
     /*
@@ -140,9 +143,79 @@ class StringProblems {
     public static void main(String[] args) {
         StringProblems string = new StringProblems();
         //System.out.println(string.isSubsequence("abc", "ahbgdc"));
-        System.out.println(string.reverseWords("the sky is blue"));
+        //System.out.println(string.reverseWords("the sky is blue"));
+    }
+}
+
+class HashTables {
+
+    /*
+    Input: strs = ["eat","tea","tan","ate","nat","bat"]
+
+    Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Function<String, String> sort = string -> {
+            char[] chars = string.toCharArray();
+            Arrays.sort(chars);
+            return new String(chars);
+        };
+
+        Map<String, List<String>> res = new HashMap<>();
+
+        for (String str: strs) {
+            String sortedString = sort.apply(str);
+            res.computeIfAbsent(sortedString, k -> new ArrayList<>()).add(str);
+        }
+
+        return res.values().stream().toList();
     }
 
+    public List<List<String>> groupAnagrams1(String[] strs) {
+        Map<String, List<String>> res = new HashMap<>();
+
+        for (String str : strs) {
+            int[] freq = new int[26]; // frequency count for a-z
+            for (char c : str.toCharArray()) {
+                freq[c - 'a']++;
+            }
+
+            // Convert frequency array to string key
+            String key = Arrays.toString(freq);
+            System.out.println(key);
+
+            res.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
+        }
+
+        return new ArrayList<>(res.values()); // mutable list
+    }
+
+    /*
+    Input: nums = [100,4,200,1,3,2]
+    Output: 4
+    Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+     */
+
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+        int maxLength = 0;
+        for (int num: nums) {
+            if (!set.contains(num - 1)) {
+                int length = 0;
+                while (set.contains(num + length)) {
+                    length += 1;
+                }
+                maxLength = max(maxLength, length);
+            }
+        }
+        return maxLength;
+    }
+
+    public static void main(String[] args) {
+        HashTables hashTables = new HashTables();
+        //System.out.println(hashTables.groupAnagrams1(new String[] {"eat","tea","tan","ate","nat","bat"}));
+        System.out.println(hashTables.longestConsecutive(new int[]{100,4,200,1,3,2}));
+    }
 }
 
 
