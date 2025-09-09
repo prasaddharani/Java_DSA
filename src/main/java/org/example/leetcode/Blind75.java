@@ -311,6 +311,30 @@ class TwoPointers {
     }
 }
 
+class PrefixSumProblem {
+
+    public int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        int res = 0;
+        int prefixSum = 0;
+        for (Integer num: nums) {
+            prefixSum += num;
+            if (map.containsKey(k - prefixSum)) {
+                res += map.get(k - prefixSum);
+            }
+            int finalPrefixSum = prefixSum;
+            map.computeIfAbsent(prefixSum, key -> 1 + map.getOrDefault(finalPrefixSum, 0));
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        PrefixSumProblem prefixSum = new PrefixSumProblem();
+        System.out.println(prefixSum.subarraySum(new int[]{1,1,1}, 3));
+    }
+}
+
 
 public class Blind75 {
 }
