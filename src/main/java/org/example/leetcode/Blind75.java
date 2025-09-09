@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 class Array {
     /*
@@ -214,7 +215,99 @@ class HashTables {
     public static void main(String[] args) {
         HashTables hashTables = new HashTables();
         //System.out.println(hashTables.groupAnagrams1(new String[] {"eat","tea","tan","ate","nat","bat"}));
-        System.out.println(hashTables.longestConsecutive(new int[]{100,4,200,1,3,2}));
+        //System.out.println(hashTables.longestConsecutive(new int[]{100,4,200,1,3,2}));
+    }
+}
+
+class TwoPointers {
+
+    /*
+    Input: height = [1,8,6,2,5,4,8,3,7]
+    Output: 49
+     */
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        int left = 0;
+        int right = height.length - 1;
+
+        while (left < right) {
+            maxArea = max(maxArea, min(height[left], height[right]) * (right - left));
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return maxArea;
+    }
+
+    /*
+    Input: nums = [-1,0,1,2,-1,-4]
+    Output: [[-1,-1,2],[-1,0,1]]
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < n - 1; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int left = i + 1;
+            int right = n - 1;
+            int totalSum = 0;
+            while (left < right) {
+                totalSum = nums[i] + nums[left] + nums[right];
+                if (totalSum == 0) {
+                    res.add(List.of(nums[i], nums[left], nums[right]));
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                } else if (totalSum > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return  res;
+    }
+
+    /*
+    Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+    Output: 6
+    Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1].
+    In this case, 6 units of rain water (blue section) are being trapped.
+     */
+    public int trap(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int leftMax = height[left];
+        int rightMax = height[right];
+        int res = 0;
+        while (left < right) {
+            if (leftMax < rightMax) {
+                left++;
+                leftMax = max(leftMax, height[left]);
+                res += leftMax - height[left];
+            } else {
+                right--;
+                rightMax = max(rightMax, height[right]);
+                res += rightMax - height[right];
+            }
+        }
+        return res;
+    }
+
+
+    public static void main(String[] args) {
+        TwoPointers twoPointers = new TwoPointers();
+        //System.out.println(twoPointers.maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
+        //System.out.println(twoPointers.threeSum(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(twoPointers.trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
     }
 }
 
