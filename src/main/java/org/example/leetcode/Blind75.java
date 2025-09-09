@@ -1,8 +1,7 @@
 package org.example.leetcode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class Array {
     /*
@@ -86,8 +85,64 @@ class Array {
         int[] nums = {2,2,1,1,1,2,2};
         //System.out.println(array.majorityElement(nums));
         //System.out.println(Arrays.toString(array.productExceptSelf(new int[]{1, 2, 3, 4})));
-        System.out.println(array.firstMissingPositive((new int[]{1, 3, 0})));
+        //System.out.println(array.firstMissingPositive((new int[]{1, 3, 0})));
     }
+}
+
+class StringProblems {
+    /*
+    Input: s = "abc", t = "ahbgdc"
+    Output: true
+    */
+    public boolean isSubsequence(String s, String t) {
+        int s_length = s.length();
+        int t_length = t.length();
+        if (s_length > t_length) {
+            return  false;
+        }
+        int length = 0;
+        for (char c: t.toCharArray()) {
+            if (s.charAt(length) == c) {
+                length += 1;
+            }
+            if (length == s_length) {
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    /*
+    Input: s = "the sky is blue"
+    Output: "blue is sky the"
+     */
+    public String reverseWords(String s) {
+       String[] strings = s.trim().split("\\s+");
+       List<String> res = new ArrayList<>();
+       for (int i = strings.length - 1; i >= 0; i--) {
+           res.add(strings[i]);
+//           if (i > 0) {
+//               res.add(" ");
+//           }
+       }
+       StringBuilder sb = new StringBuilder();
+       res.forEach(sb::append);
+       String stream = Arrays.stream(strings).collect(Collectors.collectingAndThen(Collectors.toList(),
+               list -> {
+                Collections.reverse(list);
+                return String.join(" ", list);
+               }));
+       System.out.println(stream);
+       return String.join(" ", res);
+    }
+
+
+    public static void main(String[] args) {
+        StringProblems string = new StringProblems();
+        //System.out.println(string.isSubsequence("abc", "ahbgdc"));
+        System.out.println(string.reverseWords("the sky is blue"));
+    }
+
 }
 
 
