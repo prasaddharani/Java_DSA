@@ -335,6 +335,87 @@ class PrefixSumProblem {
     }
 }
 
+class FixedSizeSlidingWindow {
+    /*
+    Input: s = "cbaebabacd", p = "abc"
+    Output: [0,6]
+    Explanation:
+    The substring with start index = 0 is "cba", which is an anagram of "abc".
+    The substring with start index = 6 is "bac", which is an anagram of "abc".
+     */
+    public List<Integer> findAnagrams(String s, String p) {
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> pMap = new HashMap<>();
+        List<Integer> res = new ArrayList<>();
+
+        for (int i = 0; i < p.length(); i++) {
+            char c1 = p.charAt(i);
+            char c2 = s.charAt(i);
+            pMap.put(c1, pMap.getOrDefault(c1, 0) + 1);
+            sMap.put(c2, sMap.getOrDefault(c2, 0) + 1);
+        }
+        if (pMap.equals(sMap)) {
+            res.add(0);
+        }
+
+        int left = 0;
+        for (int i = p.length(); i < s.length(); i++) {
+            char c = s.charAt(left);
+            sMap.put(c, sMap.get(c) - 1);
+            if (sMap.get(c) == 0) {
+                sMap.remove(c);
+            }
+            sMap.put(s.charAt(i), sMap.getOrDefault(s.charAt(i), 0) + 1);
+            left++;
+            if (pMap.equals(sMap)) {
+                res.add(left);
+            }
+        }
+        return res;
+    }
+
+    /*
+     Input: s1 = "ab", s2 = "eidbaooo"
+     Output: true
+     Explanation: s2 contains one permutation of s1 ("ba").
+     */
+    public boolean checkInclusion(String s1, String s2) {
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> pMap = new HashMap<>();
+
+        for (int i = 0; i < s1.length(); i++) {
+            char c1 = s1.charAt(i);
+            char c2 = s2.charAt(i);
+            pMap.put(c1, pMap.getOrDefault(c1, 0) + 1);
+            sMap.put(c2, sMap.getOrDefault(c2, 0) + 1);
+        }
+        if (pMap.equals(sMap)) {
+            return true;
+        }
+
+        int left = 0;
+        for (int i = s1.length(); i < s2.length(); i++) {
+            char c = s2.charAt(left);
+            sMap.put(c, sMap.get(c) - 1);
+            if (sMap.get(c) == 0) {
+                sMap.remove(c);
+            }
+            sMap.put(s2.charAt(i), sMap.getOrDefault(s2.charAt(i), 0) + 1);
+            left++;
+            if (pMap.equals(sMap)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        FixedSizeSlidingWindow fixedSizeSlidingWindow = new FixedSizeSlidingWindow();
+        //System.out.println(fixedSizeSlidingWindow.findAnagrams("cbaebabacd", "abc"));
+        System.out.println(fixedSizeSlidingWindow.checkInclusion("ab", "eidbaooo"));
+    }
+}
+
 
 public class Blind75 {
 }
