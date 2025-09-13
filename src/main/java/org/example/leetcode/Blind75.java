@@ -492,6 +492,32 @@ class DynamicSizeSlidingWindow {
     }
 }
 
+class KadanesAlgorithm {
+    /*
+    Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+    Output: 6
+    Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+     */
+    public int maxSubArray(int[] nums) {
+        int maxSum = Integer.MIN_VALUE;
+        int currSum = 0;
+        for (Integer num: nums) {
+            currSum = max(currSum + num, num);
+            maxSum = max(maxSum, currSum);
+        }
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        KadanesAlgorithm kadanesAlgorithm = new KadanesAlgorithm();
+        System.out.println(kadanesAlgorithm.maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
+    }
+}
+
+class MatrixProblem {
+
+}
+
 
 public class Blind75 {
 }
