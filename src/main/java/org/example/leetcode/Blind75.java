@@ -416,6 +416,82 @@ class FixedSizeSlidingWindow {
     }
 }
 
+class DynamicSizeSlidingWindow {
+    /*
+    Input: s = "abcabcbb"
+    Output: 3
+    Explanation: The answer is "abc", with the length of 3.
+     */
+
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0;
+        int maxLength = 0;
+        for (int right = 0; right < s.length(); right++) {
+            Character c = s.charAt(right);
+            while (map.containsKey(c)) {
+                map.remove(c);
+                left++;
+            }
+            map.put(c, 1);
+            maxLength = max(maxLength, right - left + 1);
+        }
+        return maxLength;
+    }
+
+
+    /*
+    Input: s = "ADOBECODEBANC", t = "ABC"
+    Output: "BANC"
+    Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+     */
+    public String minWindow(String s, String t) {
+
+        Map<Character, Integer> need = new HashMap<>();
+        Map<Character, Integer> have = new HashMap<>();
+        for (Character c: t.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+        int haveCount = 0;
+        int needCount = need.size();
+        int left = 0;
+        int right;
+        int resLen = Integer.MAX_VALUE;
+        int[] res = new int[2];
+        for (right = 0; right < s.length(); right++) {
+            Character c = s.charAt(right);
+            have.put(c, have.getOrDefault(c, 0) + 1);
+            if (need.containsKey(c) && Objects.equals(need.get(c), have.get(c))) {
+              haveCount++;
+            }
+
+            while (haveCount == needCount) {
+                int length = right - left + 1;
+                if (resLen > length) {
+                    res[0] = left;
+                    res[1] = right;
+                    resLen = length;
+                }
+                Character c1 = s.charAt(left);
+                have.put(c1, have.get(c1) - 1);
+                if (need.containsKey(c1) && need.get(c1) > have.get(c1)) {
+                    haveCount -= 1;
+                }
+                left++;
+            }
+        }
+        left = res[0];
+        right = res[1];
+        return resLen == Integer.MAX_VALUE? "": s.substring(left, right + 1);
+    }
+
+    public static void main(String[] args) {
+        DynamicSizeSlidingWindow dynamicSizeSlidingWindow = new DynamicSizeSlidingWindow();
+        //System.out.println(dynamicSizeSlidingWindow.lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(dynamicSizeSlidingWindow.minWindow("ADOBECODEBANC", "ABC"));
+    }
+}
+
 
 public class Blind75 {
 }
