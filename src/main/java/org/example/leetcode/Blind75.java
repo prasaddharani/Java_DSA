@@ -677,13 +677,56 @@ class LinkedListProblem {
         return dummy.next;
     }
 
+
+    /*
+    Input: head = [1,2,3,4,5], k = 2
+    Output: [2,1,4,3,5]
+     */
+
+    public ListNode getKthNode(ListNode node, int k) {
+        while (node != null && k > 0) {
+            node = node.next;
+            k -= 1;
+        }
+        return node;
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode grpPrev = dummy;
+        while (true) {
+            ListNode kthNode = getKthNode(grpPrev, k);
+            if (kthNode == null) {
+                break;
+            }
+
+            ListNode grpNext = kthNode.next;
+
+            ListNode cur = grpPrev.next;
+            ListNode prev = grpNext;
+
+            while (cur != grpNext) {
+                ListNode next = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = next;
+            }
+
+            ListNode temp = grpPrev.next;
+            grpPrev.next = kthNode;
+            grpPrev = temp;
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         LinkedListProblem linkedListProblem = new LinkedListProblem();
-        ListNode res = linkedListProblem.removeNthFromEnd(
+//        ListNode res = linkedListProblem.removeNthFromEnd(
+//                new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+//        res = linkedListProblem.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
+//        res = linkedListProblem.addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
+//                new ListNode(5, new ListNode(6, new ListNode(4))));
+        ListNode res = linkedListProblem.reverseKGroup(
                 new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
-        res = linkedListProblem.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
-        res = linkedListProblem.addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
-                new ListNode(5, new ListNode(6, new ListNode(4))));
         linkedListProblem.printLinkedList(res);
     }
 }
