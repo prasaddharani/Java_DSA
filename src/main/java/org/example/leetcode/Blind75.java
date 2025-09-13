@@ -4,8 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static java.lang.Math.*;
 
 class Array {
     /*
@@ -516,6 +515,71 @@ class KadanesAlgorithm {
 
 class MatrixProblem {
 
+    /*
+    Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    Output: [1,2,3,6,9,8,7,4,5]
+     */
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int top = 0, left = 0;
+        int right = matrix[0].length, bottom = matrix.length;
+        List<Integer> res = new ArrayList<>();
+
+        while (left < right && top < bottom) {
+            for (int i = left; i < right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++;
+
+            for (int i = top; i < bottom; i++) {
+                res.add(matrix[i][right - 1]);
+            }
+            right--;
+
+            if (!(left < right && top < bottom)) {
+                break;
+            }
+
+            for (int i = right - 1; i > left - 1; i--) {
+                res.add(matrix[bottom - 1][i]);
+            }
+            bottom--;
+
+            for(int i = bottom - 1; i > top - 1; i--) {
+                res.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return  res;
+    }
+
+    /*
+    Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    Output: [[7,4,1],[8,5,2],[9,6,3]]
+     */
+    public int[][] rotate(int[][] matrix) {
+        int left = 0, right = matrix[0].length - 1;
+        while (left < right) {
+            for (int i = 0; i < right - left; i++) {
+                int top = left, bottom = right;
+                int temp = matrix[top][left + i];
+                matrix[top][left + i] = matrix[bottom - i][left];
+                matrix[bottom - i][left] = matrix[bottom][right - i];
+                matrix[bottom][right - i] = matrix[top + i][right];
+                matrix[top + i][right] = temp;
+            }
+            left++;
+            right--;
+        }
+        return matrix;
+    }
+
+    public static void main(String[] args) {
+        MatrixProblem matrixProblem = new MatrixProblem();
+        //System.out.println(matrixProblem.spiralOrder(new int[][]{{1,2,3},{4,5,6},{7,8,9}}));
+        int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+        System.out.println(Arrays.deepToString(matrixProblem.rotate(matrix)));
+    }
 }
 
 
