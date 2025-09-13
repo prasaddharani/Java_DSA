@@ -582,6 +582,112 @@ class MatrixProblem {
     }
 }
 
+class LinkedListProblem {
+
+    /*
+    Input: head = [1,2,3,4,5], n = 2
+    Output: [1,2,3,5]
+     */
+
+    static class ListNode {
+        int value;
+        ListNode next;
+
+        ListNode() {}
+        ListNode(int value) {
+            this.value = value;
+        }
+
+        ListNode(int value, ListNode next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode slow = head;
+        ListNode fast = head;
+        for (int i = 0; i < n + 1; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        if (slow != null && slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return dummy.next;
+    }
+
+    /*
+    Input: head = [1,2,3,4]
+
+    Output: [2,1,4,3]
+     */
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+        ListNode cur = dummy.next;
+        while (cur != null && cur.next != null) {
+            ListNode first = cur;
+            ListNode second = cur.next;
+
+            prev.next = second;
+            first.next = second.next;
+            second.next = first;
+
+            prev = first;
+            cur = first.next;
+        }
+        return dummy.next;
+    }
+
+    public void printLinkedList(ListNode node) {
+        ListNode temp = node;
+        while (temp != null) {
+            System.out.println(temp.value);
+            temp = temp.next;
+        }
+    }
+
+    /*
+    Input: l1 = [2,4,3], l2 = [5,6,4]
+    Output: [7,0,8]
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        int carry = 0;
+        while (l1 != null || l2 != null || carry > 0) {
+            int val1 = l1 != null? l1.value: 0;
+            int val2 = l2 != null? l2.value: 0;
+
+            int totalSum = val1 + val2 + carry;
+            carry = totalSum / 10;
+            int val = totalSum % 10;
+            cur.next = new ListNode(val);
+
+            cur = cur.next;
+            l1 = l1 != null? l1.next: null;
+            l2 = l2 != null? l2.next: null;
+        }
+        return dummy.next;
+    }
+
+    public static void main(String[] args) {
+        LinkedListProblem linkedListProblem = new LinkedListProblem();
+        ListNode res = linkedListProblem.removeNthFromEnd(
+                new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+        res = linkedListProblem.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
+        res = linkedListProblem.addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
+                new ListNode(5, new ListNode(6, new ListNode(4))));
+        linkedListProblem.printLinkedList(res);
+    }
+}
+
 
 public class Blind75 {
 }
