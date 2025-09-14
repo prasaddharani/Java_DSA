@@ -718,6 +718,25 @@ class LinkedListProblem {
         return dummy.next;
     }
 
+    public ListNode detectCycle(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                break;
+            }
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
     public static void main(String[] args) {
         LinkedListProblem linkedListProblem = new LinkedListProblem();
 //        ListNode res = linkedListProblem.removeNthFromEnd(
@@ -725,9 +744,18 @@ class LinkedListProblem {
 //        res = linkedListProblem.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
 //        res = linkedListProblem.addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
 //                new ListNode(5, new ListNode(6, new ListNode(4))));
-        ListNode res = linkedListProblem.reverseKGroup(
-                new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
-        linkedListProblem.printLinkedList(res);
+//        ListNode res = linkedListProblem.reverseKGroup(
+//                new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+        // Build the list: 3 -> 2 -> 0 -> -4
+        ListNode head = new ListNode(3);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(0);
+        head.next.next.next = new ListNode(-4);
+
+        // Create cycle: -4 -> 2
+        head.next.next.next.next = head.next;
+        ListNode res = linkedListProblem.detectCycle(head);
+        System.out.println(res.value);
     }
 }
 
