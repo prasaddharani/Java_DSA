@@ -737,6 +737,55 @@ class LinkedListProblem {
         return slow;
     }
 
+    /*
+    Input: lists = [[1,4,5],[1,3,4],[2,6]]
+    Output: [1,1,2,3,4,4,5,6]
+    Explanation: The linked-lists are:
+    [
+      1->4->5,
+      1->3->4,
+      2->6
+    ]
+    merging them into one sorted linked list:
+    1->1->2->3->4->4->5->6
+     */
+
+    public ListNode mergeSort(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.value < l2.value) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+
+        if (l1 != null) {
+            cur.next = l1;
+        }
+
+        if (l2 != null) {
+            cur.next = l2;
+        }
+        return dummy.next;
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+
+        int interval = 1;
+        while (interval < lists.length) {
+            for (int i = 0; i + interval < lists.length; i += interval * 2) {
+                lists[i] = mergeSort(lists[i], lists[i + interval]);
+            }
+            interval *= 2;
+        }
+        return lists[0];
+    }
+
     public static void main(String[] args) {
         LinkedListProblem linkedListProblem = new LinkedListProblem();
 //        ListNode res = linkedListProblem.removeNthFromEnd(
@@ -754,8 +803,13 @@ class LinkedListProblem {
 
         // Create cycle: -4 -> 2
         head.next.next.next.next = head.next;
-        ListNode res = linkedListProblem.detectCycle(head);
-        System.out.println(res.value);
+        //ListNode res = linkedListProblem.detectCycle(head);
+        ListNode res = linkedListProblem.mergeKLists(new ListNode[]{
+                new ListNode(1, new ListNode(3, new ListNode(4))),
+                new ListNode(1, new ListNode(4, new ListNode(5))),
+                new ListNode(2, new ListNode(6))
+        });
+        linkedListProblem.printLinkedList(res);
     }
 }
 
