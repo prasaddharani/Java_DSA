@@ -877,17 +877,56 @@ class StackProblem {
         }
     }
 
+    static class Histogram {
+
+        private int index;
+        private int height;
+
+        Histogram (int index, int height) {
+            this.index = index;
+            this.height = height;
+        }
+    }
+
+    /*
+    heights = [2,1,5,6,2,3]
+    output: 10
+     */
+    public int largestRectangleArea(int[] heights) {
+        Stack<Histogram> stack = new Stack<>();
+        int maxArea = 0;
+        for (int i = 0; i < heights.length; i++) {
+            int index = i;
+            int height = heights[i];
+            while (!stack.isEmpty() && stack.peek().height > height) {
+                Histogram histogram = stack.pop();
+                index = histogram.index;
+                int h = histogram.height;
+                maxArea = max(maxArea, h * (i - index));
+            }
+            stack.push(new Histogram(index, height));
+        }
+
+        for (Histogram histogram: stack) {
+            int index = histogram.index;
+            int height = histogram.height;
+            maxArea = max(maxArea, height * (heights.length - index));
+        }
+        return maxArea;
+    }
+
     public static void main(String[] args) {
         StackProblem stackProblem = new StackProblem();
         //System.out.println(stackProblem.isValid("()[]{}"));
-        MinStack minStack = new StackProblem().new MinStack();
-        minStack.push(-2);
-        minStack.push(0);
-        minStack.push(-3);
-        System.out.println(minStack.getMin()); // return -3
-        minStack.pop();
-        System.out.println(minStack.top());    // return 0
-        System.out.println(minStack.getMin()); // return -2
+//        MinStack minStack = new StackProblem().new MinStack();
+//        minStack.push(-2);
+//        minStack.push(0);
+//        minStack.push(-3);
+//        System.out.println(minStack.getMin()); // return -3
+//        minStack.pop();
+//        System.out.println(minStack.top());    // return 0
+//        System.out.println(minStack.getMin()); // return -2
+        System.out.println(stackProblem.largestRectangleArea(new int[]{2,1,5,6,2,3}));
     }
 }
 
