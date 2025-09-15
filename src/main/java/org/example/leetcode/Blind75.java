@@ -1135,5 +1135,67 @@ class BinarySearchProblem {
         System.out.println(binarySearchProblem.findMedianSortedArrays(new int[]{1, 3}, new int[]{2}));
     }
 }
+
+class Backtrack {
+
+    /*
+    Input: nums = [1,2,3]
+    Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+     */
+
+    public void backtrack(List<List<Integer>> res, Stack<Integer> path, boolean[] used, int[] nums) {
+        if (path.size() == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = true;
+            backtrack(res, path, used, nums);
+            used[i] = false;
+            path.pop();
+        }
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+
+        backtrack(res, new Stack<>(), new boolean[nums.length], nums);
+        return res;
+    }
+
+    /*
+    Input: nums = [1,2,3]
+    Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+     */
+    public void backtrack(List<List<Integer>> res, int start, Stack<Integer> path, int[] nums) {
+        res.add(new ArrayList<>(path));
+
+        for (int end = start; end < nums.length; end++) {
+            path.add(nums[end]);
+            backtrack(res, end + 1, path, nums);
+            path.pop();
+        }
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, 0, new Stack<>(), nums);
+        return res;
+    }
+
+    public static void main(String[] args) {
+        Backtrack backtrack = new Backtrack();
+        //System.out.println(backtrack.permute(new int[]{1, 2, 3}));
+        System.out.println(backtrack.subsets(new int[]{1, 2, 3}));
+    }
+}
 public class Blind75 {
+    public static void main(String[] args) {
+
+    }
 }
