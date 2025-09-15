@@ -1,6 +1,7 @@
 package org.example.leetcode;
 
 import java.util.*;
+import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -927,6 +928,60 @@ class StackProblem {
 //        System.out.println(minStack.top());    // return 0
 //        System.out.println(minStack.getMin()); // return -2
         System.out.println(stackProblem.largestRectangleArea(new int[]{2,1,5,6,2,3}));
+    }
+}
+
+class QueueProblem {
+
+    /*
+    Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+    Output: [3,3,5,5,6,7]
+    Explanation:
+    Window position                Max
+    ---------------               -----
+    [1  3  -1] -3  5  3  6  7       3
+     1 [3  -1  -3] 5  3  6  7       3
+     1  3 [-1  -3  5] 3  6  7       5
+     1  3  -1 [-3  5  3] 6  7       5
+     1  3  -1  -3 [5  3  6] 7       6
+     1  3  -1  -3  5 [3  6  7]      7
+     */
+
+    static class MaxWindow {
+        int index;
+        int value;
+
+        MaxWindow (int index, int value) {
+            this.index = index;
+            this.value = value;
+        }
+    }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Queue<MaxWindow> queue = new LinkedList<>();
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+
+            while (!queue.isEmpty() && queue.peek().index - i > k + 1) {
+                queue.poll();
+            }
+
+            while (!queue.isEmpty() && queue.peek().value < nums[i]) {
+                queue.poll();
+            }
+
+            queue.add(new MaxWindow(i, nums[i]));
+
+            if (i >= k - 1) {
+                res.add(queue.peek().value);
+            }
+        }
+        return res.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public static void main(String[] args) {
+        QueueProblem queueProblem = new QueueProblem();
+        System.out.println(Arrays.toString(queueProblem.maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3)));
     }
 }
 
