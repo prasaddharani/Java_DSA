@@ -1095,10 +1095,9 @@ class BinarySearchProblem {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int total = (nums1.length + nums2.length) / 2;
+        // Ensure nums1 is the smaller array
         if (nums1.length > nums2.length) {
-            int[] temp = nums2;
-            nums2 = nums1;
-            nums1 = temp;
+            return findMedianSortedArrays(nums2, nums1);
         }
         int x = nums1.length;
         int y = nums2.length;
