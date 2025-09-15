@@ -1017,5 +1017,81 @@ class Sorting {
         System.out.println(Arrays.toString(sorting.sortColors(new int[]{2, 0, 2, 1, 1, 0})));
     }
 }
+
+
+class BinarySearchProblem {
+
+    /*
+    Input: nums = [5,7,7,8,8,10], target = 8
+    Output: [3,4]
+     */
+    private int binarySearch (int[] nums, int target, boolean leftBias) {
+        int left = 0, right = nums.length - 1;
+        int res = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (target == nums[mid]) {
+                res = mid;
+                if (leftBias) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return res;
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        int left = binarySearch(nums, target, true);
+        int right = binarySearch(nums, target, false);
+        return new int[]{left, right};
+    }
+
+    /*
+    Input: nums = [4,5,6,7,0,1,2], target = 0
+    Output: 4
+     */
+
+    public int binarySearchHelper(int[] nums, int target, int left, int right) {
+        if (left > right) {
+            return -1;
+        }
+
+        int mid = left + (right - left) / 2;
+
+        if (nums[mid] == target) {
+            return mid;
+        }
+
+        if (nums[left] <= nums[mid]) {
+            if (target >= nums[left] && target < nums[mid]) {
+                return binarySearchHelper(nums, target, left, mid - 1);
+            } else {
+                return binarySearchHelper(nums, target, mid + 1, right);
+            }
+        } else {
+            if (target > nums[mid] && target <= nums[right]) {
+                return binarySearchHelper(nums, target, mid + 1, right);
+            } else {
+                return binarySearchHelper(nums, target, left, mid - 1);
+            }
+        }
+    }
+
+    public int search(int[] nums, int target) {
+        return binarySearchHelper(nums, target, 0, nums.length - 1);
+    }
+
+    public static void main(String[] args) {
+        BinarySearchProblem binarySearchProblem = new BinarySearchProblem();
+        //System.out.println(Arrays.toString(binarySearchProblem.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
+        System.out.println(binarySearchProblem.search(new int[]{4,5,6,7,0,1,2}, 0));
+    }
+}
 public class Blind75 {
 }
