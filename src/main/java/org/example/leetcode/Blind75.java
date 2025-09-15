@@ -814,5 +814,82 @@ class LinkedListProblem {
 }
 
 
+class StackProblem {
+
+    /*
+    Input: s = "()[]{}"
+    Output: true
+     */
+
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (Character c: s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (!stack.isEmpty() &&
+                        ((stack.peek() == '(' && c == ')') ||
+                                (c == ']' && stack.peek() == '[')) ||
+                        (c == '}' && stack.peek() == '{')) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /*
+    ["MinStack","push","push","push","getMin","pop","top","getMin"]
+    [[],[-2],[0],[-3],[],[],[],[]]
+     */
+    class MinStack {
+        private Stack<Integer> stack;
+        private Stack<Integer> minStack;
+
+        public MinStack() {
+            stack = new Stack<>();
+            minStack = new Stack<>();
+        }
+
+        public void push(int val) {
+            stack.push(val);
+            if (minStack.isEmpty() || (minStack.peek() >= val)) {
+                minStack.push(val);
+            }
+        }
+
+        public void pop() {
+            int val = stack.pop();
+            if (minStack.peek() == val) {
+                minStack.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return minStack.peek();
+        }
+    }
+
+    public static void main(String[] args) {
+        StackProblem stackProblem = new StackProblem();
+        //System.out.println(stackProblem.isValid("()[]{}"));
+        MinStack minStack = new StackProblem().new MinStack();
+        minStack.push(-2);
+        minStack.push(0);
+        minStack.push(-3);
+        System.out.println(minStack.getMin()); // return -3
+        minStack.pop();
+        System.out.println(minStack.top());    // return 0
+        System.out.println(minStack.getMin()); // return -2
+    }
+}
+
 public class Blind75 {
 }
