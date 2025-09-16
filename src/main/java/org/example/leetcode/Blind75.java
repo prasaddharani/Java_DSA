@@ -583,6 +583,66 @@ class MatrixProblem {
     }
 }
 
+class BitManipulation {
+
+    /*
+    Input: n = 5
+    Output: [0,1,1,2,1,2]
+    Explanation:
+    0 --> 0
+    1 --> 1
+    2 --> 10
+    3 --> 11
+    4 --> 100
+    5 --> 101
+     */
+    public int[] countBits(int n) {
+        int offset = 1;
+        int[] dp = new int[n + 1];
+        for (int i = 1; i < n + 1; i++) {
+            if (offset * 2 == i) {
+                offset = i;
+            }
+            dp[i] = 1 + dp[i - offset];
+        }
+        return dp;
+    }
+
+    /*
+    Input: nums = [1,2,1,3,2,5]
+    Output: [3,5]
+    Explanation:  [5, 3] is also a valid answer.
+     */
+    public int[] singleNumber(int[] nums) {
+        int xor = 0;
+        for (int num : nums) {
+            xor ^= num; // XOR of all numbers
+        }
+
+        // Find rightmost set bit
+        int diffBit = 1;
+        while ((diffBit & xor) == 0) {
+            diffBit <<= 1;
+        }
+
+        int a = 0, b = 0;
+        for (int num : nums) {
+            if ((num & diffBit) == 0) {
+                a ^= num;
+            } else {
+                b ^= num;
+            }
+        }
+        return new int[]{a, b};
+    }
+
+    public static void main(String[] args) {
+        BitManipulation bitManipulation = new BitManipulation();
+        //System.out.println(Arrays.toString(bitManipulation.countBits(5)));
+        System.out.println(Arrays.toString(bitManipulation.singleNumber(new int[]{1, 2, 1, 3, 2, 5})));
+    }
+}
+
 class LinkedListProblem {
 
     /*
