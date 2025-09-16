@@ -1305,10 +1305,45 @@ class TreeProblems {
         return res;
     }
 
+    /*
+        Input: root = [1,2,3,null,5,null,4]
+        Output: [1,3,4]
+     */
+
+    public List<Integer> rightSideView(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        List<Integer> res = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                if (node == null) {
+                    continue;
+                }
+                level.add(node.value);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            res.add(level.get(levelSize - 1));
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
-        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
-                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
+//        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
+//                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
+        System.out.println(treeProblems.rightSideView(new TreeNode(1,
+                new TreeNode(2, null, new TreeNode(5)),
+                new TreeNode(3, null, new TreeNode(4)))));
     }
 }
 public class Blind75 {
