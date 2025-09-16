@@ -1470,6 +1470,22 @@ class TreeProblems {
         return res;
     }
 
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+
+        if (root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        }
+        return left != null? left: right;
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1511,11 +1527,26 @@ class TreeProblems {
         //System.out.println(treeProblems.isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
 //        System.out.println(treeProblems.kthSmallest(
 //                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
-        System.out.println(treeProblems.postorderTraversal(new TreeNode(1,
-                null,
-                new TreeNode(2,
-                        new TreeNode(3),
-                        null))));
+//        System.out.println(treeProblems.postorderTraversal(new TreeNode(1,
+//                null,
+//                new TreeNode(2,
+//                        new TreeNode(3),
+//                        null))));
+        TreeNode root = new TreeNode(3,
+                new TreeNode(5,
+                        new TreeNode(6),
+                        new TreeNode(2,
+                                new TreeNode(7),
+                                new TreeNode(4)
+                        )
+                ),
+                new TreeNode(1,
+                        new TreeNode(0),
+                        new TreeNode(8)
+                )
+        );
+
+        System.out.println(treeProblems.lowestCommonAncestor(root, root.left, root.right).value);
     }
 
         public class Blind75 {
