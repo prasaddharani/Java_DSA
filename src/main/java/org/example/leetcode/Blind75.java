@@ -1486,6 +1486,31 @@ class TreeProblems {
         return left != null? left: right;
     }
 
+    /*
+    124. Binary Tree Maximum Path Sum
+    Input: root = [1,2,3]
+    Output: 6
+    Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+     */
+
+    private int maxSum;
+
+    public int dfsMaxPathSum(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftMax = max(dfsMaxPathSum(node.left), 0);
+        int rightMax = max(dfsMaxPathSum(node.right), 0);
+        int currSum = node.value + leftMax + rightMax;
+        maxSum = max(this.maxSum, currSum);
+        return node.value + max(leftMax, rightMax);
+    }
+
+    public int maxPathSum(TreeNode root) {
+        dfsMaxPathSum(root);
+        return maxSum;
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1532,21 +1557,36 @@ class TreeProblems {
 //                new TreeNode(2,
 //                        new TreeNode(3),
 //                        null))));
-        TreeNode root = new TreeNode(3,
-                new TreeNode(5,
-                        new TreeNode(6),
-                        new TreeNode(2,
-                                new TreeNode(7),
+//        TreeNode root = new TreeNode(3,
+//                new TreeNode(5,
+//                        new TreeNode(6),
+//                        new TreeNode(2,
+//                                new TreeNode(7),
+//                                new TreeNode(4)
+//                        )
+//                ),
+//                new TreeNode(1,
+//                        new TreeNode(0),
+//                        new TreeNode(8)
+//                )
+//        );
+//
+//        System.out.println(treeProblems.lowestCommonAncestor(root, root.left, root.right).value);
+        TreeNode root = new TreeNode(10,
+                new TreeNode(2,
+                        new TreeNode(20),
+                        new TreeNode(1)
+                ),
+                new TreeNode(10,
+                        null,
+                        new TreeNode(-25,
+                                new TreeNode(3),
                                 new TreeNode(4)
                         )
-                ),
-                new TreeNode(1,
-                        new TreeNode(0),
-                        new TreeNode(8)
                 )
         );
 
-        System.out.println(treeProblems.lowestCommonAncestor(root, root.left, root.right).value);
+        System.out.println("Max Path Sum = " + treeProblems.maxPathSum(root));
     }
 
         public class Blind75 {
