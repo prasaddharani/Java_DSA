@@ -1435,6 +1435,25 @@ class TreeProblems {
         return res;
     }
 
+    public boolean isValidBST(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inOrder(root, res);
+        int prevVal = res.get(0);
+        for (int i = 1; i < res.size(); i++) {
+            if (prevVal > res.get(i)) {
+                return false;
+            }
+            prevVal = res.get(i);
+        }
+        return true;
+    }
+
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
+        inOrder(root, res);
+        return res.get(k - 1);
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1472,7 +1491,10 @@ class TreeProblems {
 //        TreeNode des = codec.deserialize(ser);
 //        System.out.println("Deserialized Root: " + des.value);  // should print 1
 
-        System.out.println(treeProblems.inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
+        //System.out.println(treeProblems.inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
+        //System.out.println(treeProblems.isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
+        System.out.println(treeProblems.kthSmallest(
+                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
     }
 
         public class Blind75 {
