@@ -1384,6 +1384,43 @@ class TreeProblems {
         return dfs(root, countMap, targetSum, curr_sum);
     }
 
+    public class Codec {
+        public void dfsSerialize(TreeNode node, StringBuilder sb) {
+            if (node == null) {
+                sb.append("N,");
+                return;
+            }
+
+            sb.append(node.value).append(",");
+            dfsSerialize(node.left, sb);
+            dfsSerialize(node.right, sb);
+        }
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            dfsSerialize(root, sb);
+            return sb.toString();
+        }
+
+        public TreeNode dfsDeserialize(Queue<String> queue) {
+            String data = queue.poll();
+            if (Objects.equals(data, "N")) {
+                return null;
+            }
+            TreeNode root = new TreeNode(Integer.parseInt(data));
+            root.left = dfsDeserialize(queue);
+            root.right = dfsDeserialize(queue);
+            return root;
+        }
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] values = data.split(",");
+            Queue<String> queue = new LinkedList<>(Arrays.asList(values));
+            return dfsDeserialize(queue);
+        }
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1393,27 +1430,34 @@ class TreeProblems {
 //                new TreeNode(3, null, new TreeNode(4)))));
 //        System.out.println(treeProblems.preorderTraversal(new TreeNode(1, null,
 //                new TreeNode(2, new TreeNode(3), null))));
-        System.out.println(
-                treeProblems.pathSum(
-                        new TreeNode(10,
-                                new TreeNode(5,
-                                        new TreeNode(3,
-                                                new TreeNode(3),
-                                                new TreeNode(-2)
-                                        ),
-                                        new TreeNode(2,
-                                                null,
-                                                new TreeNode(1)
-                                        )
-                                ),
-                                new TreeNode(-3,
-                                        null,
-                                        new TreeNode(11)
-                                )
-                        ),
-                        8
-                )
-        );
+//        System.out.println(
+//                treeProblems.pathSum(
+//                        new TreeNode(10,
+//                                new TreeNode(5,
+//                                        new TreeNode(3,
+//                                                new TreeNode(3),
+//                                                new TreeNode(-2)
+//                                        ),
+//                                        new TreeNode(2,
+//                                                null,
+//                                                new TreeNode(1)
+//                                        )
+//                                ),
+//                                new TreeNode(-3,
+//                                        null,
+//                                        new TreeNode(11)
+//                                )
+//                        ),
+//                        8
+//                )
+//        );
+        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+        Codec codec = treeProblems.new Codec();
+        String ser = codec.serialize(root);
+        System.out.println("Serialized: " + ser);
+        TreeNode des = codec.deserialize(ser);
+        System.out.println("Deserialized Root: " + des.value);  // should print 1
+
     }
 
         public class Blind75 {
