@@ -1421,6 +1421,20 @@ class TreeProblems {
         }
     }
 
+    public void inOrder(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        inOrder(node.left, res);
+        res.add(node.value);
+        inOrder(node.right, res);
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inOrder(root, res);
+        return res;
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1451,13 +1465,14 @@ class TreeProblems {
 //                        8
 //                )
 //        );
-        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
-        Codec codec = treeProblems.new Codec();
-        String ser = codec.serialize(root);
-        System.out.println("Serialized: " + ser);
-        TreeNode des = codec.deserialize(ser);
-        System.out.println("Deserialized Root: " + des.value);  // should print 1
+//        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+//        Codec codec = treeProblems.new Codec();
+//        String ser = codec.serialize(root);
+//        System.out.println("Serialized: " + ser);
+//        TreeNode des = codec.deserialize(ser);
+//        System.out.println("Deserialized Root: " + des.value);  // should print 1
 
+        System.out.println(treeProblems.inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
     }
 
         public class Blind75 {
