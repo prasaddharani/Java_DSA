@@ -1454,6 +1454,22 @@ class TreeProblems {
         return res.get(k - 1);
     }
 
+    public void postOrder(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+
+        postOrder(node.left, res);
+        postOrder(node.right, res);
+        res.add(node.value);
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        postOrder(root, res);
+        return res;
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
@@ -1493,8 +1509,13 @@ class TreeProblems {
 
         //System.out.println(treeProblems.inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
         //System.out.println(treeProblems.isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
-        System.out.println(treeProblems.kthSmallest(
-                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
+//        System.out.println(treeProblems.kthSmallest(
+//                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
+        System.out.println(treeProblems.postorderTraversal(new TreeNode(1,
+                null,
+                new TreeNode(2,
+                        new TreeNode(3),
+                        null))));
     }
 
         public class Blind75 {
