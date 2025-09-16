@@ -1337,17 +1337,88 @@ class TreeProblems {
         return res;
     }
 
+    /*
+    Input: root = [1,null,2,3]
+    Output: [1,2,3]
+     */
+
+    public void dfs(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        res.add(node.value);
+
+        if (node.left != null) {
+            dfs(node.left, res);
+        }
+
+        if (node.right != null) {
+            dfs(node.right, res);
+        }
+    }
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res);
+        return res;
+    }
+
+
+    public int dfs(TreeNode node, Map<Integer, Integer> countMap, int targetSum, int curr_sum) {
+        if (node == null) {
+            return 0;
+        }
+        curr_sum += node.value;
+        int count = countMap.getOrDefault(curr_sum - targetSum, 0);
+        countMap.put(curr_sum, countMap.getOrDefault(curr_sum, 0) + 1);
+
+        count += dfs(node.left, countMap, targetSum, curr_sum);
+        count += dfs(node.right, countMap, targetSum, curr_sum);
+        countMap.put(curr_sum, countMap.get(curr_sum) - 1);
+        return count;
+    }
+
+    public int pathSum(TreeNode root, int targetSum) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        countMap.put(0, 1);
+        int curr_sum = 0;
+        return dfs(root, countMap, targetSum, curr_sum);
+    }
+
     public static void main(String[] args) {
         TreeProblems treeProblems = new TreeProblems();
 //        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
 //                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
-        System.out.println(treeProblems.rightSideView(new TreeNode(1,
-                new TreeNode(2, null, new TreeNode(5)),
-                new TreeNode(3, null, new TreeNode(4)))));
+//        System.out.println(treeProblems.rightSideView(new TreeNode(1,
+//                new TreeNode(2, null, new TreeNode(5)),
+//                new TreeNode(3, null, new TreeNode(4)))));
+//        System.out.println(treeProblems.preorderTraversal(new TreeNode(1, null,
+//                new TreeNode(2, new TreeNode(3), null))));
+        System.out.println(
+                treeProblems.pathSum(
+                        new TreeNode(10,
+                                new TreeNode(5,
+                                        new TreeNode(3,
+                                                new TreeNode(3),
+                                                new TreeNode(-2)
+                                        ),
+                                        new TreeNode(2,
+                                                null,
+                                                new TreeNode(1)
+                                        )
+                                ),
+                                new TreeNode(-3,
+                                        null,
+                                        new TreeNode(11)
+                                )
+                        ),
+                        8
+                )
+        );
     }
-}
-public class Blind75 {
-    public static void main(String[] args) {
 
-    }
+        public class Blind75 {
+            public static void main(String[] args) {
+
+            }
+        }
 }
