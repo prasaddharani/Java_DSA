@@ -1254,6 +1254,63 @@ class Backtrack {
         System.out.println(backtrack.subsets(new int[]{1, 2, 3}));
     }
 }
+
+class TreeProblems {
+    static class TreeNode {
+        int value;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {}
+
+        TreeNode(int value) {
+            this.value = value;
+        }
+
+        TreeNode(int value, TreeNode left, TreeNode right) {
+            this.left = left;
+            this.value = value;
+            this.right = right;
+        }
+    }
+
+    /*
+    Input: root = [3,9,20,null,null,15,7]
+    Output: [[3],[9,20],[15,7]]
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        List<List<Integer>> res = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                if (node == null) {
+                    continue;
+                }
+                level.add(node.value);
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            res.add(level);
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        TreeProblems treeProblems = new TreeProblems();
+        System.out.println(treeProblems.levelOrder(new TreeNode(3, new TreeNode(9),
+                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
+    }
+}
 public class Blind75 {
     public static void main(String[] args) {
 
