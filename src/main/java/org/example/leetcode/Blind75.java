@@ -1589,6 +1589,74 @@ class TreeProblems {
         System.out.println("Max Path Sum = " + treeProblems.maxPathSum(root));
     }
 
+    /*
+    Input
+    ["MyCalendar", "book", "book", "book"]
+    [[], [10, 20], [15, 25], [20, 30]]
+    Output
+    [null, true, false, true]
+     */
+
+    static class CalendarTreeNode {
+        int start;
+        int end;
+        CalendarTreeNode left;
+        CalendarTreeNode right;
+
+        CalendarTreeNode() {}
+
+        CalendarTreeNode(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        CalendarTreeNode(int start, int end, CalendarTreeNode left, CalendarTreeNode right) {
+            this.start = start;
+            this.end = end;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    static class MyCalendar {
+        CalendarTreeNode root;
+        public MyCalendar() {
+            root = null;
+        }
+
+        public boolean book(int startTime, int endTime) {
+            if (root == null) {
+                root = new CalendarTreeNode(startTime, endTime);
+                return true;
+            }
+            CalendarTreeNode cur = root;
+            while (cur != null) {
+                if (cur.start >= endTime) {
+                    if (cur.left == null) {
+                        cur.left = new CalendarTreeNode(startTime, endTime);
+                        return true;
+                    }
+                    cur = cur.left;
+                } else if (cur.end <= startTime) {
+                    if (cur.right == null) {
+                        cur.right = new CalendarTreeNode(startTime, endTime);
+                        return true;
+                    }
+                    cur = cur.right;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public static void main(String[] args) {
+            MyCalendar myCalendar = new MyCalendar();
+            System.out.println(myCalendar.book(10, 20)); // return True
+            System.out.println(myCalendar.book(15, 25)); // return False, It can not be booked because time 15 is already booked by another event.
+            System.out.println(myCalendar.book(20, 30)); // return True, The event can be booked, as the first event takes every time less than 20, but not including 20.
+        }
+    }
+
         public class Blind75 {
             public static void main(String[] args) {
 
