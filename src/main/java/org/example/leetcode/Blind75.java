@@ -1747,6 +1747,56 @@ class TreeProblems {
         }
     }
 
+    /*
+    Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+    Output: [[1,6],[8,10],[15,18]]
+    Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+     */
+    static class IntervalProblems {
+
+        public int[][] merge(int[][] intervals) {
+            Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+            List<int[]> res = new ArrayList<>();
+            int[] current = intervals[0];
+            res.add(current);
+
+            for (int[] interval: intervals) {
+                if (interval[0] <= current[1]) {
+                    current[1] = Math.max(interval[1], current[1]);
+                } else {
+                    current = interval;
+                    res.add(interval);
+                }
+            }
+            return res.toArray(new int[res.size()][]);
+        }
+
+
+        /*
+        Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+        Output: 1
+        Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.
+         */
+        public int eraseOverlapIntervals(int[][] intervals) {
+            Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+            int count = 0;
+            int[] current = intervals[0];
+            for (int i = 1; i < intervals.length; i++) {
+                if (intervals[i][0] < current[1]) {
+                    current[1] = Math.min(intervals[i][1], current[1]);
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public static void main(String[] args) {
+            IntervalProblems intervalProblems = new IntervalProblems();
+            //System.out.println(Arrays.deepToString(intervalProblems.merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+            System.out.println(intervalProblems.eraseOverlapIntervals(new int[][]{{1,2},{2,3},{3,4},{1,3}}));
+        }
+    }
+
         public class Blind75 {
             public static void main(String[] args) {
 
