@@ -1711,6 +1711,42 @@ class TreeProblems {
         }
     }
 
+    static class HeapProblems {
+        static class Pair {
+            Integer key;
+            Integer value;
+
+            Pair(Integer key, Integer value) {
+                this.key = key;
+                this.value = value;
+            }
+        }
+        public int[] topKFrequent(int[] nums, int k) {
+            Queue<Pair> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a.value));
+            Map<Integer, Integer> map = new HashMap<>();
+            for (Integer num: nums) {
+                map.put(num, map.getOrDefault(num, 0) + 1);
+            }
+
+            for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+                queue.add(new Pair(entry.getKey(), entry.getValue()));
+            }
+            int[] res = new int[k];
+            int i = 0;
+            while (k > 0) {
+                res[i] = queue.poll().value;
+                k -= 1;
+                i += 1;
+            }
+            return res;
+        }
+
+        public static void main(String[] args) {
+            HeapProblems heapProblems = new HeapProblems();
+            System.out.println(Arrays.toString(heapProblems.topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));
+        }
+    }
+
         public class Blind75 {
             public static void main(String[] args) {
 
