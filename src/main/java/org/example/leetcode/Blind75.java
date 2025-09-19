@@ -1880,6 +1880,51 @@ class TreeProblems {
         }
     }
 
+    static class Greedy {
+        /*
+        Input: nums = [2,3,1,1,4]
+        Output: true
+        Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+        */
+        public boolean jump(int[] nums) {
+
+            int maxJump = 0;
+            for (int i = 0; i < nums.length; i++) {
+                if (i > maxJump) {
+                    return false;
+                }
+                maxJump = max(maxJump, i + nums[i]);
+                if (maxJump > nums.length) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int jumpGame(int[] nums) {
+            int curJump = 0;
+            int maxJump = 0;
+            int res = 0;
+            for (int i = 0; i < nums.length - 1; i++) {
+                maxJump = max(maxJump, i + nums[i]);
+                if (curJump == i) {
+                    curJump = maxJump;
+                    res++;
+                }
+                if (curJump > nums.length - 1) {
+                    return res;
+                }
+            }
+            return res;
+        }
+
+        public static void main(String[] args) {
+            Greedy greedy = new Greedy();
+            System.out.println(greedy.jump(new int[]{2,3,1,1,4}));
+            System.out.println(greedy.jumpGame(new int[]{2,3,1,1,4}));
+        }
+    }
+
         public class Blind75 {
             public static void main(String[] args) {
 
