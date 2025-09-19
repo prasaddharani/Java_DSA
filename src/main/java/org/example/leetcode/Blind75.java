@@ -1797,6 +1797,89 @@ class TreeProblems {
         }
     }
 
+    static class SystemDesign {
+        static class LinkedList {
+            int key;
+            int value;
+            LinkedList prev;
+            LinkedList next;
+
+            LinkedList() {}
+            LinkedList(int key, int value) {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        static class LRUCache {
+            Map<Integer, LinkedList> cache;
+            int capacity;
+            LinkedList head, tail;
+
+            public LRUCache(int capacity) {
+                this.cache = new HashMap<>();
+                this.capacity = capacity;
+                head = new LinkedList();
+                tail = new LinkedList();
+                head.next = tail;
+                tail.prev = head;
+            }
+
+            public void remove(LinkedList node) {
+                LinkedList prev = node.prev, next = node.next;
+                prev.next = next;
+                next.prev = prev;
+            }
+
+            public void add(LinkedList node) {
+                node.prev = head;
+                node.next = head.next;
+                head.next.prev = node;
+                head.next = node;
+            }
+
+            public int get(int key) {
+                if (cache.containsKey(key)) {
+                    LinkedList node = cache.get(key);
+                    remove(node);
+                    add(node);
+                    return node.value;
+                }
+                return -1;
+            }
+
+            public void put(int key, int value) {
+                LinkedList node;
+                if (cache.containsKey(key)) {
+                    node = cache.get(key);
+                    node.value = value;
+                    cache.put(key, node);
+                    remove(node);
+                    add(node);
+                } else {
+                    node = new LinkedList(key, value);
+                    cache.put(key, node);
+                    add(node);
+                    if (cache.size() > capacity) {
+                        LinkedList lruNode = tail.prev;
+                        remove(lruNode);
+                    }
+                }
+            }
+        }
+
+        public static void main(String[] args) {
+            LRUCache obj = new LRUCache(2);
+            System.out.println(obj.get(2));  // -1
+            obj.put(1, 5);
+            obj.put(2, 10);
+            System.out.println(obj.get(1));  // 5
+            obj.put(3, 15);  // evicts key 2
+            System.out.println(obj.get(2));  // -1
+            System.out.println(obj.get(3));  // 15
+        }
+    }
+
         public class Blind75 {
             public static void main(String[] args) {
 
