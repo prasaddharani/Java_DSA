@@ -2010,12 +2010,28 @@ class TreeProblems {
             return dp[nums.length - 1];
         }
 
+        public int lengthOfLIS1(int[] nums) {
+            List<Integer> sub = new ArrayList<>();
+            for (int num: nums) {
+                int idx = Collections.binarySearch(sub, num);
+                if (idx < 0) {
+                    idx = -(idx + 1);
+                }
+                if (idx == sub.size()) {
+                    sub.add(num);
+                } else {
+                    sub.set(idx, num);
+                }
+            }
+            return sub.size();
+        }
+
         public static void main(String[] args) {
             DynamicProgramming dp = new DynamicProgramming();
             //System.out.println(dp.rob(new int[]{2, 3, 2}));
             //System.out.println(dp.canPartition(new int[]{1, 5, 11, 5}));
             //System.out.println(dp.coinChange(new int[]{1, 2, 5}, 11));
-            System.out.println(dp.lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
+            System.out.println(dp.lengthOfLIS1(new int[]{10,9,2,5,3,7,101,18}));
         }
     }
 
