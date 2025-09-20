@@ -1973,10 +1973,30 @@ class TreeProblems {
             return dp[target];
         }
 
+        /*
+        Input: coins = [1,2,5], amount = 11
+        Output: 3
+        Explanation: 11 = 5 + 5 + 1
+         */
+        public int coinChange(int[] coins, int amount) {
+            int[] dp = new int[amount + 1];
+            Arrays.fill(dp, Integer.MAX_VALUE);
+            dp[0] = 0;
+            for (int i = 1; i <= amount; i++) {
+                for (int coin: coins) {
+                    if (i- coin >=0 && dp[i - coin] != Integer.MAX_VALUE) {
+                        dp[i] = min(dp[i], 1 + dp[i - coin]);
+                    }
+                }
+            }
+            return dp[amount];
+        }
+
         public static void main(String[] args) {
             DynamicProgramming dp = new DynamicProgramming();
             //System.out.println(dp.rob(new int[]{2, 3, 2}));
-            System.out.println(dp.canPartition(new int[]{1, 5, 11, 5}));
+            //System.out.println(dp.canPartition(new int[]{1, 5, 11, 5}));
+            System.out.println(dp.coinChange(new int[]{1, 2, 5}, 11));
         }
     }
 
