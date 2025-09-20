@@ -1925,9 +1925,42 @@ class TreeProblems {
         }
     }
 
-        public class Blind75 {
-            public static void main(String[] args) {
+    static class DynamicProgramming {
 
+        /*
+        Input: nums = [2,3,2]
+        Output: 3
+        Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.
+         */
+        public int robHelper(int[] nums) {
+            if (nums.length < 2) {
+                return nums[0];
             }
+            int[] dp = new int[nums.length];
+            dp[0] = nums[0];
+            dp[1] = max(dp[0], dp[1]);
+
+            for (int i = 2; i < nums.length; i++) {
+                dp[i] = max(nums[i] + dp[i - 2], dp[i - 1]);
+            }
+            return dp[nums.length - 1];
         }
+        public int rob(int[] nums) {
+            int excludeFist = robHelper(Arrays.copyOfRange(nums, 0, nums.length - 2));
+            int excludeLast = robHelper(Arrays.copyOfRange(nums, 1, nums.length - 1));
+            return max(excludeFist, excludeLast);
+        }
+
+        public static void main(String[] args) {
+            DynamicProgramming dp = new DynamicProgramming();
+            System.out.println(dp.rob(new int[]{2, 3, 2}));
+
+        }
+    }
+
+    public class Blind75 {
+        public static void main(String[] args) {
+
+        }
+    }
 }
