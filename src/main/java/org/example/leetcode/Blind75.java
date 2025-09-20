@@ -1951,10 +1951,32 @@ class TreeProblems {
             return max(excludeFist, excludeLast);
         }
 
+        /*
+        Input: nums = [1,5,11,5]
+        Output: true
+        Explanation: The array can be partitioned as [1, 5, 5] and [11].
+         */
+        public boolean canPartition(int[] nums) {
+
+            int total = Arrays.stream(nums).sum();
+            if (total % 2 != 0) {
+                return false;
+            }
+            int target = total / 2;
+            boolean[] dp = new boolean[target + 1];
+            dp[0] = true;
+            for (int num: nums) {
+                for (int i = target; i >= num; i--) {
+                    dp[i] = dp[i] || dp[i - num];
+                }
+            }
+            return dp[target];
+        }
+
         public static void main(String[] args) {
             DynamicProgramming dp = new DynamicProgramming();
-            System.out.println(dp.rob(new int[]{2, 3, 2}));
-
+            //System.out.println(dp.rob(new int[]{2, 3, 2}));
+            System.out.println(dp.canPartition(new int[]{1, 5, 11, 5}));
         }
     }
 
