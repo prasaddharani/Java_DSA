@@ -1945,6 +1945,7 @@ class TreeProblems {
             }
             return dp[nums.length - 1];
         }
+
         public int rob(int[] nums) {
             int excludeFist = robHelper(Arrays.copyOfRange(nums, 0, nums.length - 2));
             int excludeLast = robHelper(Arrays.copyOfRange(nums, 1, nums.length - 1));
@@ -1965,7 +1966,7 @@ class TreeProblems {
             int target = total / 2;
             boolean[] dp = new boolean[target + 1];
             dp[0] = true;
-            for (int num: nums) {
+            for (int num : nums) {
                 for (int i = target; i >= num; i--) {
                     dp[i] = dp[i] || dp[i - num];
                 }
@@ -1983,8 +1984,8 @@ class TreeProblems {
             Arrays.fill(dp, Integer.MAX_VALUE);
             dp[0] = 0;
             for (int i = 1; i <= amount; i++) {
-                for (int coin: coins) {
-                    if (i- coin >=0 && dp[i - coin] != Integer.MAX_VALUE) {
+                for (int coin : coins) {
+                    if (i - coin >= 0 && dp[i - coin] != Integer.MAX_VALUE) {
                         dp[i] = min(dp[i], 1 + dp[i - coin]);
                     }
                 }
@@ -2012,7 +2013,7 @@ class TreeProblems {
 
         public int lengthOfLIS1(int[] nums) {
             List<Integer> sub = new ArrayList<>();
-            for (int num: nums) {
+            for (int num : nums) {
                 int idx = Collections.binarySearch(sub, num);
                 if (idx < 0) {
                     idx = -(idx + 1);
@@ -2071,6 +2072,102 @@ class TreeProblems {
             return dp[s.length()];
         }
 
+        /*
+        Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
+        Output: 7
+        Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.
+         */
+        public int minPathSum(int[][] grid) {
+            int rows = grid.length;
+            int cols = grid[0].length;
+            int[][] dp = new int[rows + 1][cols + 1];
+            for (int i = rows; i >= 0; i--) {
+                for (int j = cols; j >= 0; j--) {
+                    dp[i][j] = Integer.MAX_VALUE;
+                }
+            }
+            dp[rows - 1][cols] = 0;
+
+            for (int i = rows - 1; i >= 0; i--) {
+                for (int j = cols - 1; j >= 0; j--) {
+                    dp[i][j] = grid[i][j] + min(dp[i + 1][j], dp[i][j + 1]);
+                }
+            }
+            return dp[0][0];
+        }
+
+        /*
+        Input: matrix = [[9,9,4],[6,6,8],[2,1,1]]
+        Output: 4
+        Explanation: The longest increasing path is [1, 2, 6, 9].
+         */
+        class RowCol {
+            int row;
+            int col;
+
+            RowCol() {
+            }
+
+            RowCol(int row, int col) {
+                this.row = row;
+                this.col = col;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (o == this) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                RowCol rowCol = (RowCol) o;
+                return row == rowCol.row && col == rowCol.col;
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(row, col);
+            }
+        }
+
+        public int dfs(RowCol cell, int[][] matrix, Map<RowCol, Integer> memo, List<RowCol> directions, int rows, int cols) {
+            if (memo.containsKey(cell)) {
+                return memo.get(cell);
+            }
+
+            int maxLen = 1;
+            for (RowCol dir : directions) {
+                int nextRow = cell.row + dir.row;
+                int nextCol = cell.col + dir.col;
+
+                if (0 <= nextRow && nextRow < rows &&
+                        0 <= nextCol && nextCol < cols &&
+                        matrix[nextRow][nextCol] > matrix[cell.row][cell.col]) {
+
+                    maxLen = Math.max(maxLen, 1 + dfs(new RowCol(nextRow, nextCol), matrix, memo, directions, rows, cols));
+                }
+            }
+
+            memo.put(cell, maxLen);
+            return maxLen;
+        }
+
+        public int longestIncreasingPath(int[][] matrix) {
+            int rows = matrix.length, cols = matrix[0].length;
+            Map<RowCol, Integer> memo = new HashMap<>();
+
+            List<RowCol> directions = new ArrayList<>();
+            directions.add(new RowCol(0, 1));
+            directions.add(new RowCol(1, 0));
+            directions.add(new RowCol(0, -1));
+            directions.add(new RowCol(-1, 0));
+
+            int maxLen = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    maxLen = Math.max(maxLen, dfs(new RowCol(i, j), matrix, memo, directions, rows, cols));
+                }
+            }
+            return maxLen;
+        }
+
         public static void main(String[] args) {
             DynamicProgramming dp = new DynamicProgramming();
             //System.out.println(dp.rob(new int[]{2, 3, 2}));
@@ -2078,7 +2175,9 @@ class TreeProblems {
             //System.out.println(dp.coinChange(new int[]{1, 2, 5}, 11));
             //System.out.println(dp.lengthOfLIS1(new int[]{10,9,2,5,3,7,101,18}));
             //System.out.println(dp.longestCommonSubsequence("abcde", "ace"));
-            System.out.println(dp.wordBreak("applepenapple", List.of("apple","pen")));
+            //System.out.println(dp.wordBreak("applepenapple", List.of("apple","pen")));
+            //System.out.println(dp.minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+            System.out.println(dp.longestIncreasingPath(new int[][]{{9,9,4}, {6,6,8},{2,1,1}}));
         }
     }
 
