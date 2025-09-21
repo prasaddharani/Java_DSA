@@ -2181,6 +2181,46 @@ class TreeProblems {
         }
     }
 
+    static class Geometry {
+        public int reverse(int x) {
+            int rev = 0;
+            int sign = x < 0? -1: 1;
+            x = abs(x);
+            while (x != 0) {
+                int rem = x % 10;
+                rev = (rev * 10) + rem;
+                x = x / 10;
+            }
+            return sign * rev;
+        }
+
+        public int maxPoints(int[][] points) {
+            int rows = points.length, cols = points[0].length;
+            int maxPoints = 1;
+            for (int i = 0; i < rows; i++) {
+                Map<Integer, Integer> count = new HashMap<>();
+                int slope;
+                for (int j = i + 1; j < rows; j++) {
+                    if (points[i][0] == points[j][0]) {
+                        slope = Integer.MAX_VALUE;
+                    } else {
+                        slope = (points[j][1] - points[i][1]) /(points[j][0] - points[i][0]);
+                    }
+                    count.put(slope, count.getOrDefault(slope, 0) + 1);
+                    maxPoints = max(maxPoints, 1 + count.get(slope));
+                }
+            }
+            return maxPoints;
+        }
+
+
+        public static void main(String[] args) {
+            Geometry geometry = new Geometry();
+            //System.out.println(geometry.reverse(-123));
+            System.out.println(geometry.maxPoints(new int[][]{{1, 1}, {2, 2}, {3, 3}}));
+        }
+    }
+
     public class Blind75 {
         public static void main(String[] args) {
 
