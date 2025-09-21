@@ -2048,13 +2048,37 @@ class TreeProblems {
             return dp[rows][cols];
         }
 
+        /*
+        Input: s = "applepenapple", wordDict = ["apple","pen"]
+        Output: true
+        Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+        Note that you are allowed to reuse a dictionary word.
+         */
+        public boolean wordBreak(String s, List<String> wordDict) {
+            boolean[] dp = new boolean[s.length() + 1];
+            dp[0] = true;
+
+            int max_len = wordDict.stream().mapToInt(String::length).max().orElse(0);
+
+            for (int i = 1; i <= s.length(); i++) {
+                for (int j = i - 1; j >= Math.max(0, i - max_len); j--) {
+                    if (dp[j] && wordDict.contains(s.substring(j, i))) {
+                        dp[i] = true;
+                        break;  // no need to check further
+                    }
+                }
+            }
+            return dp[s.length()];
+        }
+
         public static void main(String[] args) {
             DynamicProgramming dp = new DynamicProgramming();
             //System.out.println(dp.rob(new int[]{2, 3, 2}));
             //System.out.println(dp.canPartition(new int[]{1, 5, 11, 5}));
             //System.out.println(dp.coinChange(new int[]{1, 2, 5}, 11));
             //System.out.println(dp.lengthOfLIS1(new int[]{10,9,2,5,3,7,101,18}));
-            System.out.println(dp.longestCommonSubsequence("abcde", "ace"));
+            //System.out.println(dp.longestCommonSubsequence("abcde", "ace"));
+            System.out.println(dp.wordBreak("applepenapple", List.of("apple","pen")));
         }
     }
 
