@@ -2221,6 +2221,54 @@ class TreeProblems {
         }
     }
 
+    static class Graph {
+        /*
+    Input: grid = [
+          ["1","1","1","1","0"],
+          ["1","1","0","1","0"],
+          ["1","1","0","0","0"],
+          ["0","0","0","0","0"]
+        ]
+    Output: 1
+     */
+
+        public void dfs(int i, int j, int[][] directions, char[][] grid, int rows, int cols) {
+            grid[i][j] = '0';
+            for (int[] direction: directions) {
+                int nr = i + direction[0], nc = j + direction[1];
+                if (0 <= nr && nr < rows && 0 <= nc && nc < cols && grid[nr][nc] == '1') {
+                    dfs(nr, nc, directions, grid, rows, cols);
+                }
+            }
+        }
+
+        public int numIslands(char[][] grid) {
+            int rows = grid.length, cols = grid[0].length;
+            int count = 0;
+            int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (grid[i][j] == '1') {
+                        dfs(i, j, directions, grid, rows, cols);
+                        count += 1;
+                    }
+                }
+            }
+            return count;
+        }
+
+        public static void main(String[] args) {
+            Graph graph = new Graph();
+            System.out.println(graph.numIslands(new char[][]{
+                    {'1','1','1','1','0'},
+                    {'1','1','0','1','0'},
+                    {'1','1','0','0','0'},
+                    {'0','0','0','0','0'}
+                }));
+        }
+    }
+
     public class Blind75 {
         public static void main(String[] args) {
 
