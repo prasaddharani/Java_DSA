@@ -2316,6 +2316,52 @@ class TreeProblems {
             return true;
         }
 
+        class OrangeRot {
+            int row;
+            int col;
+            int minutes;
+
+            OrangeRot(int row, int col, int minutes) {
+                this.row = row;
+                this.col = col;
+                this.minutes = minutes;
+            }
+        }
+
+        public int orangesRotting(int[][] grid) {
+            int rows = grid.length, cols = grid[0].length;
+            Queue<OrangeRot> queue = new LinkedList<>();
+            int freshCount = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (grid[i][j] == 1) {
+                        freshCount++;
+                    } else if (grid[i][j] == 2) {
+                        queue.add(new OrangeRot(i, j, 0));
+                    }
+                }
+            }
+
+            int minutes = 0;
+            int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            while (!queue.isEmpty()) {
+                OrangeRot orangeRot = queue.poll();
+                int r = orangeRot.row, c = orangeRot.col;
+                for (int[] direction: directions) {
+                    int dr = direction[0], dc = direction[1];
+                    int nr = r + dr, nc = c + dc;
+                    if (0 <= nr && nr < rows && 0 <= nc && nc < cols && grid[nr][nc] == 1) {
+                        grid[nr][nc] = 0;
+                        int nextMinute = orangeRot.minutes + 1;
+                        freshCount -= 1;
+                        queue.add(new OrangeRot(nr, nc, nextMinute));
+                        minutes = nextMinute;
+                    }
+                }
+            }
+            return freshCount == 0? minutes: -1;
+        }
+
         public static void main(String[] args) {
             Graph graph = new Graph();
 //            System.out.println(graph.numIslands(new char[][]{
@@ -2334,7 +2380,8 @@ class TreeProblems {
 //
 //            System.out.println("\nCloned Graph:");
 //            printGraph(cloned, new HashSet<>());
-            System.out.println(graph.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
+            //System.out.println(graph.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
+            System.out.println(graph.orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
         }
 
         public static Node buildGraph() {
