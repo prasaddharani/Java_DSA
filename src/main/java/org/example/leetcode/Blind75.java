@@ -2292,6 +2292,30 @@ class TreeProblems {
             return dfs(visited, node);
         }
 
+        public boolean isBipartite(int[][] graph) {
+            int[] color = new int[graph.length];
+            Arrays.fill(color, -1);
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < graph.length; i++) {
+                if (color[i] == -1) {
+                    color[i] = 0;
+                    queue.add(i);
+                    while (!queue.isEmpty()) {
+                        int node = queue.poll();
+                        for (int neighbor: graph[node]) {
+                            if (color[neighbor] == -1) {
+                                color[neighbor] = 1 - color[node];
+                                queue.add(neighbor);
+                            } else if (color[neighbor] == color[node]) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         public static void main(String[] args) {
             Graph graph = new Graph();
 //            System.out.println(graph.numIslands(new char[][]{
@@ -2300,16 +2324,17 @@ class TreeProblems {
 //                    {'1','1','0','0','0'},
 //                    {'0','0','0','0','0'}
 //                }));
-            Node n1 = buildGraph();
-            // Clone the graph
-            Node cloned = new Graph().cloneGraph(n1);
-
-            // Print adjacency list of original and cloned
-            System.out.println("Original Graph:");
-            printGraph(n1, new HashSet<>());
-
-            System.out.println("\nCloned Graph:");
-            printGraph(cloned, new HashSet<>());
+//            Node n1 = buildGraph();
+//            // Clone the graph
+//            Node cloned = new Graph().cloneGraph(n1);
+//
+//            // Print adjacency list of original and cloned
+//            System.out.println("Original Graph:");
+//            printGraph(n1, new HashSet<>());
+//
+//            System.out.println("\nCloned Graph:");
+//            printGraph(cloned, new HashSet<>());
+            System.out.println(graph.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
         }
 
         public static Node buildGraph() {
