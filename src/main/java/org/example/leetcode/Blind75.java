@@ -2422,6 +2422,37 @@ class TreeProblems {
             return 0;
         }
 
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            int[] indegree = new int[numCourses];
+            List<Integer> res = new ArrayList<>();
+            Map<Integer, List<Integer>> graph = new HashMap<>();
+            Queue<Integer> queue = new LinkedList<>();
+
+            for(int[] prerequisite: prerequisites) {
+                int src = prerequisite[1], dst = prerequisite[0];
+                indegree[dst] += 1;
+                graph.computeIfAbsent(src, k -> new ArrayList<>()).add(dst);
+            }
+
+            for (int i = 0; i < numCourses; i++) {
+                if (indegree[i] == 0) {
+                    queue.add(i);
+                }
+            }
+
+            while (!queue.isEmpty()) {
+                int course = queue.poll();
+                res.add(course);
+                for (int neighbor: graph.getOrDefault(course, new ArrayList<>())) {
+                    indegree[neighbor]--;
+                    if (indegree[neighbor] == 0) {
+                        queue.add(neighbor);
+                    }
+                }
+            }
+            return res.stream().mapToInt(Integer::intValue).toArray();
+        }
+
 
         public static void main(String[] args) {
             Graph graph = new Graph();
@@ -2443,7 +2474,8 @@ class TreeProblems {
 //            printGraph(cloned, new HashSet<>());
             //System.out.println(graph.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
             //System.out.println(graph.orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
-            System.out.println(graph.ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
+            //System.out.println(graph.ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
+            System.out.println(Arrays.toString(graph.findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
         }
 
         public static Node buildGraph() {
