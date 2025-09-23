@@ -65,7 +65,7 @@ class Array {
         }
 
         for (int i = 0; i < n; i++) {
-            int val = Math.abs(nums[i]);
+            int val = abs(nums[i]);
             if (val >= 1 && val <= n) {
                 if (nums[val - 1] == 0) {
                     nums[val - 1] = -1 * (n + 1);
@@ -1762,7 +1762,7 @@ class TreeProblems {
 
             for (int[] interval: intervals) {
                 if (interval[0] <= current[1]) {
-                    current[1] = Math.max(interval[1], current[1]);
+                    current[1] = max(interval[1], current[1]);
                 } else {
                     current = interval;
                     res.add(interval);
@@ -1783,7 +1783,7 @@ class TreeProblems {
             int[] current = intervals[0];
             for (int i = 1; i < intervals.length; i++) {
                 if (intervals[i][0] < current[1]) {
-                    current[1] = Math.min(intervals[i][1], current[1]);
+                    current[1] = min(intervals[i][1], current[1]);
                     count++;
                 }
             }
@@ -2004,7 +2004,7 @@ class TreeProblems {
             for (int i = 0; i < nums.length; i++) {
                 for (int j = 0; j < i; j++) {
                     if (nums[i] > nums[j]) {
-                        dp[i] = Math.max(dp[i], dp[j] + 1);
+                        dp[i] = max(dp[i], dp[j] + 1);
                     }
                 }
             }
@@ -2062,7 +2062,7 @@ class TreeProblems {
             int max_len = wordDict.stream().mapToInt(String::length).max().orElse(0);
 
             for (int i = 1; i <= s.length(); i++) {
-                for (int j = i - 1; j >= Math.max(0, i - max_len); j--) {
+                for (int j = i - 1; j >= max(0, i - max_len); j--) {
                     if (dp[j] && wordDict.contains(s.substring(j, i))) {
                         dp[i] = true;
                         break;  // no need to check further
@@ -2141,7 +2141,7 @@ class TreeProblems {
                         0 <= nextCol && nextCol < cols &&
                         matrix[nextRow][nextCol] > matrix[cell.row][cell.col]) {
 
-                    maxLen = Math.max(maxLen, 1 + dfs(new RowCol(nextRow, nextCol), matrix, memo, directions, rows, cols));
+                    maxLen = max(maxLen, 1 + dfs(new RowCol(nextRow, nextCol), matrix, memo, directions, rows, cols));
                 }
             }
 
@@ -2162,7 +2162,7 @@ class TreeProblems {
             int maxLen = 0;
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    maxLen = Math.max(maxLen, dfs(new RowCol(i, j), matrix, memo, directions, rows, cols));
+                    maxLen = max(maxLen, dfs(new RowCol(i, j), matrix, memo, directions, rows, cols));
                 }
             }
             return maxLen;
@@ -2362,6 +2362,67 @@ class TreeProblems {
             return freshCount == 0? minutes: -1;
         }
 
+        /*
+        Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+        Output: 5
+        Explanation: One shortest transformation sequence is "hit" -> "hot" -> "dot" -> "dog" -> cog", which is 5 words long.
+         */
+
+        static class WordCount {
+            String word;
+            int count;
+            WordCount(String word, int count) {
+                this.word = word;
+                this.count = count;
+            }
+        }
+
+        public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+            Set<String> wordSet = new HashSet<>(wordList);
+            if (!wordSet.contains(endWord)) {
+                return 0; // per problem definition
+            }
+
+            // Build pattern → words mapping
+            Map<String, List<String>> patternMap = new HashMap<>();
+            wordSet.add(beginWord);
+
+            for (String word : wordSet) {
+                for (int i = 0; i < word.length(); i++) {
+                    String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
+                    patternMap.computeIfAbsent(pattern, k -> new ArrayList<>()).add(word);
+                }
+            }
+
+            // BFS
+            Queue<WordCount> queue = new LinkedList<>();
+            queue.add(new WordCount(beginWord, 1));
+            Set<String> visited = new HashSet<>();
+            visited.add(beginWord);
+
+            while (!queue.isEmpty()) {
+                WordCount wc = queue.poll();
+                String word = wc.word;
+                int count = wc.count;
+
+                for (int i = 0; i < word.length(); i++) {
+                    String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
+                    for (String neighbor : patternMap.getOrDefault(pattern, Collections.emptyList())) {
+                        if (endWord.equals(neighbor)) {
+                            return count + 1;
+                        }
+                        if (!visited.contains(neighbor)) {
+                            visited.add(neighbor);
+                            queue.add(new WordCount(neighbor, count + 1));
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+
         public static void main(String[] args) {
             Graph graph = new Graph();
 //            System.out.println(graph.numIslands(new char[][]{
@@ -2381,7 +2442,8 @@ class TreeProblems {
 //            System.out.println("\nCloned Graph:");
 //            printGraph(cloned, new HashSet<>());
             //System.out.println(graph.isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
-            System.out.println(graph.orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
+            //System.out.println(graph.orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
+            System.out.println(graph.ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
         }
 
         public static Node buildGraph() {
