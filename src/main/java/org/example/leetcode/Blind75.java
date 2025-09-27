@@ -2558,10 +2558,10 @@ class TreeProblems {
     static class Tries {
         static class TrieNode {
             Map<Character, TrieNode> children;
-            boolean isEnd;
+            String isEnd;
             TrieNode () {
                 children = new HashMap<>();
-                isEnd = false;
+                isEnd = null;
             }
         }
         static class Trie {
@@ -2579,12 +2579,12 @@ class TreeProblems {
                     }
                     node = node.children.get(c);
                 }
-                node.isEnd = true;
+                node.isEnd = word;
             }
 
             public boolean search(String word) {
                 TrieNode node = this.contains(word);
-                return node != null && node.isEnd;
+                return node != null && word.equals(node.isEnd);
             }
 
             public boolean startsWith(String prefix) {
@@ -2603,6 +2603,60 @@ class TreeProblems {
                 return node;
             }
         }
+
+        /*
+        Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
+        Output: ["eat","oath"]
+        */
+
+        private void dfsTries(int r, int c, char[][] board, int rows, int cols, int[][] directions,
+                              List<String> res, TrieNode node, List<String> words) {
+            Character ch = board[r][c];
+            if (!node.children.containsKey(ch)) {
+                return;
+            }
+            TrieNode nextNode = node.children.get(ch);
+            if (nextNode.isEnd != null && words.contains(nextNode.isEnd)) {
+                res.add(node.isEnd);
+                node.isEnd = null;
+            }
+            board[r][c] = '#';
+            for (int[] direction: directions) {
+                int dr = direction[0], dc = direction[1];
+                int nr = r + dr, nc = c + dc;
+                if (0 <= nr && nc < rows && 0 <= nc && nc < cols && board[nr][nc] != '#') {
+                    dfsTries(nr, nc, board, rows, cols, directions, res, nextNode, words);
+                }
+            }
+            board[r][c] = ch;
+
+        }
+
+        public List<String> findWords(char[][] board, String[] words) {
+            TrieNode root = new TrieNode();
+            for(String word: words) {
+                TrieNode node = root;
+                for (Character c: word.toCharArray()) {
+                    if (!node.children.containsKey(c)) {
+                        node.children.put(c, new TrieNode());
+                    }
+                    node = node.children.get(c);
+                }
+                node.isEnd = word;
+            }
+
+            int rows = board.length, cols = board[0].length;
+            int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            List<String> res = new ArrayList<>();
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    dfsTries(i, j, board, rows, cols, directions, res, root, List.of(words));
+                }
+            }
+            return Collections.emptyList();
+        }
+
+
 
         public static void main(String[] args) {
             /**
