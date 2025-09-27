@@ -2554,6 +2554,71 @@ class TreeProblems {
 
     }
 
+
+    static class Tries {
+        static class TrieNode {
+            Map<Character, TrieNode> children;
+            boolean isEnd;
+            TrieNode () {
+                children = new HashMap<>();
+                isEnd = false;
+            }
+        }
+        static class Trie {
+            TrieNode root;
+
+            public Trie() {
+                root = new TrieNode();
+            }
+
+            public void insert(String word) {
+                TrieNode node = root;
+                for (Character c: word.toCharArray()) {
+                    if (!node.children.containsKey(c)) {
+                        node.children.put(c, new TrieNode());
+                    }
+                    node = node.children.get(c);
+                }
+                node.isEnd = true;
+            }
+
+            public boolean search(String word) {
+                TrieNode node = this.contains(word);
+                return node != null && node.isEnd;
+            }
+
+            public boolean startsWith(String prefix) {
+                TrieNode node = this.contains(prefix);
+                return node != null;
+            }
+
+            public TrieNode contains(String word) {
+                TrieNode node = root;
+                for (Character c: word.toCharArray()) {
+                    if (!node.children.containsKey(c)) {
+                        return null;
+                    }
+                    node = node.children.get(c);
+                }
+                return node;
+            }
+        }
+
+        public static void main(String[] args) {
+            /**
+             * Your Trie object will be instantiated and called as such:
+             **/
+             Trie obj = new Trie();
+             obj.insert("Dharani");
+             boolean param_2 = obj.search("Dharani");
+             boolean param_3 = obj.startsWith("Dhara");
+             System.out.println(param_2);
+             System.out.println(param_3);
+        }
+    }
+
+
+
     public class Blind75 {
         public static void main(String[] args) {
 
