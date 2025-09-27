@@ -2453,6 +2453,42 @@ class TreeProblems {
             return res.stream().mapToInt(Integer::intValue).toArray();
         }
 
+        /*
+        Input: n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1
+        Output: 200
+        Explanation:
+        The graph is shown above.
+        The optimal path with at most 1 stop from city 0 to 2 is marked in red and has cost 100 + 100 = 200.
+         */
+        static class BellmanFordAlgorithm {
+            public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+                int[] prices = new int[n];
+                Arrays.fill(prices, Integer.MAX_VALUE);
+                prices[src] = 0;
+                for (int i = 0; i < k + 1; i++) {
+                    int[] temp = Arrays.copyOf(prices, n);
+                    for (int[] flight: flights) {
+                        int u = flight[0], v = flight[1], price = flight[2];
+                        if (prices[u] == Integer.MAX_VALUE) {
+                            continue;
+                        }
+                        int cost = prices[u] + price;
+                        if (cost < temp[v]) {
+                            temp[v] = cost;
+                        }
+                    }
+                    prices = temp;
+                }
+                return prices[dst];
+            }
+
+            public static void main(String[] args) {
+                BellmanFordAlgorithm bellmanFordAlgorithm = new BellmanFordAlgorithm();
+                System.out.println(
+                        bellmanFordAlgorithm.findCheapestPrice(3, new int[][]{{0,1,100},{1,2,100},{0,2,500}}, 0, 2, 1));
+            }
+        }
+
 
         public static void main(String[] args) {
             Graph graph = new Graph();
