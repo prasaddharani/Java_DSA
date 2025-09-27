@@ -2617,8 +2617,8 @@ class TreeProblems {
             }
             TrieNode nextNode = node.children.get(ch);
             if (nextNode.isEnd != null && words.contains(nextNode.isEnd)) {
-                res.add(node.isEnd);
-                node.isEnd = null;
+                res.add(nextNode.isEnd);
+                nextNode.isEnd = null;
             }
             board[r][c] = '#';
             for (int[] direction: directions) {
@@ -2653,7 +2653,7 @@ class TreeProblems {
                     dfsTries(i, j, board, rows, cols, directions, res, root, List.of(words));
                 }
             }
-            return Collections.emptyList();
+            return res;
         }
 
 
@@ -2668,6 +2668,9 @@ class TreeProblems {
              boolean param_3 = obj.startsWith("Dhara");
              System.out.println(param_2);
              System.out.println(param_3);
+             Tries tries = new Tries();
+             System.out.println(tries.findWords(new char[][]{{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}},
+                     new String[]{"oath","pea","eat","rain"}));
         }
     }
 
