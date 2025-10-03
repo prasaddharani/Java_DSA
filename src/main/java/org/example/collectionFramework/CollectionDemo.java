@@ -55,4 +55,38 @@ public class CollectionDemo {
         log.info(map.get(Status.NEW));
 
     }
+
+    static class CollectionRemove {
+        static class Employee {
+            int id;
+            String name;
+            int salary;
+            Employee(int id, String name, int salary) {
+                this.id = id;
+                this.name = name;
+                this.salary = salary;
+            }
+
+            @Override
+            public String toString() {
+                return "Employee{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        ", salary=" + salary +
+                        '}';
+            }
+        }
+        public static void main(String[] args) {
+            Employee employee1 = new Employee(1, "dharani", 10000);
+            Employee employee2 = new Employee(2, "Prasad", 20000);
+            List<Employee> employees = new ArrayList<>(List.of(employee1, employee2));
+            //            employees.forEach(employee -> {
+//                if (employee.salary <= 10000) {
+//                    employees.remove(employee);
+//                }
+//            });
+            employees.removeIf(employee -> employee.salary <= 10000);
+            employees.forEach(System.out::println);
+        }
+    }
 }
