@@ -16,7 +16,7 @@ class Engine {
 
 // Car Bean with field injection
 @Component
-class Car {
+class FieldInjectionCar {
     @Autowired
     private Engine engine;
 
@@ -68,7 +68,7 @@ public class DependencyInjection {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         // Get Car bean
-        Car car = context.getBean(Car.class);
+        FieldInjectionCar car = context.getBean(FieldInjectionCar.class);
 
         SetterInjectionCar setterInjectionCar = context.getBean(SetterInjectionCar.class);
 
