@@ -2,12 +2,10 @@ package org.example.java8.streams;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class StreamsPractice {
@@ -66,5 +64,55 @@ public class StreamsPractice {
                         Collectors.averagingDouble(Employee::getSalary)));
         log.info("Average Salary by department: {}", averageSalaryByDept);
 
+        // Find highest paid employee by each department
+        Map<String, Optional<Employee>> highestPaidEmpByDept= employees.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.maxBy(Comparator.comparing(Employee::getSalary))));
+        log.info("highest paid employee by each department {}", highestPaidEmpByDept);
+
+        // Find all departments with more than 2 employees
+        Map<String, Long> employeesWithDept = employees.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.counting()));
+        log.info("employee count with department wise {}", employeesWithDept);
+        List<String> moreThan2EmployeesDept = employeesWithDept.entrySet().stream()
+                                .filter(department -> department.getValue() >= 2)
+                                .map(Map.Entry::getKey)
+                                .toList();
+        log.info("More than 2 Employess Dept {}", moreThan2EmployeesDept);
+        List<Employee> moreThan2Employees = employees.stream()
+                        .filter(employee -> moreThan2EmployeesDept.contains(employee.getDepartment()))
+                        .toList();
+        log.info("all departments with more than 2 employees: {}", moreThan2Employees);
+
+        // find department with the highest average salary
+        Optional<String> highestAverageSalDepartment = employees.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.averagingDouble(Employee::getSalary)))
+                .entrySet()
+                .stream().max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey);
+        log.info("department with the highest average salary: {}", highestAverageSalDepartment);
+
+        // find more frequent character in a string
+        Optional<Character> mostFrequentCharacter = "Dharani".chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream().max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey);
+        log.info("more frequent character in a string: {}", mostFrequentCharacter);
+
+        // Find first non-repeating character
+        Optional<Character> nonRepeatingChar = "Dharani".chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+                .entrySet()
+                .stream().filter(characterLongEntry -> characterLongEntry.getValue() == 1)
+                .map(Map.Entry::getKey).findFirst();
+        log.info("first non-repeating character: {}", nonRepeatingChar);
     }
 }
