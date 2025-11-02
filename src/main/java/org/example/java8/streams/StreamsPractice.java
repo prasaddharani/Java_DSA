@@ -45,12 +45,26 @@ public class StreamsPractice {
         log.info("Person list partition by age: {}", partitionByAge);
 
         // group list of words by their length
-        List<String> words = List.of("Dharani", "Prasad", "Cat", "Dog", "random");
+        List<String> words = List.of("Dharani", "Prasad", "Cat", "Dog", "random", "Dharani");
 
         Map<Integer, List<String>> wordsByLength = words.stream()
                 .collect(Collectors.groupingBy(String::length));
         log.info("group list of words by their length: {}", wordsByLength);
 
+        // count the occurrence of each element
+
+        Map<String, Long> wordCount = words.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        log.info("count the occurrence of each element: {}", wordCount);
+
+        // group employee by each dept and calculate avg salary
+
+        Map<String, Double> averageSalaryByDept = employees.stream()
+                .collect(Collectors.groupingBy(
+                        Employee::getDepartment,
+                        Collectors.averagingDouble(Employee::getSalary)));
+        log.info("Average Salary by department: {}", averageSalaryByDept);
 
     }
 }
