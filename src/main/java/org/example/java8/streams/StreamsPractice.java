@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -15,7 +16,8 @@ public class StreamsPractice {
                 new Employee(1, "Dharani", "IT", 50000, List.of("Java", "Python")),
                 new Employee(3, "Prasad", "IT", 20000, List.of("Java", "Python")),
                 new Employee(4, "John", "BPO", 30000, List.of("Communication")),
-                new Employee(2, "Edge", "CEO", 100000, List.of("Business")));
+                new Employee(2, "Edge", "CEO", 100000, List.of("Business")),
+                new Employee(2, "Prasanth", "CEO", 200000, List.of("Business")));
 
 
         // sort list of employees by salary
@@ -114,5 +116,64 @@ public class StreamsPractice {
                 .stream().filter(characterLongEntry -> characterLongEntry.getValue() == 1)
                 .map(Map.Entry::getKey).findFirst();
         log.info("first non-repeating character: {}", nonRepeatingChar);
+
+        // Find most common first letter among all employees
+        Optional<List<Employee>> employeesWithCommonFirstChar = employees.stream()
+                .collect(Collectors.groupingBy(employee -> employee.getName().charAt(0)))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparing(entry -> entry.getValue().size()))
+                .map(Map.Entry::getValue);
+        Optional<Map.Entry<Character, Long>> employeeNameWithMostCommonChar = employees.stream()
+                        .map(employee -> employee.getName().charAt(0))
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet()
+                        .stream()
+                        .max(Map.Entry.comparingByValue());
+        log.info("most common first letter among all employees: {}", employeesWithCommonFirstChar);
+        log.info("most common first letter among all employees: {}", employeeNameWithMostCommonChar);
+
+        // Find average 3 consecutive elements sliding window
+        List<Integer> input = Arrays.asList(4, 8, 15, 16, 23, 42);
+
+        int window = 3;
+        List<Double> averageOfThreeConsecutive = IntStream.range(0, input.size() - (window - 1))
+                .mapToObj(i -> input.subList(i, i + window))
+                .toList()
+                .stream()
+                .map( subList ->
+                        subList.stream()
+                                .mapToInt(i -> i)
+                                .average()
+                                .orElse(0.0))
+                .toList();
+        log.info("average 3 consecutive elements sliding window: {}", averageOfThreeConsecutive);
+
+        // Finding the longest word in a sentence
+        String sentence = "average , 3 consecutive ' elements sliding window";
+        Optional<String> longestWordFromSentence = Arrays.stream(sentence.toLowerCase()
+                        .replaceAll("[^a-z\\s]", "")
+                        .split(" "))
+                        .max(Comparator.comparing(String::length));
+
+        log.info("longest word in a sentence: {}", longestWordFromSentence);
+
+        // Find top 3 most words in paragraph
+        String paragraph = "Java is object oriented programming language. Java is platform independent";
+        List<String> maxWords = Arrays.stream(paragraph.split(" "))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(3)
+                .map(Map.Entry::getKey)
+                .toList();
+        log.info("top 3 most words in paragraph: {}", maxWords);
+
+        // Reverse words in string
+        String reversedString = Arrays.stream(paragraph.split(" "))
+                .map(word -> Arrays.stream(word.split(""))
+                        .reduce("", (ch, rev) -> rev + ch))
+                .collect(Collectors.joining(" "));
+        log.info("Reversed String: {}", reversedString);
     }
 }
