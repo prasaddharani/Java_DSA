@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 class Counter {
     int count = 0;
 
-    public synchronized void increment() {
-        count++;
+    public void increment() {
+        synchronized (Counter.class) {
+            count++;
+        }
     }
 }
 
