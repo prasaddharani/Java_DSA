@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
 
+// chatgpt: https://chatgpt.com/c/690ad50f-7034-8324-b851-600a012fc629
 @Slf4j
 public class ExecutorDemo {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
