@@ -2,7 +2,11 @@ package org.example.repractice.threads.completableFuture;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Slf4j
 class RunAsyncExample {
@@ -47,5 +51,44 @@ public class CompletableFutureExample {
         });
 
         System.out.println(future.join());
+
+
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
+        CompletableFuture<String> ap1 = CompletableFuture.supplyAsync(() ->
+                "Running from Thread " + Thread.currentThread().getName()+" Call API-1", fixedThreadPool);
+        CompletableFuture<String> ap2 = CompletableFuture.supplyAsync(() ->
+                "Running from Thread " + Thread.currentThread().getName()+" Call API-1", fixedThreadPool);
+        CompletableFuture<String> api3 = CompletableFuture.supplyAsync(() ->
+                "Running from Thread " + Thread.currentThread().getName()+" Call API-1", fixedThreadPool);
+
+        CompletableFuture<List<String>> allOf = collectResult(List.of(ap1, ap2, api3));
+        List<String> results = allOf.join();
+        fixedThreadPool.shutdown();
+
+        log.info("Result: {}", results);
+
+        CompletableFuture<Void> f1 = CompletableFuture.runAsync(() -> sleepAndPrint("Task 1"));
+        CompletableFuture<Void> f2 = CompletableFuture.runAsync(() -> sleepAndPrint("Task 2"));
+        CompletableFuture<Void> f3 = CompletableFuture.runAsync(() -> sleepAndPrint("Task 3"));
+
+
+        CompletableFuture.allOf(f1, f2, f3).join(); // waits untill all tasks finishes off
+
+        CompletableFuture<Object> any = CompletableFuture.anyOf(
+                CompletableFuture.supplyAsync(() -> "Result 1"),
+                CompletableFuture.supplyAsync(() -> "Result 2")
+        );
+        System.out.println(any.join()); // whichever finishes first
+    }
+
+    public static <T> CompletableFuture<List<T>> collectResult(List<CompletableFuture<T>> futures) {
+        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new))
+                .thenApply(v -> futures.stream()
+                        .map(CompletableFuture::join).toList());
+    }
+
+    static void sleepAndPrint(String name) {
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        log.info("{} done by {}", name, Thread.currentThread().getName());
     }
 }
