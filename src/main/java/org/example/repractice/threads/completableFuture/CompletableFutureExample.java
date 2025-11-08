@@ -7,6 +7,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Slf4j
 class RunAsyncExample {
@@ -79,6 +81,12 @@ public class CompletableFutureExample {
                 CompletableFuture.supplyAsync(() -> "Result 2")
         );
         System.out.println(any.join()); // whichever finishes first
+
+        Supplier<String> supplier = () -> "hi";
+        log.info("Supplier: {}", supplier.get());
+
+        Function<String, String> function = (a)  -> a + " Hello";
+        log.info("Function: {}", function.apply("Dharani"));
     }
 
     public static <T> CompletableFuture<List<T>> collectResult(List<CompletableFuture<T>> futures) {
