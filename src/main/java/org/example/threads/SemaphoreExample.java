@@ -1,11 +1,8 @@
 package org.example.threads;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.Phaser;
-
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.*;
 
 class CountDownLatchExample {
     public static void main(String[] args) throws InterruptedException {
@@ -60,6 +57,34 @@ class CyclicBarrierExample {
                 phaser.arriveAndAwaitAdvance();
             }).start();
         }
+    }
+}
+
+@Slf4j
+class DataExchanger {
+    public static void main(String[] args) {
+        Exchanger<String> exchanger = new Exchanger<>();
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    String msg = exchanger.exchange("Data got from Thread A with value " + i);
+                    log.info("Thread A got: {}", msg);
+                }
+            } catch (InterruptedException ex) {
+                log.error("exception-A: {}", ex.getMessage());
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    String msg = exchanger.exchange("Data got from Thread B with value " + i);
+                    log.info("Thread B got: {}", msg);
+                }
+            } catch (InterruptedException ex) {
+                log.error("exception-B: {}", ex.getMessage());
+            }
+        }).start();
     }
 }
 
