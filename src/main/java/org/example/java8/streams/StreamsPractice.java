@@ -2,6 +2,7 @@ package org.example.java8.streams;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -175,5 +176,24 @@ public class StreamsPractice {
                         .reduce("", (ch, rev) -> rev + ch))
                 .collect(Collectors.joining(" "));
         log.info("Reversed String: {}", reversedString);
+
+        // Find the day with highest spend from the list of transactions
+        List<Transaction> transactions = List.of(
+                new Transaction("T1", LocalDate.of(2025, 11, 1), 1000),
+                new Transaction("T2", LocalDate.of(2025, 11, 2), 3000),
+                new Transaction("T3", LocalDate.of(2025, 11, 1), 1000),
+                new Transaction("T4", LocalDate.of(2025, 11, 3), 1000),
+                new Transaction("T5", LocalDate.of(2025, 11, 2), 2000)
+                );
+
+        LocalDate maxSpent = transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::getDate,
+                        Collectors.summingDouble(Transaction::getAmount)))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparingDouble(Map.Entry::getValue))
+                .map(Map.Entry::getKey).orElse(null);
+        log.info("Max spent on: {}", maxSpent);
+
     }
 }
