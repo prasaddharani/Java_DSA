@@ -223,6 +223,15 @@ public class StreamsPractice {
                 .filter(entry -> entry.getValue().size() >= 3)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         log.info("Employees who works in more than 3 departments: {}", talentedEmployee);
+
+        // Find Bi-gram frequency
+        String paragraph2 = "Java is great and Java is fun. Java is powerful";
+        String[] wordsSplit = paragraph2.split(" ");
+        List<String> bigram = new ArrayList<>();
+        Map<String, Long> bigramFrequency = IntStream.range(0, wordsSplit.length - 1)
+                .mapToObj(i -> wordsSplit[i] + " " + wordsSplit[i + 1])
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        log.info("Bigram frequency: {}", bigramFrequency);
     }
 
     private static CharacterTypeEnum getCharacterType(Character c) {
