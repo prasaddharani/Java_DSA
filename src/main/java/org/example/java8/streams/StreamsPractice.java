@@ -196,6 +196,25 @@ public class StreamsPractice {
         log.info("Max spent on: {}", maxSpent);
 
 
+        List<Employee> employeesBySalary = List.of(
+                new Employee(1, "Dharani", "IT", 50000, List.of("Java", "Python")),
+                new Employee(3, "Prasad", "IT", 20000, List.of("Java", "Python")),
+                new Employee(4, "John", "BPO", 30000, List.of("Communication")),
+                new Employee(2, "Edge", "CEO", 100000, List.of("Business")),
+                new Employee(2, "Prasanth", "CEO", 200000, List.of("Business")));
 
+        Map<SalaryRangeEnum, List<Employee>> employeesBySalRange = employeesBySalary.stream()
+                .collect(Collectors.groupingBy(employee -> getSalaryBand(employee.getSalary())));
+        log.info("Employees by salary range: {}", employeesBySalRange);
+    }
+
+    private static SalaryRangeEnum getSalaryBand(Double salary) {
+        if (salary <= 10000) {
+            return SalaryRangeEnum.LOW;
+        } else if (salary > 10000 && salary < 50000 ) {
+            return SalaryRangeEnum.MEDIUM;
+        } else {
+            return SalaryRangeEnum.HIGH;
+        }
     }
 }
