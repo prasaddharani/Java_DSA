@@ -195,5 +195,7 @@ public class StreamsPractice {
                 .map(Map.Entry::getKey).orElse(null);
         log.info("Max spent on: {}", maxSpent);
 
+
+
     }
 }
