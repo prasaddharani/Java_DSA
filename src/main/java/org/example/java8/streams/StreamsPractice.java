@@ -214,6 +214,15 @@ public class StreamsPractice {
         Map<CharacterTypeEnum, List<Character>> characterMap = characters.stream()
                 .collect(Collectors.groupingBy(StreamsPractice::getCharacterType));
         log.info("Group by character type: {}", characterMap);
+
+        // Find All Employees who worked in 3+ departments
+        Map<String, List<Employee>> talentedEmployee = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getName))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() >= 3)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        log.info("Employees who works in more than 3 departments: {}", talentedEmployee);
     }
 
     private static CharacterTypeEnum getCharacterType(Character c) {
