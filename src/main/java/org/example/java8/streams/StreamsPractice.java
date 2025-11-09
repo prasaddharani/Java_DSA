@@ -206,6 +206,26 @@ public class StreamsPractice {
         Map<SalaryRangeEnum, List<Employee>> employeesBySalRange = employeesBySalary.stream()
                 .collect(Collectors.groupingBy(employee -> getSalaryBand(employee.getSalary())));
         log.info("Employees by salary range: {}", employeesBySalRange);
+
+        // Group character based on upper case, lower case, special, digit
+        List<Character> characters =
+                List.of('A', 'b', '3', 'Z', 'x', '#', '7', 'm', '@');
+
+        Map<CharacterTypeEnum, List<Character>> characterMap = characters.stream()
+                .collect(Collectors.groupingBy(StreamsPractice::getCharacterType));
+        log.info("Group by character type: {}", characterMap);
+    }
+
+    private static CharacterTypeEnum getCharacterType(Character c) {
+        if (Character.isDigit(c)) {
+            return CharacterTypeEnum.DIGIT;
+        } else if (Character.isUpperCase(c)) {
+            return CharacterTypeEnum.UPPER_CASE;
+        } else if (Character.isLowerCase(c)) {
+            return CharacterTypeEnum.LOWER_CASE;
+        } else {
+            return CharacterTypeEnum.OTHER;
+        }
     }
 
     private static SalaryRangeEnum getSalaryBand(Double salary) {
