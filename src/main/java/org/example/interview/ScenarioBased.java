@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class ScenarioBased {
@@ -41,7 +44,17 @@ public class ScenarioBased {
         }
 
         //When finally will not execute?
-        exitWithoutFinally();
+        //exitWithoutFinally();
+
+        // Concurrent modification exception
+        //arrayRemovalWhileIteration();
+
+        // Can we have switch statement which has null as condition
+        //nullSwitchCondition();
+
+        // Diamond problem
+        Child c = new Child();
+        c.hello();
 
     }
 
@@ -68,5 +81,45 @@ public class ScenarioBased {
         } finally {
             log.info("This will not execute");
         }
+    }
+
+    private static void arrayRemovalWhileIteration() {
+        List<Integer> data = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        for (Integer val: data) {
+            if (val == 2) {
+                data.remove(val);
+            }
+        }
+    }
+
+    private static void nullSwitchCondition() {
+        String data = "string";
+        switch (data) {
+            case "string" -> log.info("matched");
+            case null -> log.info("null supported");
+            //case null: // compilation error < 21 Java version 
+            default -> throw new IllegalStateException("Unexpected value: " + data);
+        }
+    }
+}
+
+// Diamond problem
+interface A {
+    default void hello() {
+        System.out.println("Hello from interface-A");
+    }
+}
+
+interface B {
+    default void hello() {
+        System.out.println("Hello from interface-B");
+    }
+}
+
+class Child implements A, B {
+
+    @Override
+    public void hello() {
+        A.super.hello();
     }
 }
