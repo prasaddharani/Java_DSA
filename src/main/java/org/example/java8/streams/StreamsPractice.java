@@ -240,6 +240,12 @@ public class StreamsPractice {
         Integer reducedValue = IntStream.range(0, 10)
                 .reduce(0, Integer::sum);
         log.info("Reduced Sum value: {}", reducedValue);
+
+        List<String> allSkills = employees.stream()
+                .flatMap(employee -> employee.getSkills().stream())
+                .distinct()
+                .toList();
+        log.info("Employees all skills: {}", allSkills);
     }
 
     private static CharacterTypeEnum getCharacterType(Character c) {
