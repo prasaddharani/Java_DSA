@@ -232,6 +232,14 @@ public class StreamsPractice {
                 .mapToObj(i -> wordsSplit[i] + " " + wordsSplit[i + 1])
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         log.info("Bigram frequency: {}", bigramFrequency);
+
+        // can update main object
+        //employees.forEach(employee -> employee.setSalary(10000));
+        log.info("Updated Employees: {}", employees);
+
+        Integer reducedValue = IntStream.range(0, 10)
+                .reduce(0, Integer::sum);
+        log.info("Reduced Sum value: {}", reducedValue);
     }
 
     private static CharacterTypeEnum getCharacterType(Character c) {
