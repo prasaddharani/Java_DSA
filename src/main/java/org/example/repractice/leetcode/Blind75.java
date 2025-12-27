@@ -750,5 +750,70 @@ class DutchAlg {
     }
 }
 
+class BinarySearchProblems {
+
+    public static int[] searchRange(int[] nums, int target) {
+        int left = binarySearchHelper(nums, target, true);
+        int right = binarySearchHelper(nums, target, false);
+        return new int[]{left, right};
+    }
+
+    public static int binarySearchHelper(int[] nums, int target, boolean leftBias) {
+        int l = 0;
+        int r = nums.length - 1;
+        int res = -1;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] < target) {
+                l++;
+            } else if (nums[mid] > target) {
+                r--;
+            } else {
+               res = mid;
+               if (leftBias) {
+                   r--;
+               } else {
+                   l++;
+               }
+            }
+        }
+        return res;
+    }
+
+    public static int search(int[] nums, int target) {
+        return binarySearchHelper(nums, target, 0, nums.length - 1);
+    }
+
+    public static int binarySearchHelper(int[] nums, int target, int l, int r) {
+        if (l > r) {
+            return -1;
+        }
+
+        int mid = l + (r - l) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        }
+
+        if (nums[mid] > nums[l]) {
+            if (target >= nums[l] && target < nums[mid]) {
+                return binarySearchHelper(nums, target, l, mid -1);
+            } else {
+                return binarySearchHelper(nums, target, mid + 1, r);
+            }
+        } else {
+            if (target <= nums[r] && target > nums[mid]) {
+                return binarySearchHelper(nums, target, mid + 1, r);
+            } else {
+                return binarySearchHelper(nums, target, l, mid -1);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(Arrays.toString(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
+        System.out.println(search(new int[]{4,5,6,7,0,1,2}, 0));
+    }
+}
+
 public class Blind75 {
 }
