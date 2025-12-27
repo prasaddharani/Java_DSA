@@ -182,5 +182,66 @@ class PrefixSum {
     }
 }
 
+class FixedWindow {
+
+    public static List<Integer> findAnagrams(String s, String p) {
+        Map<Character, Integer> pCount = new HashMap<>();
+        Map<Character, Integer> sCount = new HashMap<>();
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < p.length(); i++) {
+            pCount.put(p.charAt(i), 1 + pCount.getOrDefault(p.charAt(i), 0));
+            sCount.put(s.charAt(i), 1 + sCount.getOrDefault(s.charAt(i), 0));
+        }
+        if (pCount.equals(sCount)) {
+            res.add(0);
+        }
+        System.out.println(sCount);
+        int l = 0;
+        for (int j = p.length(); j < s.length(); j++) {
+            sCount.put(s.charAt(j), 1 + sCount.getOrDefault(s.charAt(j), 0));
+            sCount.put(s.charAt(l), sCount.get(s.charAt(l)) - 1);
+            if (sCount.get(s.charAt(l)) == 0) {
+                sCount.remove(s.charAt(l));
+            }
+            l++;
+            if (pCount.equals(sCount)) {
+                res.add(l);
+            }
+        }
+        return res;
+    }
+
+    public static boolean checkInclusion(String s1, String s2) {
+        Map<Character, Integer> pCount = new HashMap<>();
+        Map<Character, Integer> sCount = new HashMap<>();
+        for (int i = 0; i < s1.length(); i++) {
+            pCount.put(s1.charAt(i), 1 + pCount.getOrDefault(s1.charAt(i), 0));
+            sCount.put(s2.charAt(i), 1 + sCount.getOrDefault(s2.charAt(i), 0));
+        }
+        if (pCount.equals(sCount)) {
+            return true;
+        }
+        System.out.println(sCount);
+        int l = 0;
+        for (int j = s1.length(); j < s2.length(); j++) {
+            sCount.put(s2.charAt(j), 1 + sCount.getOrDefault(s2.charAt(j), 0));
+            sCount.put(s2.charAt(l), sCount.get(s2.charAt(l)) - 1);
+            if (sCount.get(s2.charAt(l)) == 0) {
+                sCount.remove(s2.charAt(l));
+            }
+            l++;
+            if (pCount.equals(sCount)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(findAnagrams("cbaebabacd", "abc"));
+        System.out.println(checkInclusion("ab", "eidbaooo"));
+    }
+}
+
 public class Blind75 {
 }
