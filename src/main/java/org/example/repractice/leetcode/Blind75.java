@@ -314,5 +314,22 @@ class DynamicSize {
     }
 }
 
+class KadaneAlg {
+
+    public static int maxSubArray(int[] nums) {
+        int curSum = 0;
+        int maxSum = 0;
+        for (Integer num: nums) {
+            curSum = max(curSum + num, num);
+            maxSum = max(maxSum, curSum);
+        }
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
+    }
+}
+
 public class Blind75 {
 }
