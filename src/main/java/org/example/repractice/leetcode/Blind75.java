@@ -331,5 +331,66 @@ class KadaneAlg {
     }
 }
 
+class MatrixProblems {
+
+    public static int[][] rotate(int[][] matrix) {
+        int left = 0;
+        int right = matrix[0].length - 1;
+        while (left < right) {
+            for (int i = 0; i < right - left; i++) {
+                int top = left;
+                int bottom = right;
+                int temp = matrix[top][left + i];
+                matrix[top][left + i] = matrix[bottom - i][left];
+                matrix[bottom - i][left] = matrix[bottom][right - i];
+                matrix[bottom][right - i] = matrix[top + i][right];
+                matrix[top + i][right] = temp;
+            }
+            left++;
+            right--;
+        }
+        return matrix;
+    }
+
+    public static List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int left = 0, top = 0;
+        int bottom = matrix.length, right = matrix[0].length;
+
+        while (left < right && top < bottom) {
+            for (int i = left; i < right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++;
+
+            for (int i = top; i < bottom; i++) {
+                res.add(matrix[i][right - 1]);
+            }
+            right--;
+
+            if (!(top < bottom) && (left < right)) {
+                break;
+            }
+
+            for (int i = right - 1; i > left - 1; i--) {
+                res.add(matrix[bottom - 1][i]);
+            }
+            bottom--;
+
+            for (int i = bottom - 1; i > top - 1; i--) {
+                res.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+        //System.out.println(Arrays.deepToString(rotate(matrix)));
+        System.out.println(spiralOrder(matrix));
+    }
+}
+
 public class Blind75 {
 }
