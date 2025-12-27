@@ -396,9 +396,18 @@ class LinkedListProblems {
     public static class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
@@ -406,7 +415,7 @@ class LinkedListProblems {
         ListNode slow = head;
         ListNode fast = head;
 
-        for (int i = 0; i <=n; i++) {
+        for (int i = 0; i <= n; i++) {
             if (fast != null) {
                 fast = fast.next;
             } else {
@@ -456,21 +465,42 @@ class LinkedListProblems {
         ListNode cur = dummy;
         int carry = 0;
         while (l1 != null || l2 != null || carry > 0) {
-            int val1 = l1 != null? l1.val: 0;
-            int val2 = l2 != null? l2.val: 0;
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
 
             int threeSum = val1 + val2 + carry;
             carry = threeSum / 10;
             int val = threeSum % 10;
             cur.next = new ListNode(val);
 
-            l1 = l1 != null? l1.next: l1;
-            l2 = l2 != null? l2.next: l2;
+            l1 = l1 != null ? l1.next : l1;
+            l2 = l2 != null ? l2.next : l2;
             cur = cur.next;
         }
         return dummy.next;
     }
 
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                break;
+            }
+        }
+        if (slow != fast) {
+            return null;
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
 
     public static void main(String[] args) {
         ListNode res = removeNthFromEnd(
