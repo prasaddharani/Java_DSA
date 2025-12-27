@@ -502,13 +502,48 @@ class LinkedListProblems {
         return slow;
     }
 
+    private static ListNode getKthNode(ListNode node, int k) {
+        while (k > 0 && node != null) {
+            node = node.next;
+            k -= 1;
+        }
+        return node;
+    }
+
+    public static ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode grpPrev = dummy;
+        while (true) {
+            ListNode kth = getKthNode(grpPrev, k);
+            if (kth == null) {
+                break;
+            }
+            ListNode grpNext = kth.next;
+            ListNode prev = grpNext;
+            ListNode cur = grpPrev.next;
+            while (cur != grpNext) {
+                ListNode temp = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = temp;
+            }
+
+            ListNode temp = grpPrev.next;
+            grpPrev.next = kth;
+            grpPrev = temp;
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         ListNode res = removeNthFromEnd(
                 new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
         ListNode res1 = swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
         ListNode res2 = addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
                 new ListNode(5, new ListNode(6, new ListNode(4))));
-        printLinkedList(res2);
+        ListNode res3 = reverseKGroup(
+                 new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+        printLinkedList(res3);
     }
 }
 
