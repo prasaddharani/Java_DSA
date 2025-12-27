@@ -1017,26 +1017,33 @@ class QueueProblem {
         }
     }
 
-    public int[] maxSlidingWindow(int[] nums, int k) {
-        Queue<MaxWindow> queue = new LinkedList<>();
-        List<Integer> res = new ArrayList<>();
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> deque = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        int index = 0;
+
         for (int i = 0; i < nums.length; i++) {
 
-            while (!queue.isEmpty() && queue.peek().index - i > k + 1) {
-                queue.poll();
+            // 1️⃣ Remove indices outside the window
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
             }
 
-            while (!queue.isEmpty() && queue.peek().value < nums[i]) {
-                queue.poll();
+            // 2️⃣ Maintain decreasing order
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
             }
 
-            queue.add(new MaxWindow(i, nums[i]));
+            // 3️⃣ Add current index
+            deque.addLast(i);
 
+            // 4️⃣ Record result when window is valid
             if (i >= k - 1) {
-                res.add(queue.peek().value);
+                res[index++] = nums[deque.peekFirst()];
             }
         }
-        return res.stream().mapToInt(Integer::intValue).toArray();
+
+        return res;
     }
 
     public static void main(String[] args) {

@@ -685,5 +685,41 @@ class StackProblems {
     }
 }
 
+class QueueProblems {
+
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> deque = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        int index = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // 1️⃣ Remove indices outside the window
+            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            // 2️⃣ Maintain decreasing order
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // 3️⃣ Add current index
+            deque.addLast(i);
+
+            // 4️⃣ Record result when window is valid
+            if (i >= k - 1) {
+                res[index++] = nums[deque.peekFirst()];
+            }
+        }
+
+        return res;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(maxSlidingWindow(new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3)));
+    }
+}
+
 public class Blind75 {
 }
