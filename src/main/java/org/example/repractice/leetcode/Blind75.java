@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 class BitManipulations {
 
@@ -86,5 +87,77 @@ class HashTables {
         System.out.println(longestConsecutive(new int[]{100,4,200,1,3,2}));
     }
 }
+
+class TwoPointers {
+
+    public static int maxArea(int[] height) {
+        int l = 0, r = height.length - 1;
+        int maxArea = 0;
+        while (l < r) {
+            maxArea = max(maxArea, (r - l) * (min(height[l], height[r])));
+            if (height[r] > height[l]) {
+                l += 1;
+            } else {
+                r -= 1;
+            }
+        }
+        return maxArea;
+    }
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int l = i + 1, r = nums.length - 1;
+            while (l < r) {
+                int threeSum = nums[i] + nums[l] + nums[r];
+                if (threeSum == 0) {
+                    res.add(List.of(nums[i], nums[l], nums[r]));
+                    l++;
+                    r--;
+                    while (l < r && nums[r] == nums[r - 1]) {
+                        r--;
+                    }
+                    while (l < r && nums[l] == nums[l + 1]) {
+                        l++;
+                    }
+                } else if (threeSum > 0) {
+                    r--;
+                } else {
+                    l++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int trap(int[] height) {
+        int maxLeft = Integer.MIN_VALUE, maxRight = Integer.MIN_VALUE;
+        int l = 0, r = height.length - 1;
+        int trap = 0;
+        while (l < r) {
+            if (maxLeft < maxRight) {
+                l++;
+                maxLeft = max(maxLeft, height[l]);
+                trap += maxLeft - height[l];
+            } else {
+                r--;
+                maxRight = max(maxRight, height[r]);
+                trap += maxRight - height[r];
+            }
+        }
+        return trap;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(maxArea((new int[]{1,8,6,2,5,4,8,3,7})));
+        //System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(trap(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+    }
+}
+
 public class Blind75 {
 }
