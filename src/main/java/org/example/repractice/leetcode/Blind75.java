@@ -592,5 +592,68 @@ class LinkedListProblems {
     }
 }
 
+class StackProblems {
+
+    /*
+    Input: s = "()[]{}"
+    Output: true
+     */
+
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (Character c: s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if ((!stack.isEmpty()) &&
+                        ((c == '}' && stack.peek() == '{')
+                        || (c == ']' && stack.peek() == '[')
+                        || (c == ')' && stack.peek() == '('))) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    class MinStack {
+        private Stack<Integer> stack;
+        private Stack<Integer> minStack;
+
+        public MinStack() {
+            this.stack = new Stack<>();
+            this.minStack = new Stack<>();
+        }
+
+        public void push(int val) {
+            stack.add(val);
+            while (minStack.isEmpty() || minStack.peek() >= val) {
+                minStack.add(val);
+            }
+        }
+
+        public void pop() {
+            int val = stack.removeLast();
+            if (!minStack.isEmpty() && minStack.peek() == val) {
+                minStack.removeLast();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return minStack.peek();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isValid("()[]{}"));
+    }
+}
+
 public class Blind75 {
 }
