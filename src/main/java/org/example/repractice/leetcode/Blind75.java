@@ -4,7 +4,6 @@ package org.example.repractice.leetcode;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -389,6 +388,97 @@ class MatrixProblems {
         int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
         //System.out.println(Arrays.deepToString(rotate(matrix)));
         System.out.println(spiralOrder(matrix));
+    }
+}
+
+class LinkedListProblems {
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode slow = head;
+        ListNode fast = head;
+
+        for (int i = 0; i <=n; i++) {
+            if (fast != null) {
+                fast = fast.next;
+            } else {
+                return null;
+            }
+        }
+
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        if (slow != null && slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return dummy.next;
+    }
+
+    public static void printLinkedList(ListNode head) {
+        ListNode temp = head;
+        while (temp != null) {
+            System.out.println("Current value: " + temp.val);
+            temp = temp.next;
+        }
+    }
+
+    public static ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+        ListNode cur = dummy.next;
+        while (cur != null && cur.next != null) {
+            ListNode first = cur;
+            ListNode second = cur.next;
+
+            prev.next = second;
+            first.next = second.next;
+            second.next = first;
+
+            prev = first;
+            cur = first.next;
+        }
+        return dummy.next;
+    }
+
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode();
+        ListNode cur = dummy;
+        int carry = 0;
+        while (l1 != null || l2 != null || carry > 0) {
+            int val1 = l1 != null? l1.val: 0;
+            int val2 = l2 != null? l2.val: 0;
+
+            int threeSum = val1 + val2 + carry;
+            carry = threeSum / 10;
+            int val = threeSum % 10;
+            cur.next = new ListNode(val);
+
+            l1 = l1 != null? l1.next: l1;
+            l2 = l2 != null? l2.next: l2;
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+
+
+    public static void main(String[] args) {
+        ListNode res = removeNthFromEnd(
+                new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+        ListNode res1 = swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
+        ListNode res2 = addTwoNumbers(new ListNode(2, new ListNode(4, new ListNode(3))),
+                new ListNode(5, new ListNode(6, new ListNode(4))));
+        printLinkedList(res2);
     }
 }
 
