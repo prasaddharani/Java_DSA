@@ -535,6 +535,46 @@ class LinkedListProblems {
         return dummy.next;
     }
 
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode();
+        ListNode cur = dummy;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+        if (l1 != null) {
+            cur.next = l1;
+        } else {
+            cur.next = l2;
+        }
+        return dummy.next;
+    }
+
+    public static ListNode mergeKLists(ListNode[] lists) {
+        int interval = 1;
+        while (interval < lists.length) {
+//            System.out.println("Interval: " + interval);
+//            System.out.println("ListNode length: " + lists.length);
+            for (int i = 0; i + interval < lists.length; i+= interval * 2) {
+                lists[i] = mergeTwoLists(lists[i], lists[i + interval]);
+            }
+//            int i = 1;
+//            for (ListNode list: lists) {
+//                printLinkedList(list);
+//                System.out.println("done " + i);
+//                i++;
+//            }
+            interval *= 2;
+        }
+        return lists[0];
+    }
+
     public static void main(String[] args) {
         ListNode res = removeNthFromEnd(
                 new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
@@ -543,7 +583,12 @@ class LinkedListProblems {
                 new ListNode(5, new ListNode(6, new ListNode(4))));
         ListNode res3 = reverseKGroup(
                  new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
-        printLinkedList(res3);
+        ListNode res4 = mergeKLists(new ListNode[]{
+                new ListNode(1, new ListNode(3, new ListNode(4))),
+                new ListNode(1, new ListNode(4, new ListNode(5))),
+                new ListNode(2, new ListNode(6))
+        });
+        printLinkedList(res4);
     }
 }
 
