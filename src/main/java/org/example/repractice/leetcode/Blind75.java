@@ -852,5 +852,52 @@ class BinarySearchProblems {
     }
 }
 
+class Backtrack {
+
+    private static void backtrack(List<List<Integer>> res, boolean[] used, Stack<Integer> path, int[] nums) {
+        if (path.size() == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = true;
+            backtrack(res, used, path, nums);
+            used[i] = false;
+            path.pop();
+        }
+    }
+    public static List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, new boolean[nums.length], new Stack<>(), nums);
+        return res;
+    }
+
+    private static void backtrack(List<List<Integer>> res, int[] nums, int start, Stack<Integer> path) {
+        res.add(new ArrayList<>(path));
+
+        for (int end = start; end < nums.length; end++) {
+            path.add(nums[end]);
+            backtrack(res, nums, end + 1, path);
+            path.pop();
+        }
+    }
+
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        backtrack(res, nums, 0, new Stack<>());
+        return res;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(permute(new int[]{1, 2, 3}));
+        System.out.println(subsets(new int[]{1, 2, 3}));
+    }
+}
+
 public class Blind75 {
 }
