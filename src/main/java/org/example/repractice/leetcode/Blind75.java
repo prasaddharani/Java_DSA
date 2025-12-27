@@ -159,5 +159,28 @@ class TwoPointers {
     }
 }
 
+class PrefixSum {
+    public static int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> prefixCount = new HashMap<>();
+        prefixCount.put(0, 1);
+        int count = 0;
+        int prefixSum = 0;
+        for (Integer num: nums) {
+            prefixSum += num;
+            if (prefixCount.containsKey(prefixSum - k)) {
+                count = 1 + prefixCount.get(prefixSum - num);
+            }
+            int finalPrefixSum = prefixSum;
+            prefixCount.computeIfAbsent(
+                    prefixSum, key -> 1 + prefixCount.getOrDefault(finalPrefixSum, 0));
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(subarraySum(new int[]{1, 1, 1}, 2));
+    }
+}
+
 public class Blind75 {
 }
