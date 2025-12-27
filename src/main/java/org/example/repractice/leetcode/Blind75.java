@@ -650,8 +650,38 @@ class StackProblems {
         }
     }
 
+    static class Histogram {
+        Integer height;
+        Integer index;
+
+        Histogram(Integer height, Integer index) {
+            this.height = height;
+            this.index = index;
+        }
+    }
+
+    public static int largestRectangleArea(int[] heights) {
+        int maxArea = 0;
+        Stack<Histogram> stack = new Stack<>();
+        for (int start = 0; start < heights.length; start++) {
+            int index = start;
+            while (!stack.isEmpty() && stack.peek().height > heights[start]) {
+                Histogram histogram = stack.pop();
+                index = histogram.index;
+                maxArea = max(maxArea, ((start - index) * histogram.height));
+            }
+            stack.push(new Histogram(heights[start], index));
+        }
+
+        for (Histogram histogram: stack) {
+            maxArea = max(maxArea, ((heights.length) - histogram.index) * histogram.height);
+        }
+        return maxArea;
+    }
+
     public static void main(String[] args) {
-        System.out.println(isValid("()[]{}"));
+        //System.out.println(isValid("()[]{}"));
+        System.out.println(largestRectangleArea(new int[]{2,1,5,6,2,3}));
     }
 }
 
