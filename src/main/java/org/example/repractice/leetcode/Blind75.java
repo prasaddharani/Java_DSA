@@ -899,5 +899,73 @@ class Backtrack {
     }
 }
 
+class CalendarProblem {
+
+    static class CalendarNode {
+        int start;
+        int end;
+        CalendarNode left;
+        CalendarNode right;
+
+        CalendarNode(int start, int end, CalendarNode left, CalendarNode right) {
+            this.start = start;
+            this.end = end;
+            this.left = left;
+            this.right = right;
+        }
+
+        CalendarNode(int start, int end) {
+            this.start = start;
+            this.end = end;
+            this.left = null;
+            this.right = null;
+        }
+
+        boolean insert(int start, int end) {
+            CalendarNode cur = this;
+            while (cur != null) {
+                if (cur.start >= end) {
+                    if (cur.left == null) {
+                        cur.left = new CalendarNode(start, end);
+                        return true;
+                    }
+                    cur = cur.left;
+                } else if (cur.end <= start) {
+                    if (cur.right == null) {
+                        cur.right = new CalendarNode(start, end);
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+
+    static class MyCalendar {
+        private CalendarNode root;
+
+        public MyCalendar() {
+            this.root = null;
+        }
+
+        public boolean book(int startTime, int endTime) {
+            if (root == null) {
+                root = new CalendarNode(startTime, endTime);
+                return true;
+            }
+            return root.insert(startTime, endTime);
+        }
+    }
+
+    public static void main(String[] args) {
+        MyCalendar myCalendar = new MyCalendar();
+        System.out.println(myCalendar.book(10, 20)); // return True
+        System.out.println(myCalendar.book(15, 25)); // return False, It can not be booked because time 15 is already booked by another event.
+        System.out.println(myCalendar.book(20, 30)); // return True, The event can be booked, as the first event takes every time less than 20, but not including 20.
+    }
+}
+
 public class Blind75 {
 }
