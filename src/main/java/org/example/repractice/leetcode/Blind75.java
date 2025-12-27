@@ -2,7 +2,9 @@ package org.example.repractice.leetcode;
 
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -240,6 +242,75 @@ class FixedWindow {
     public static void main(String[] args) {
         //System.out.println(findAnagrams("cbaebabacd", "abc"));
         System.out.println(checkInclusion("ab", "eidbaooo"));
+    }
+}
+
+class DynamicSize {
+
+    public static int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int maxLength = Integer.MIN_VALUE;
+        int l = 0;
+        for (int r = 0; r < s.length(); r++) {
+            if (map.containsKey(s.charAt(r))) {
+                map.remove(s.charAt(l));
+                l++;
+            }
+            map.put(s.charAt(r), 1);
+            maxLength = max(maxLength, r - l + 1);
+        }
+        return maxLength;
+    }
+
+    /*
+    Input: s = "ADOBECODEBANC", t = "ABC"
+    Output: "BANC"
+    Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+     */
+    public static String minWindow(String s, String t) {
+        int l = 0;
+        Map<Character, Long> tCount = t.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<Character, Long> sCount = new HashMap<>();
+        int need = tCount.size();
+        int have = 0;
+        int maxLen = Integer.MAX_VALUE;
+        int[] res = new int[2];
+        for (int r = 0; r < s.length(); r++) {
+            char c = s.charAt(r);
+            sCount.put(c, sCount.getOrDefault(c, 0L) + 1);
+            if (tCount.containsKey(c) && Objects.equals(tCount.get(c), sCount.get(c))) {
+                have += 1;
+            }
+            System.out.println(tCount);
+            System.out.println(sCount);
+            System.out.println(maxLen);
+            while (have == need) {
+                if (maxLen > r - l + 1) {
+                    maxLen = r - l + 1;
+                    res = new int[] {l, r};
+                }
+                Character lChar = s.charAt(l);
+                sCount.put(lChar, sCount.get(lChar) - 1);
+                if (tCount.containsKey(lChar) && tCount.get(lChar) > sCount.get(lChar)) {
+                    have -= 1;
+                }
+                l++;
+            }
+        }
+        l = res[0];
+        int r = res[1];
+        if (maxLen == Integer.MAX_VALUE) {
+            return null;
+        } else {
+            return s.substring(l, r + 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(minWindow("ADOBECODEBANC", "ABC"));
     }
 }
 
