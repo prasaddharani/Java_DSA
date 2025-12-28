@@ -1247,8 +1247,25 @@ class DynamicProgramming {
         return dp[nums.length - 1];
     }
 
+    public static boolean canPartition(int[] nums) {
+        int total = Arrays.stream(nums).sum();
+        if (total % 2 != 0) {
+            return false;
+        }
+        int target = total / 2;
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+        for (Integer num: nums) {
+            for (int i = target; i >= num; i--) {
+                dp[i] = dp[i - num] || dp[i];
+            }
+        }
+        return dp[target];
+    }
+
     public static void main(String[] args) {
-        System.out.println(rob(new int[]{2, 3, 2}));
+        //System.out.println(rob(new int[]{2, 3, 2}));
+        System.out.println(canPartition(new int[]{1,5,11,5}));
     }
 }
 
