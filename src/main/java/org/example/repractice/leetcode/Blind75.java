@@ -1198,5 +1198,34 @@ class SystemDesign {
     }
 }
 
+class GreedyProblems {
+
+    /*
+    Input: nums = [2,3,1,1,4]
+    Output: 2
+    Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+     */
+    public static int jump(int[] nums) {
+        int res = 0;
+        int currentJumpEnd = 0;
+        int maxJumps = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            maxJumps = max(maxJumps, i + nums[i]);
+            if (currentJumpEnd == i) {
+                currentJumpEnd = maxJumps;
+                res++;
+            }
+            if (currentJumpEnd > nums.length - 1) {
+                return res;
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(jump(new int[]{2,3,1,1,4}));
+    }
+}
+
 public class Blind75 {
 }
