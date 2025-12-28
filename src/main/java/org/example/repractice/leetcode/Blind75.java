@@ -5,8 +5,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static java.lang.Math.*;
 
 class BitManipulations {
 
@@ -1420,6 +1419,49 @@ class DynamicProgramming {
         //System.out.println(wordBreak("applepenapple", List.of("apple","pen")));
         //System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
         System.out.println(longestIncreasingPath(new int[][]{{9,9,4}, {6,6,8},{2,1,1}}));
+    }
+}
+
+class Geometry {
+    public static int reverse(int x) {
+        int sign = x < 0 ? -1: 1;
+        x = abs(x);
+        int rev = 0;
+        while (x != 0) {
+            int rem = x % 10;
+            rev = (rev * 10) + rem;
+            x = x/10;
+        }
+        return sign * rev;
+    }
+
+    /*
+    Input: points = [[1,1],[2,2],[3,3]]
+    Output: 3
+     */
+    public static int maxPoints(int[][] points) {
+        int maxCount = 1;
+        for (int i = 0; i < points.length; i++) {
+            int[] p1 = points[i];
+            Map<Integer, Integer> slope = new HashMap<>();
+            for (int j = i + 1; j < points.length; j++) {
+                int[] p2 = points[j];
+                int val = 0;
+                if (p1[1] == p2[1]) {
+                    val = Integer.MAX_VALUE;
+                } else {
+                    val = (p2[1] - p1[1]) / (p2[0] - p1[0]);
+                }
+                slope.put(val, slope.getOrDefault(val, 0) + 1);
+                maxCount = max(maxCount, 1 + slope.get(val));
+            }
+        }
+        return maxCount;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(reverse(-123));
+        System.out.println(maxPoints(new int[][]{{1, 1}, {2, 2}, {3, 3}}));
     }
 }
 
