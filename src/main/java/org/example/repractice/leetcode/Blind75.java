@@ -1340,13 +1340,32 @@ class DynamicProgramming {
         return dp[s.length()];
     }
 
+    public static int minPathSum(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int[][] dp = new int[rows + 1][cols + 1];
+        for (int i = rows; i >= 0; i--) {
+            for (int j = cols; j >= 0; j--) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        dp[rows - 1][cols] = 0;
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = cols - 1; j >= 0; j--) {
+                dp[i][j] = grid[i][j] + min(dp[i + 1][j], dp[i][j + 1]);
+            }
+        }
+        return dp[0][0];
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
         //System.out.println(canPartition(new int[]{1,5,11,5}));
         //System.out.println(coinChange(new int[]{1, 2, 5}, 11));
         //System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
         //System.out.println(longestCommonSubsequence("abcde", "ace"));
-        System.out.println(wordBreak("applepenapple", List.of("apple","pen")));
+        //System.out.println(wordBreak("applepenapple", List.of("apple","pen")));
+        System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
     }
 }
 
