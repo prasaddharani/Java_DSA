@@ -1321,12 +1321,32 @@ class DynamicProgramming {
         return dp[text1.length()][text2.length()];
     }
 
+    /*
+    s = "applepenapple", wordDict = ["apple","pen"]
+     */
+    public static boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        int maxLen = wordDict.stream().mapToInt(String::length).max().orElse(0);
+        Set<String> wordSet = new HashSet<>(wordDict);
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = i - 1; j >= max(0, i - maxLen); j--) {
+                if (wordSet.contains(s.substring(j, i)) && dp[j]) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
         //System.out.println(canPartition(new int[]{1,5,11,5}));
         //System.out.println(coinChange(new int[]{1, 2, 5}, 11));
         //System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
-        System.out.println(longestCommonSubsequence("abcde", "ace"));
+        //System.out.println(longestCommonSubsequence("abcde", "ace"));
+        System.out.println(wordBreak("applepenapple", List.of("apple","pen")));
     }
 }
 
