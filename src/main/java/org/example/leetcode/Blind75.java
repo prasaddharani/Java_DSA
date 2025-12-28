@@ -1770,20 +1770,31 @@ class TreeProblems {
      */
     static class IntervalProblems {
 
-        public int[][] merge(int[][] intervals) {
-            Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        public static int[][] merge(int[][] intervals) {
+            if (intervals == null || intervals.length == 0)
+                return new int[0][];
+
             List<int[]> res = new ArrayList<>();
+
+            // 1️⃣ Sort by start time
+            Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+
+            // 2️⃣ Start with first interval
             int[] current = intervals[0];
             res.add(current);
 
-            for (int[] interval: intervals) {
-                if (interval[0] <= current[1]) {
-                    current[1] = max(interval[1], current[1]);
+            // 3️⃣ Merge intervals
+            for (int i = 1; i < intervals.length; i++) {
+                if (intervals[i][0] <= current[1]) {
+                    // Overlapping → merge
+                    current[1] = Math.max(current[1], intervals[i][1]);
                 } else {
-                    current = interval;
-                    res.add(interval);
+                    // No overlap → new interval
+                    current = intervals[i];
+                    res.add(current);
                 }
             }
+
             return res.toArray(new int[res.size()][]);
         }
 

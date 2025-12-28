@@ -1055,5 +1055,48 @@ class HeapProblems {
     }
 }
 
+class IntervalProblems {
+    /*
+    Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+    Output: [[1,6],[8,10],[15,18]]
+    Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+    */
+    public static int[][] merge(int[][] intervals) {
+        List<int[]> res = new ArrayList<>();
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        int[] current = intervals[0];
+        res.add(current);
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] <= current[1]) {
+                current[1] = max(current[1], intervals[i][1]);
+            } else {
+                current = intervals[i];
+                res.add(intervals[i]);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+
+    public static int eraseOverlapIntervals(int[][] intervals) {
+        int res = 0;
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        int prevVal = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= prevVal) {
+                prevVal = intervals[i][1];
+            } else {
+                res++;
+                prevVal = min(intervals[i][1], prevVal);
+            }
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        //System.out.println(Arrays.deepToString(merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}})));
+        System.out.println(eraseOverlapIntervals(new int[][]{{1,2},{2,3},{3,4},{1,3}}));
+    }
+}
+
 public class Blind75 {
 }
