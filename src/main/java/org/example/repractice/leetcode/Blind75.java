@@ -1358,6 +1358,59 @@ class DynamicProgramming {
         return dp[0][0];
     }
 
+    static class RowCol {
+        int row;
+        int col;
+        RowCol(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            RowCol rowCol = (RowCol) o;
+            return row == rowCol.row && col == rowCol.col;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(row, col);
+        }
+    }
+
+    public static int dfs(RowCol rowCol, Map<RowCol, Integer> dp, int rows, int cols, int[][] matrix) {
+        if (dp.containsKey(rowCol)) {
+            return dp.get(rowCol);
+        }
+        int count = 1;
+        int[][] directions = new int[][]{{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+        for (int[] direction: directions) {
+            int dr = direction[0];
+            int dc = direction[1];
+            int nr = rowCol.row + dr;
+            int nc = rowCol.col + dc;
+            if (0 <= nr && nr < rows && 0 <= nc && nc < cols && matrix[nr][nc] > matrix[rowCol.row][rowCol.col]) {
+                count = max(count, 1 + dfs(new RowCol(nr, nc), dp, rows, cols, matrix));
+            }
+        }
+        dp.put(rowCol, count);
+        return count;
+    }
+
+    public static int longestIncreasingPath(int[][] matrix) {
+        Map<RowCol, Integer> dp = new HashMap<>();
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int maxCount = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                maxCount = max(maxCount, dfs(new RowCol(i, j), dp, rows, cols, matrix));
+            }
+        }
+        return maxCount;
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
         //System.out.println(canPartition(new int[]{1,5,11,5}));
@@ -1365,7 +1418,8 @@ class DynamicProgramming {
         //System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
         //System.out.println(longestCommonSubsequence("abcde", "ace"));
         //System.out.println(wordBreak("applepenapple", List.of("apple","pen")));
-        System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        //System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        System.out.println(longestIncreasingPath(new int[][]{{9,9,4}, {6,6,8},{2,1,1}}));
     }
 }
 
