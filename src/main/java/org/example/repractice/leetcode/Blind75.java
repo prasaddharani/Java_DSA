@@ -1263,9 +1263,31 @@ class DynamicProgramming {
         return dp[target];
     }
 
+    public static int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 0; i <= amount; i++) {
+            for (Integer coin: coins) {
+                if (i >= coin) {
+                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+                }
+            }
+        }
+
+        for (Integer coin: coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] = min(dp[i], 1 + dp[i - coin]);
+            }
+        }
+        return dp[amount];
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
-        System.out.println(canPartition(new int[]{1,5,11,5}));
+        //System.out.println(canPartition(new int[]{1,5,11,5}));
+        System.out.println(coinChange(new int[]{1, 2, 5}, 11));
     }
 }
 
