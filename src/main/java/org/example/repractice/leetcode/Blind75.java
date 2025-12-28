@@ -1098,5 +1098,105 @@ class IntervalProblems {
     }
 }
 
+class SystemDesign {
+    static class ListNode {
+        private int key;
+        private int val;
+        private ListNode prev;
+        private ListNode next;
+
+        ListNode() {
+            this.key = 0;
+            this.val = 0;
+            this.prev = null;
+            this.next = null;
+        }
+
+        ListNode(int key, int val, ListNode prev, ListNode next) {
+            this.key = key;
+            this.val = val;
+            this.prev = prev;
+            this.next = next;
+        }
+
+        ListNode(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+    static class LRUCache {
+        private Map<Integer, ListNode> cache;
+        private int capacity;
+        private ListNode head;
+        private ListNode tail;
+
+        public LRUCache(int capacity) {
+            this.cache = new HashMap<>();
+            this.capacity = capacity;
+            this.head = new ListNode();
+            this.tail = new ListNode();
+            this.head.next = this.tail;
+            this.tail.prev = this.head;
+        }
+
+        private void add(ListNode node) {
+            node.prev = this.head;
+            node.next = this.head.next;
+            this.head.next.prev = node;
+            this.head.next = node;
+        }
+
+        private void remove(ListNode node) {
+            ListNode prevNode = node.prev;
+            ListNode nextNode = node.next;
+            prevNode.next = nextNode;
+            nextNode.prev = prevNode;
+            node.prev = null;
+            node.next = null;
+        }
+
+        public int get(int key) {
+            if (cache.containsKey(key)) {
+                ListNode node = cache.get(key);
+                remove(node);
+                add(node);
+                return node.val;
+            }
+            return -1;
+        }
+
+        public void put(int key, int value) {
+            ListNode node = null;
+            if (cache.containsKey(key)) {
+                node = cache.get(key);
+                node.val = value;
+                remove(node);
+            } else {
+                node = new ListNode(key, value);
+            }
+            cache.put(key, node);
+            add(node);
+            if (capacity < cache.size()) {
+                ListNode lruNode = tail.prev;
+                remove(lruNode);
+                cache.remove(lruNode.key);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        LRUCache obj = new LRUCache(2);
+        System.out.println(obj.get(2));  // -1
+        obj.put(1, 5);
+        obj.put(2, 10);
+        System.out.println(obj.get(1));  // 5
+        obj.put(3, 15);  // evicts key 2
+        System.out.println(obj.get(2));  // -1
+        System.out.println(obj.get(3));  // 15
+    }
+}
+
 public class Blind75 {
 }
