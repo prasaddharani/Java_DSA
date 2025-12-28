@@ -1719,38 +1719,47 @@ class TreeProblems {
     }
 
     static class HeapProblems {
-        static class Pair {
-            Integer key;
-            Integer value;
+        static class KFrequent {
+            int num;
+            int count;
 
-            Pair(Integer key, Integer value) {
-                this.key = key;
-                this.value = value;
+            KFrequent(int num, int count) {
+                this.num = num;
+                this.count = count;
             }
         }
-        public int[] topKFrequent(int[] nums, int k) {
-            Queue<Pair> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a.value));
+
+        public static int[] topKFrequent(int[] nums, int k) {
             Map<Integer, Integer> map = new HashMap<>();
-            for (Integer num: nums) {
+
+            // 1️⃣ Count frequencies
+            for (int num : nums) {
                 map.put(num, map.getOrDefault(num, 0) + 1);
             }
 
-            for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
-                queue.add(new Pair(entry.getKey(), entry.getValue()));
+            // 2️⃣ Min-heap of size k
+            PriorityQueue<KFrequent> pq =
+                    new PriorityQueue<>(Comparator.comparingInt(a -> a.count));
+
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                pq.add(new KFrequent(entry.getKey(), entry.getValue()));
+                if (pq.size() > k) {
+                    pq.poll(); // remove smallest frequency
+                }
             }
+
+            // 3️⃣ Extract results
             int[] res = new int[k];
             int i = 0;
-            while (k > 0) {
-                res[i] = queue.poll().value;
-                k -= 1;
-                i += 1;
+            while (!pq.isEmpty()) {
+                res[i++] = pq.poll().num;
             }
+
             return res;
         }
 
         public static void main(String[] args) {
-            HeapProblems heapProblems = new HeapProblems();
-            System.out.println(Arrays.toString(heapProblems.topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));
+            System.out.println(Arrays.toString(topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));
         }
     }
 

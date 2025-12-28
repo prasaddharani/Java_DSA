@@ -1006,6 +1006,36 @@ class HeapProblems {
         }
     }
 
+    static class KFrequent {
+        int key;
+        int count;
+        KFrequent (int key, int count) {
+            this.key = key;
+            this.count = count;
+        }
+    }
+
+    public static int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int[] res = new int[k];
+        PriorityQueue<KFrequent> kFrequents = new PriorityQueue<>(Comparator.comparingInt(a -> a.count));
+        for (Integer num: nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            kFrequents.add(new KFrequent(entry.getKey(), entry.getValue()));
+            if (kFrequents.size() > k) {
+                kFrequents.poll();
+            }
+        }
+        int i = 0;
+        while (!kFrequents.isEmpty()) {
+            res[i++] = kFrequents.poll().key;
+        }
+        return res;
+    }
+
     /**
      * Your MedianFinder object will be instantiated and called as such:
      * MedianFinder obj = new MedianFinder();
@@ -1020,6 +1050,8 @@ class HeapProblems {
         System.out.println(medianFinder.findMedian()); // return 1.5 (i.e., (1 + 2) / 2)
         medianFinder.addNum(3);    // arr[1, 2, 3]
         System.out.println(medianFinder.findMedian()); // return 2.0
+
+        System.out.println(Arrays.toString(topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2)));
     }
 }
 
