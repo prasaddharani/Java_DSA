@@ -1284,10 +1284,29 @@ class DynamicProgramming {
         return dp[amount];
     }
 
+    /*
+    Input: nums = [10,9,2,5,3,7,101,18]
+    Output: 4
+    Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+     */
+    public static int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = max(dp[i], 1 + dp[j]);
+                }
+            }
+        }
+        return dp[nums.length - 1];
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
         //System.out.println(canPartition(new int[]{1,5,11,5}));
-        System.out.println(coinChange(new int[]{1, 2, 5}, 11));
+        //System.out.println(coinChange(new int[]{1, 2, 5}, 11));
+        System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
     }
 }
 
