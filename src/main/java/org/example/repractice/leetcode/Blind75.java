@@ -1302,11 +1302,31 @@ class DynamicProgramming {
         return dp[nums.length - 1];
     }
 
+    /*
+    Input: text1 = "abcde", text2 = "ace"
+    Output: 3
+    Explanation: The longest common subsequence is "ace" and its length is 3.
+     */
+    public static int longestCommonSubsequence(String text1, String text2) {
+        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
+        for (int i = 1; i <= text1.length(); i++) {
+            for (int j = 1; j <= text2.length(); j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = max(dp[i-1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[text1.length()][text2.length()];
+    }
+
     public static void main(String[] args) {
         //System.out.println(rob(new int[]{2, 3, 2}));
         //System.out.println(canPartition(new int[]{1,5,11,5}));
         //System.out.println(coinChange(new int[]{1, 2, 5}, 11));
-        System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
+        //System.out.println(lengthOfLIS(new int[]{10,9,2,5,3,7,101,18}));
+        System.out.println(longestCommonSubsequence("abcde", "ace"));
     }
 }
 
