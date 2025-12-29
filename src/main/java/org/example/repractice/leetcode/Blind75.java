@@ -1613,6 +1613,39 @@ class TreeProblems {
         }
     }
 
+    private static void inorder(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        inorder(node.left, res);
+        res.add(node.val);
+        inorder(node.right, res);
+    }
+
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res;
+    }
+
+    public static boolean isValidBST(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        int prevVal = res.getFirst();
+        for (int i = 1; i < res.size(); i++) {
+            if (prevVal >= res.get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int kthSmallest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res.get(k - 1);
+    }
+
     public static void main(String[] args) {
 //        System.out.println(levelOrder(new TreeNode(3, new TreeNode(9),
 //                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
@@ -1642,12 +1675,16 @@ class TreeProblems {
 //                        8
 //                )
 //        );
-        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
-        Codec codec = new Codec();
-        String ser = codec.serialize(root);
-        System.out.println("Serialized: " + ser);
-        TreeNode des = codec.deserialize(ser);
-        System.out.println("Deserialized Root: " + des.val);  // should print 1
+//        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+//        Codec codec = new Codec();
+//        String ser = codec.serialize(root);
+//        System.out.println("Serialized: " + ser);
+//        TreeNode des = codec.deserialize(ser);
+//        System.out.println("Deserialized Root: " + des.val);  // should print 1
+        //System.out.println(inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
+        //System.out.println(isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
+        System.out.println(kthSmallest(
+                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
     }
 
 }
