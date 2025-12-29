@@ -1646,6 +1646,51 @@ class TreeProblems {
         return res.get(k - 1);
     }
 
+    private static void postorder(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        postorder(node.left, res);
+        postorder(node.right, res);
+        res.add(node.val);
+    }
+
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        postorder(root, res);
+        return res;
+    }
+
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        if (p == null || q == null) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left != null && right!= null) {
+            return root;
+        }
+        return left != null ? left: right;
+    }
+    private int maxPath;
+    private int dfsMaxPath(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftMax = max(0, dfsMaxPath(node.left));
+        int rightMax = max(0, dfsMaxPath(node.right));
+        this.maxPath = max(this.maxPath, node.val + leftMax + rightMax);
+        return node.val + max(leftMax, rightMax);
+    }
+
+    public int maxPathSum(TreeNode root) {
+        dfsMaxPath(root);
+        return this.maxPath;
+    }
+
     public static void main(String[] args) {
 //        System.out.println(levelOrder(new TreeNode(3, new TreeNode(9),
 //                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
@@ -1683,12 +1728,46 @@ class TreeProblems {
 //        System.out.println("Deserialized Root: " + des.val);  // should print 1
         //System.out.println(inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
         //System.out.println(isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
-        System.out.println(kthSmallest(
-                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
-    }
+//        System.out.println(kthSmallest(
+//                new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4)), 1));
+//        System.out.println(postorderTraversal(new TreeNode(1,
+//                null,
+//                new TreeNode(2,
+//                        new TreeNode(3),
+//                        null))));
+//        TreeNode root = new TreeNode(3,
+//                new TreeNode(5,
+//                        new TreeNode(6),
+//                        new TreeNode(2,
+//                                new TreeNode(7),
+//                                new TreeNode(4)
+//                        )
+//                ),
+//                new TreeNode(1,
+//                        new TreeNode(0),
+//                        new TreeNode(8)
+//                )
+//        );
+        TreeNode root = new TreeNode(10,
+                new TreeNode(2,
+                        new TreeNode(20),
+                        new TreeNode(1)
+                ),
+                new TreeNode(10,
+                        null,
+                        new TreeNode(-25,
+                                new TreeNode(3),
+                                new TreeNode(4)
+                        )
+                )
+        );
 
+        System.out.println("Max Path Sum = " + new TreeProblems().maxPathSum(root));
+   }
 }
 
 public class Blind75 {
+    public static void main(String[] args) {
 
+    }
 }
