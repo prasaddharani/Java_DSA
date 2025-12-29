@@ -1964,6 +1964,36 @@ class GraphProblems {
         return count;
     }
 
+    public static int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] res = new int[numCourses];
+        int count = 0;
+        int[] indegree = new int[numCourses];
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] prerequisite: prerequisites) {
+            int dst = prerequisite[0], src = prerequisite[1];
+            indegree[dst]++;
+            graph.computeIfAbsent(src, key -> new ArrayList<>()).add(dst);
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0 ; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int index = queue.poll();
+            res[count] = index;
+            count++;
+            for (Integer course: graph.getOrDefault(index, Collections.emptyList())) {
+                indegree[course]--;
+                if (indegree[course] == 0) {
+                    queue.add(course);
+                }
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -1983,7 +2013,8 @@ class GraphProblems {
 //            printGraph(cloned, new HashSet<>());
 //        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
         //System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
-        System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
+        //System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
+        System.out.println(Arrays.toString(findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
     }
 }
 
