@@ -106,6 +106,15 @@ public class streams {
                 .findFirst();
         log.info("first non-repeating character: {}", nonRepeatingChar);
 
+        // Find most common first letter among all employees
+        List<Employee> employeeNameWithMostCommonChar = employees.stream()
+                .collect(Collectors.groupingBy(employee -> employee.getName().charAt(0)))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByKey())
+                .map(Map.Entry::getValue).get();
+        log.info("most common first letter among all employees: {}", employeeNameWithMostCommonChar);
+
 
 
     }
