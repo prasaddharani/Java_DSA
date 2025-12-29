@@ -1465,6 +1465,87 @@ class Geometry {
     }
 }
 
+class TreeProblems {
+
+    static public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        List<Integer> level;
+        int levelSize;
+        while (!deque.isEmpty()) {
+            levelSize = deque.size();
+            level = new ArrayList<>();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = deque.poll();
+                if (node == null) {
+                    continue;
+                }
+                level.add(node.val);
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
+            res.add(level);
+        }
+        return res;
+    }
+
+    public static List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Queue<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
+        List<Integer> level;
+        int levelSize;
+        while (!deque.isEmpty()) {
+            levelSize = deque.size();
+            level = new ArrayList<>();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = deque.poll();
+                if (node == null) {
+                    continue;
+                }
+                level.add(node.val);
+                if (node.left != null) {
+                    deque.add(node.left);
+                }
+
+                if (node.right != null) {
+                    deque.add(node.right);
+                }
+            }
+            res.add(level.getLast());
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+//        System.out.println(levelOrder(new TreeNode(3, new TreeNode(9),
+//                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
+        System.out.println(rightSideView(new TreeNode(1,
+                new TreeNode(2, null, new TreeNode(5)),
+                new TreeNode(3, null, new TreeNode(4)))));
+    }
+
+}
+
 public class Blind75 {
 
 }
