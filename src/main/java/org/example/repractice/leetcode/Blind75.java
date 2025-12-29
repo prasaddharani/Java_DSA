@@ -1868,6 +1868,30 @@ class GraphProblems {
         }
     }
 
+    public static boolean isBipartite(int[][] graph) {
+        int[] color = new int[graph.length];
+        Arrays.fill(color, -1);
+        for (int i = 0; i < graph.length; i++) {
+            if (color[i] == -1) {
+                color[i] = 0;
+                Queue<Integer> queue = new LinkedList<>();
+                queue.add(i);
+                while (!queue.isEmpty()) {
+                    int index = queue.poll();
+                    for (Integer neighbor: graph[index]) {
+                        if (color[index] == color[neighbor]) {
+                            return false;
+                        } else if (color[neighbor] == -1) {
+                            color[neighbor] = 1 - color[index];
+                            queue.add(neighbor);
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -1875,16 +1899,17 @@ class GraphProblems {
 //                    {'1','1','0','0','0'},
 //                    {'0','0','0','0','0'}
 //                }));
-                   Node n1 = buildGraph();
-            // Clone the graph
-            Node cloned = cloneGraph(n1);
-
-            // Print adjacency list of original and cloned
-            System.out.println("Original Graph:");
-            printGraph(n1, new HashSet<>());
-
-            System.out.println("\nCloned Graph:");
-            printGraph(cloned, new HashSet<>());
+//                   Node n1 = buildGraph();
+//            // Clone the graph
+//            Node cloned = cloneGraph(n1);
+//
+//            // Print adjacency list of original and cloned
+//            System.out.println("Original Graph:");
+//            printGraph(n1, new HashSet<>());
+//
+//            System.out.println("\nCloned Graph:");
+//            printGraph(cloned, new HashSet<>());
+        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
     }
 }
 
