@@ -1926,6 +1926,44 @@ class GraphProblems {
         return freshCount == 0? minutes: -1;
     }
 
+    record WordCount(String word, int count){}
+
+    public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Map<String, List<String>> graph = new HashMap<>();
+        int length = endWord.length();
+        Set<String> wordSet = new HashSet<>(wordList);
+        wordSet.add(beginWord);
+        for (String word: wordSet) {
+            for (int i = 0; i < length; i++) {
+                String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
+                graph.computeIfAbsent(pattern, k -> new ArrayList<>()).add(word);
+            }
+        }
+        Queue<WordCount> queue = new LinkedList<>();
+        queue.add(new WordCount(beginWord, 1));
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
+        int count = 1;
+        while (!queue.isEmpty()) {
+            WordCount wordCount = queue.poll();
+            String word = wordCount.word;
+            count = wordCount.count;
+            for (int i = 0; i < length; i++) {
+                String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
+                for (String neighbor: graph.getOrDefault(pattern, Collections.emptyList())) {
+                    if (neighbor.equals(endWord)) {
+                        return 1 + count;
+                    }
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.add(new WordCount(neighbor, 1 + count));
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -1944,7 +1982,8 @@ class GraphProblems {
 //            System.out.println("\nCloned Graph:");
 //            printGraph(cloned, new HashSet<>());
 //        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
-        System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
+        //System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
+        System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
     }
 }
 
