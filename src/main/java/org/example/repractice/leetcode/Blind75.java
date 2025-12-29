@@ -2049,6 +2049,29 @@ class GraphProblems {
         return res.size();
     }
 
+    public static int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+
+        int[] prices = new int[flights.length];
+        Arrays.fill(prices, Integer.MAX_VALUE);
+        prices[src] = 0;
+        for (int i = 0; i < k + 1; i++) {
+            int[] tempPrices = Arrays.copyOf(prices, prices.length);
+            for (int[] flight: flights) {
+                int s = flight[0];
+                int d = flight[1];
+                int cost = flight[2];
+                if (prices[s] == Integer.MAX_VALUE) {
+                    continue;
+                }
+                if (tempPrices[d] > cost + prices[s]) {
+                    tempPrices[d] = cost + prices[s];
+                }
+            }
+            prices = tempPrices;
+        }
+        return prices[dst];
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -2070,7 +2093,8 @@ class GraphProblems {
         //System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
         //System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
         //System.out.println(Arrays.toString(findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
-        System.out.println(findCircleNum(new int[][]{{1,1,0},{1,1,0},{0,0,1}}));
+        //System.out.println(findCircleNum(new int[][]{{1,1,0},{1,1,0},{0,0,1}}));
+        System.out.println(findCheapestPrice(4, new int[][]{{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}},  0,  3, 1));
     }
 }
 
