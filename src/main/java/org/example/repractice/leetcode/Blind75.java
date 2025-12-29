@@ -2072,6 +2072,33 @@ class GraphProblems {
         return prices[dst];
     }
 
+    record MinCost(int point, int cost){}
+
+    public static int minCostConnectPoints(int[][] points) {
+        PriorityQueue<MinCost> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a.cost));
+        queue.add(new MinCost(0, 0));
+        Set<Integer> visited = new HashSet<>();
+        int totalCost = 0;
+        while (visited.size() < points.length) {
+            MinCost minCost = queue.poll();
+            if (visited.contains(minCost.point)) {
+                continue;
+            }
+            visited.add(minCost.point);
+            totalCost += minCost.cost;
+            int[] p1 = points[minCost.point];
+            for (int i = 0; i < points.length; i++) {
+                if (visited.contains(i)) {
+                    continue;
+                }
+                int[] p2 = points[i];
+                int cost = abs(p1[0] - p2[0]) + abs(p1[1] - p2[1]);
+                queue.add(new MinCost(i, cost));
+            }
+        }
+        return totalCost;
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -2094,7 +2121,8 @@ class GraphProblems {
         //System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
         //System.out.println(Arrays.toString(findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
         //System.out.println(findCircleNum(new int[][]{{1,1,0},{1,1,0},{0,0,1}}));
-        System.out.println(findCheapestPrice(4, new int[][]{{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}},  0,  3, 1));
+        //System.out.println(findCheapestPrice(4, new int[][]{{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}},  0,  3, 1));
+        System.out.println(minCostConnectPoints(new int[][]{{0,0},{2,2},{3,10},{5,2},{7,0}}));
     }
 }
 
