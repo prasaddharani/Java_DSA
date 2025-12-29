@@ -1536,12 +1536,118 @@ class TreeProblems {
         return res;
     }
 
+    private static void dfs(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
+        }
+        res.add(node.val);
+        dfs(node.left, res);
+        dfs(node.right, res);
+    }
+
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        dfs(root, res);
+        return res;
+    }
+
+    private static int dfsPathSum(TreeNode node, int target, Map<Integer, Integer> map, int prefixSum) {
+        if (node == null) {
+            return 0;
+        }
+        prefixSum += node.val;
+        int count = map.getOrDefault(prefixSum - target, 0);
+        map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
+        count += dfsPathSum(node.left, target, map, prefixSum);
+        count += dfsPathSum(node.right, target, map, prefixSum);
+        map.put(prefixSum, map.getOrDefault(prefixSum, 0) - 1);
+        return count;
+    }
+
+    public static int pathSum(TreeNode root, int targetSum) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        int prefixSum = 0;
+        return dfsPathSum(root, targetSum, map, prefixSum);
+    }
+
+    public static class Codec {
+
+
+        private static void dfsSerialize(TreeNode node, StringBuilder sb) {
+            if (node == null) {
+                sb.append("N,");
+                return;
+            }
+            sb.append(node.val).append(",");
+            dfsSerialize(node.left, sb);
+            dfsSerialize(node.right, sb);
+        }
+
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            dfsSerialize(root, sb);
+            return sb.toString();
+        }
+
+        private static TreeNode dfsDeserialize(Queue<String> queue) {
+            if (!queue.isEmpty()) {
+                String data = queue.poll();
+                if (data.equals("N")) {
+                    return null;
+                }
+                TreeNode root = new TreeNode(Integer.parseInt(data));
+                root.left = dfsDeserialize(queue);
+                root.right = dfsDeserialize(queue);
+                return root;
+            }
+            return null;
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            String[] values = data.split(",");
+            Queue<String> queue = new LinkedList<>(Arrays.asList(values));
+            return dfsDeserialize(queue);
+        }
+    }
+
     public static void main(String[] args) {
 //        System.out.println(levelOrder(new TreeNode(3, new TreeNode(9),
 //                new TreeNode(20, new TreeNode(15), new TreeNode(7)))));
-        System.out.println(rightSideView(new TreeNode(1,
-                new TreeNode(2, null, new TreeNode(5)),
-                new TreeNode(3, null, new TreeNode(4)))));
+//        System.out.println(rightSideView(new TreeNode(1,
+//                new TreeNode(2, null, new TreeNode(5)),
+//                new TreeNode(3, null, new TreeNode(4)))));
+//        System.out.println(preorderTraversal(new TreeNode(1, null,
+//                new TreeNode(2, new TreeNode(3), null))));
+//                System.out.println(
+//                pathSum(
+//                        new TreeNode(10,
+//                                new TreeNode(5,
+//                                        new TreeNode(3,
+//                                                new TreeNode(3),
+//                                                new TreeNode(-2)
+//                                        ),
+//                                        new TreeNode(2,
+//                                                null,
+//                                                new TreeNode(1)
+//                                        )
+//                                ),
+//                                new TreeNode(-3,
+//                                        null,
+//                                        new TreeNode(11)
+//                                )
+//                        ),
+//                        8
+//                )
+//        );
+        TreeNode root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+        Codec codec = new Codec();
+        String ser = codec.serialize(root);
+        System.out.println("Serialized: " + ser);
+        TreeNode des = codec.deserialize(ser);
+        System.out.println("Deserialized Root: " + des.val);  // should print 1
     }
 
 }
