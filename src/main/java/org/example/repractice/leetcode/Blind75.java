@@ -1994,6 +1994,61 @@ class GraphProblems {
         return res;
     }
 
+    static class DSU {
+        private int[] parent;
+        private int[] rank;
+        DSU(int n) {
+            parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+            rank = new int[n];
+            Arrays.fill(rank, 1);
+        }
+
+        public int find(int x) {
+            if (x != parent[x]) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        public void union(int x, int y) {
+            int px = find(x);
+            int py = find(y);
+            if (px == py) {
+                return;
+            }
+            if (rank[px] < rank[py]) {
+                parent[px] = py;
+            } else if (rank[px] > rank[py]) {
+                parent[py] = px;
+            } else {
+                parent[py] = px;
+                rank[px] += 1;
+            }
+        }
+
+        public boolean isConnected(int x, int y) {
+            return find(x) == find(y);
+        }
+    }
+    public static int findCircleNum(int[][] isConnected) {
+        DSU dsu = new DSU(isConnected.length);
+        for (int i = 0; i < isConnected.length; i++) {
+            for (int j = i + 1; j < isConnected.length; j++) {
+                if (isConnected[i][j] == 1) {
+                    dsu.union(i, j);
+                }
+            }
+        }
+        Set<Integer> res = new HashSet<>();
+        for (int i = 0; i < isConnected.length; i++) {
+            res.add(dsu.find(i));
+        }
+        return res.size();
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -2014,7 +2069,8 @@ class GraphProblems {
 //        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
         //System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
         //System.out.println(ladderLength("hit", "cog", List.of("hot","dot","dog","lot","log","cog")));
-        System.out.println(Arrays.toString(findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
+        //System.out.println(Arrays.toString(findOrder(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}})));
+        System.out.println(findCircleNum(new int[][]{{1,1,0},{1,1,0},{0,0,1}}));
     }
 }
 

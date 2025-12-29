@@ -1,7 +1,7 @@
 package org.example.leetcode;
 
-import java.util.*;
 import java.util.LinkedList;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -2478,6 +2478,61 @@ class TreeProblems {
                 }
             }
             return res.stream().mapToInt(Integer::intValue).toArray();
+        }
+
+        static class DSU {
+            private int[] parent;
+            private int[] rank;
+            DSU(int n) {
+                parent = new int[n];
+                for (int i = 0; i < n; i++) {
+                    parent[i] = i;
+                }
+                rank = new int[n];
+                Arrays.fill(rank, 1);
+            }
+
+            public int find(int x) {
+                if (x != parent[x]) {
+                    parent[x] = find(parent[x]);
+                }
+                return parent[x];
+            }
+
+            public void union(int x, int y) {
+                int px = find(x);
+                int py = find(y);
+                if (px == py) {
+                    return;
+                }
+                if (rank[px] < rank[py]) {
+                    parent[px] = py;
+                } else if (rank[px] > rank[py]) {
+                    parent[py] = px;
+                } else {
+                    parent[py] = px;
+                    rank[px] += 1;
+                }
+            }
+
+            public boolean isConnected(int x, int y) {
+                return find(x) == find(y);
+            }
+        }
+        public static int findCircleNum(int[][] isConnected) {
+            DSU dsu = new DSU(isConnected.length);
+            for (int i = 0; i < isConnected.length; i++) {
+                for (int j = i + 1; j < isConnected.length; j++) {
+                    if (isConnected[i][j] == 1) {
+                        dsu.union(i, j);
+                    }
+                }
+            }
+            Set<Integer> res = new HashSet<>();
+            for (int i = 0; i < isConnected.length; i++) {
+                res.add(dsu.find(i));
+            }
+            return res.size();
         }
 
         /*
