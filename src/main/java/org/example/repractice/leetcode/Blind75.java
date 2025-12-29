@@ -1794,13 +1794,97 @@ class GraphProblems {
         return count;
     }
 
+    static class Node {
+        public int val;
+        public List<Node> neighbors;
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+    
+    private static Node dfsClone(Node node, Map<Node, Node> cache) {
+        if (node == null) {
+            return null;
+        }
+        if (cache.containsKey(node)) {
+            return cache.get(node);
+        }
+        Node clone = new Node(node.val);
+        cache.put(node, clone);
+        for (Node neighbor: node.neighbors) {
+            clone.neighbors.add(dfsClone(neighbor, cache));
+        }
+        return clone;
+    }
+
+    public static Node cloneGraph(Node node) {
+        return dfsClone(node, new HashMap<>());
+    }
+
+    public static Node buildGraph() {
+        // Build graph manually
+        Node n1 = new Node(1);
+        Node n2 = new Node(2);
+        Node n3 = new Node(3);
+        Node n4 = new Node(4);
+
+        n1.neighbors.add(n2);
+        n1.neighbors.add(n4);
+
+        n2.neighbors.add(n1);
+        n2.neighbors.add(n3);
+
+        n3.neighbors.add(n2);
+        n3.neighbors.add(n4);
+
+        n4.neighbors.add(n1);
+        n4.neighbors.add(n3);
+
+        return n1;
+    }
+
+    // Utility to print graph
+    static void printGraph(Node node, Set<Node> visited) {
+        if (node == null || visited.contains(node)) return;
+        visited.add(node);
+
+        System.out.print("Node " + node.val + " -> ");
+        for (Node neigh : node.neighbors) {
+            System.out.print(neigh.val + " ");
+        }
+        System.out.println();
+
+        for (Node neigh : node.neighbors) {
+            printGraph(neigh, visited);
+        }
+    }
+
     public static void main(String[] args) {
-                    System.out.println(numIslands(new char[][]{
-                    {'1','1','1','1','0'},
-                    {'1','1','0','1','0'},
-                    {'1','1','0','0','0'},
-                    {'0','0','0','0','0'}
-                }));
+//                    System.out.println(numIslands(new char[][]{
+//                    {'1','1','1','1','0'},
+//                    {'1','1','0','1','0'},
+//                    {'1','1','0','0','0'},
+//                    {'0','0','0','0','0'}
+//                }));
+                   Node n1 = buildGraph();
+            // Clone the graph
+            Node cloned = cloneGraph(n1);
+
+            // Print adjacency list of original and cloned
+            System.out.println("Original Graph:");
+            printGraph(n1, new HashSet<>());
+
+            System.out.println("\nCloned Graph:");
+            printGraph(cloned, new HashSet<>());
     }
 }
 
