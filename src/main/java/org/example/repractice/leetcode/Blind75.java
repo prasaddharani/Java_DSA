@@ -1766,8 +1766,44 @@ class TreeProblems {
    }
 }
 
-public class Blind75 {
-    public static void main(String[] args) {
-
+class GraphProblems {
+    private static void dfsIslands(int rows, int cols, int row, int col, char[][] grid) {
+        int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        for (int[] direction: directions) {
+            int nr = row + direction[0];
+            int nc = col + direction[1];
+            while (0 <= nr && nr < rows && 0 <= nc && nc < cols && grid[nr][nc] == '1') {
+                grid[nr][nc] = '0';
+                dfsIslands(rows, cols, nr, nc, grid);
+            }
+        }
     }
+
+    public static int numIslands(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int count = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1') {
+                    count += 1;
+                    dfsIslands(rows, cols, i, j, grid);
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+                    System.out.println(numIslands(new char[][]{
+                    {'1','1','1','1','0'},
+                    {'1','1','0','1','0'},
+                    {'1','1','0','0','0'},
+                    {'0','0','0','0','0'}
+                }));
+    }
+}
+
+public class Blind75 {
+
 }
