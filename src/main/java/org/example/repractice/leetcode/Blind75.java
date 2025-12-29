@@ -1892,6 +1892,40 @@ class GraphProblems {
         return true;
     }
 
+    record OrangeRot(int row, int col, int minutes){}
+
+    public static int orangesRotting(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int freshCount = 0;
+        int minutes = 0;
+        Queue<OrangeRot> queue = new LinkedList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {
+                    freshCount++;
+                } else if (grid[i][j] == 2) {
+                    queue.add(new OrangeRot(i, j, 0));
+                }
+            }
+        }
+        int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        while (!queue.isEmpty()) {
+            OrangeRot orangeRot = queue.poll();
+            minutes = orangeRot.minutes;
+            for (int[] direction: directions) {
+                int nr = orangeRot.row + direction[0];
+                int nc = orangeRot.col + direction[1];
+                while (0 <= nr && nr < rows && 0 <= nc && nc < cols && grid[nr][nc] == 1) {
+                    grid[nr][nc] = 2;
+                    queue.add(new OrangeRot(nr, nc, 1 + minutes));
+                    freshCount -= 1;
+                }
+            }
+        }
+        return freshCount == 0? minutes: -1;
+    }
+
     public static void main(String[] args) {
 //                    System.out.println(numIslands(new char[][]{
 //                    {'1','1','1','1','0'},
@@ -1909,7 +1943,8 @@ class GraphProblems {
 //
 //            System.out.println("\nCloned Graph:");
 //            printGraph(cloned, new HashSet<>());
-        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
+//        System.out.println(isBipartite(new int[][]{{1,3},{0,2},{1,3},{0,2}}));
+        System.out.println(orangesRotting(new int[][]{{2,1,1},{1,1,0},{0,1,1}}));
     }
 }
 
