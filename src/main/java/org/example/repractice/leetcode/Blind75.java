@@ -2130,10 +2130,10 @@ class GraphProblems {
 class TrieProblems {
     static class TrieNode {
         Map<Character, TrieNode> children;
-        boolean isEnd;
+        String word;
         TrieNode() {
             children = new HashMap<>();
-            isEnd = false;
+            word = null;
         }
     }
     static class Trie {
@@ -2150,12 +2150,12 @@ class TrieProblems {
                 }
                 cur = cur.children.get(c);
             }
-            cur.isEnd = true;
+            cur.word = word;
         }
 
         public boolean search(String word) {
             TrieNode node = prefix(word);
-            return node != null && node.isEnd;
+            return node != null && node.word != null;
         }
 
         public boolean startsWith(String prefix) {
@@ -2174,6 +2174,57 @@ class TrieProblems {
         }
     }
 
+    public static List<String> findWords(char[][] board, String[] words) {
+        TrieNode root = new TrieNode();
+        for (String word: words) {
+            TrieNode cur = root;
+            for (Character c: word.toCharArray()) {
+                if (!cur.children.containsKey(c)) {
+                    cur.children.put(c, new TrieNode());
+                }
+                cur = cur.children.get(c);
+            }
+            cur.word = word;
+        }
+
+        int rows = board.length;
+        int cols = board[0].length;
+        List<String> res = new ArrayList<>();
+        int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        Set<String> wordSet = new HashSet<>(Arrays.stream(words).toList());
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                dfsTrie(i, j, rows, cols, board, directions, wordSet, root, res);
+            }
+        }
+        return res;
+    }
+
+    public static void dfsTrie(
+            int row,int col, int rows, int cols, char[][] board,
+            int[][] directions, Set<String> wordSet, TrieNode node, List<String> res) {
+        char c = board[row][col];
+        if (node == null || !node.children.containsKey(c)) {
+            return;
+        }
+        TrieNode nextNode = node.children.get(c);
+        if (nextNode == null) {
+            return;
+        }
+        if (nextNode.word != null && wordSet.contains(nextNode.word)) {
+            res.add(nextNode.word);
+            nextNode.word = null;
+        }
+        board[row][col] = '#';
+
+        for (int[] direction: directions) {
+            int nr = row + direction[0], nc = col + direction[1];
+            if (0 <= nr && nr < rows && 0 <= nc && nc < cols && board[nr][nc] != '#') {
+                dfsTrie(nr, nc, rows, cols, board, directions, wordSet, nextNode, res);
+            }
+        }
+        board[row][col] = c;
+    }
     public static void main(String[] args) {
         Trie obj = new Trie();
         obj.insert("Dharani");
@@ -2181,6 +2232,8 @@ class TrieProblems {
         boolean param_3 = obj.startsWith("Dhara");
         System.out.println(param_2);
         System.out.println(param_3);
+        System.out.println(findWords(new char[][]{{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}},
+                new String[]{"oath","pea","eat","rain"}));
     }
 }
 
