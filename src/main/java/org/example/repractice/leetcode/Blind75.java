@@ -2126,6 +2126,64 @@ class GraphProblems {
     }
 }
 
+
+class TrieProblems {
+    static class TrieNode {
+        Map<Character, TrieNode> children;
+        boolean isEnd;
+        TrieNode() {
+            children = new HashMap<>();
+            isEnd = false;
+        }
+    }
+    static class Trie {
+        TrieNode root;
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        public void insert(String word) {
+            TrieNode cur = root;
+            for (Character c: word.toCharArray()) {
+                if (!cur.children.containsKey(c)) {
+                    cur.children.put(c, new TrieNode());
+                }
+                cur = cur.children.get(c);
+            }
+            cur.isEnd = true;
+        }
+
+        public boolean search(String word) {
+            TrieNode node = prefix(word);
+            return node != null && node.isEnd;
+        }
+
+        public boolean startsWith(String prefix) {
+            return prefix(prefix) != null;
+        }
+
+        public TrieNode prefix(String word) {
+            TrieNode cur = root;
+            for (Character c: word.toCharArray()) {
+                if (!cur.children.containsKey(c)) {
+                    return null;
+                }
+                cur = cur.children.get(c);
+            }
+            return cur;
+        }
+    }
+
+    public static void main(String[] args) {
+        Trie obj = new Trie();
+        obj.insert("Dharani");
+        boolean param_2 = obj.search("Dharani");
+        boolean param_3 = obj.startsWith("Dhara");
+        System.out.println(param_2);
+        System.out.println(param_3);
+    }
+}
+
 public class Blind75 {
 
 }
