@@ -125,5 +125,13 @@ public class streams {
                         .toList();
         log.info("average 3 consecutive elements sliding window: {}", averageOfThreeConsecutive);
 
+
+        // Finding the longest word in a sentence
+        String sentence = "average , 3 consecutive ' elements sliding window";
+        String longestWordFromSentence = Arrays.stream(
+                sentence.replaceAll("[^a-z\\s]", "")
+                        .split(" "))
+                .max(Comparator.comparing(String::length)).orElse("");
+        log.info("longest word in a sentence: {}", longestWordFromSentence);
     }
 }
