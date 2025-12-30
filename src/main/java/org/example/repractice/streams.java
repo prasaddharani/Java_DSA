@@ -133,5 +133,19 @@ public class streams {
                         .split(" "))
                 .max(Comparator.comparing(String::length)).orElse("");
         log.info("longest word in a sentence: {}", longestWordFromSentence);
+
+        String paragraph = "Java is object oriented programming language. Java is platform independent";
+
+        // Find top 3 most words in paragraph
+        List<String> maxWords = Arrays.stream(paragraph.split(" "))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(3)
+                .map(Map.Entry::getKey)
+                .toList();
+        log.info("top 3 most words in paragraph: {}", maxWords);
+
     }
 }
