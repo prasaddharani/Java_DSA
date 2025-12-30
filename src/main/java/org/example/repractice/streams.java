@@ -4,13 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.java8.streams.Employee;
 import org.example.java8.streams.Person;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class streams {
@@ -115,7 +113,17 @@ public class streams {
                 .map(Map.Entry::getValue).get();
         log.info("most common first letter among all employees: {}", employeeNameWithMostCommonChar);
 
-
+        // Find average 3 consecutive elements sliding window
+        List<Integer> input = Arrays.asList(4, 8, 15, 16, 23, 42);
+        int window = 3;
+        List<Double> averageOfThreeConsecutive = IntStream.range(0, input.size() - (window - 1))
+                        .mapToObj(i -> input.subList(i, i + window))
+                        .toList()
+                        .stream()
+                        .map(subList ->
+                                subList.stream().mapToInt(i -> i).average().orElse(0))
+                        .toList();
+        log.info("average 3 consecutive elements sliding window: {}", averageOfThreeConsecutive);
 
     }
 }
