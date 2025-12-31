@@ -199,7 +199,17 @@ public class streams {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         log.info("Employees who works in more than 3 departments: {}", talentedEmployee);
 
+        // Find Bi-gram frequency
+        String paragraph2 = "Java is great and Java is fun. Java is powerful";
+        String[] wordSplit = paragraph2.split(" ");
+        Map<String, Long> bigramFrequency = IntStream.range(0, wordSplit.length - 1)
+                .mapToObj(i -> wordSplit[i] + wordSplit[i + 1])
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        log.info("Bigram frequency: {}", bigramFrequency);
+        List<String> allSkills = employees.stream()
+                        .flatMap(employee -> employee.getSkills().stream()).distinct().toList();
 
+        log.info("Employees all skills: {}", allSkills);
     }
 
 
