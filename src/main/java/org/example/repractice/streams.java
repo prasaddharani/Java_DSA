@@ -3,7 +3,10 @@ package org.example.repractice;
 import lombok.extern.slf4j.Slf4j;
 import org.example.java8.streams.Employee;
 import org.example.java8.streams.Person;
+import org.example.java8.streams.SalaryRangeEnum;
+import org.example.java8.streams.Transaction;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.Future;
 import java.util.function.Function;
@@ -147,5 +150,51 @@ public class streams {
                 .toList();
         log.info("top 3 most words in paragraph: {}", maxWords);
 
+        // Reverse words in string
+        String reversedString = Arrays.stream(paragraph.split(" "))
+                .map(word -> Arrays.stream(word.split(""))
+                        .reduce("", (ch, rev) -> rev + ch)).collect(Collectors.joining(" "));
+        log.info("Reversed String: {}", reversedString);
+
+        // Find the day with highest spend from the list of transactions
+        List<Transaction> transactions = List.of(
+                new Transaction("T1", LocalDate.of(2025, 11, 1), 1000),
+                new Transaction("T2", LocalDate.of(2025, 11, 2), 3000),
+                new Transaction("T3", LocalDate.of(2025, 11, 1), 1000),
+                new Transaction("T4", LocalDate.of(2025, 11, 3), 1000),
+                new Transaction("T5", LocalDate.of(2025, 11, 2), 2000)
+        );
+
+        LocalDate maxSpent = transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::getDate, Collectors.summingDouble(Transaction::getAmount)))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparingDouble(Map.Entry::getValue))
+                .map(Map.Entry::getKey)
+                .orElse(null);
+        log.info("Max spent on: {}", maxSpent);
+
+        List<Employee> employeesBySalary = List.of(
+                new Employee(1, "Dharani", "IT", 50000, List.of("Java", "Python")),
+                new Employee(3, "Prasad", "IT", 20000, List.of("Java", "Python")),
+                new Employee(4, "John", "BPO", 30000, List.of("Communication")),
+                new Employee(2, "Edge", "CEO", 100000, List.of("Business")),
+                new Employee(2, "Prasanth", "CEO", 200000, List.of("Business")));
+
+        Map<SalaryRangeEnum, List<Employee>> employeesBySalRange = employeesBySalary.stream()
+                .collect(Collectors.groupingBy(employee -> groupBySalaryRange(employee.getSalary())));
+        log.info("Employees by salary range: {}", employeesBySalRange);
+
+
+    }
+
+    private static SalaryRangeEnum groupBySalaryRange(Double salary) {
+        if (salary < 10000) {
+            return SalaryRangeEnum.LOW;
+        } else if (salary <= 50000) {
+            return SalaryRangeEnum.MEDIUM;
+        } else {
+            return SalaryRangeEnum.HIGH;
+        }
     }
 }
