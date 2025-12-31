@@ -1,10 +1,7 @@
 package org.example.repractice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.java8.streams.Employee;
-import org.example.java8.streams.Person;
-import org.example.java8.streams.SalaryRangeEnum;
-import org.example.java8.streams.Transaction;
+import org.example.java8.streams.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -185,7 +182,38 @@ public class streams {
                 .collect(Collectors.groupingBy(employee -> groupBySalaryRange(employee.getSalary())));
         log.info("Employees by salary range: {}", employeesBySalRange);
 
+        // Group character based on upper case, lower case, special, digit
+        List<Character> characters =
+                List.of('A', 'b', '3', 'Z', 'x', '#', '7', 'm', '@');
 
+        Map<CharacterTypeEnum, List<Character>> characterMap = characters.stream()
+                .collect(Collectors.groupingBy(streams::groupByCharacterType));
+        log.info("Group by character type: {}", characterMap);
+
+        // Find All Employees who worked in 3+ departments
+        Map<String, List<Employee>> talentedEmployee = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getName))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() >= 3)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        log.info("Employees who works in more than 3 departments: {}", talentedEmployee);
+
+
+    }
+
+
+
+    private static CharacterTypeEnum groupByCharacterType(Character c) {
+        if (Character.isDigit(c)) {
+            return CharacterTypeEnum.DIGIT;
+        } else if (Character.isLowerCase(c)) {
+            return CharacterTypeEnum.LOWER_CASE;
+        } else if (Character.isUpperCase(c)) {
+            return CharacterTypeEnum.UPPER_CASE;
+        } else {
+            return CharacterTypeEnum.OTHER;
+        }
     }
 
     private static SalaryRangeEnum groupBySalaryRange(Double salary) {
