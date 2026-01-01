@@ -2,6 +2,7 @@ package org.example.repractice;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,5 +18,9 @@ public class Java8 {
 
         Consumer<String> consumer = (a) -> log.info("Hello " + a + " From Consumer Example");
         consumer.accept("Dharani");
+
+        BiConsumer<String, String> biConsumer = (a, b) ->
+                log.info("Hello {} {} from BiConsumer Example", a, b);
+        biConsumer.accept("Dharani", "Prasad");
     }
 }
