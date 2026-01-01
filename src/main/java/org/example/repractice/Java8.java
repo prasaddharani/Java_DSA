@@ -2,10 +2,7 @@ package org.example.repractice;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.*;
 
 @Slf4j
 public class Java8 {
@@ -22,5 +19,16 @@ public class Java8 {
         BiConsumer<String, String> biConsumer = (a, b) ->
                 log.info("Hello {} {} from BiConsumer Example", a, b);
         biConsumer.accept("Dharani", "Prasad");
+
+        Supplier<String> supplier = () -> "Hello From Supplier";
+        log.info(supplier.get());
+
+        Predicate<Integer> predicate = a -> a % 2 == 0;
+        log.info("Predicate Example: {}", predicate.test(2));
+
+        BiPredicate<String, String> biPredicate = String::equalsIgnoreCase; // equivalent to (a, b) -> a.equalsIgnoreCase(b);
+        log.info("BiPredicate Example: {}", biPredicate.test("Hello", "hello"));
+
+
     }
 }
