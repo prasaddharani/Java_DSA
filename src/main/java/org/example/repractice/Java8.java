@@ -36,12 +36,15 @@ public class Java8 {
 
         // Same applicable for IntPredicate, IntConsumer, IntSupplier
 
-        // Chaining
+        // andThen Chaining (First this and then that)
         Function<Integer, Integer> doubleIt = (a) -> a * 2;
         Function<Integer, Integer> squareIt = a -> a * a;
 
-        Function<Integer, Integer> result = doubleIt.andThen(squareIt);
-        log.info("Chaining example: {}", result.apply(2));
+        Function<Integer, Integer> andThenResult = doubleIt.andThen(squareIt);
+        Function<Integer, Integer> composeResult = doubleIt.compose(squareIt);
+        log.info("Chaining example: {}", andThenResult.apply(2));
 
+        // Compose Chaining (First That and then this)
+        log.info("Compose Chaining {}", composeResult.apply(2));
     }
 }
