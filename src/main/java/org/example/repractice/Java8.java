@@ -30,5 +30,18 @@ public class Java8 {
         log.info("BiPredicate Example: {}", biPredicate.test("Hello", "hello"));
 
 
+        // Primitive Specialization => Avoid AutoBoxing and boost performance
+        IntUnaryOperator unaryOperator = (a) -> a * a;
+        log.info("UnaryOperator Example: {}", unaryOperator.applyAsInt(2));
+
+        // Same applicable for IntPredicate, IntConsumer, IntSupplier
+
+        // Chaining
+        Function<Integer, Integer> doubleIt = (a) -> a * 2;
+        Function<Integer, Integer> squareIt = a -> a * a;
+
+        Function<Integer, Integer> result = doubleIt.andThen(squareIt);
+        log.info("Chaining example: {}", result.apply(2));
+
     }
 }
