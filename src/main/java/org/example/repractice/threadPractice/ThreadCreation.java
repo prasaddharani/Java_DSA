@@ -28,6 +28,7 @@ public class ThreadCreation {
             for (int i = 0; i < 1000; i++) {
                 System.out.println("method from C is running: " + i);
             }
+            System.out.println(Thread.currentThread().getName());
         });
         a.start();
         b.start();
