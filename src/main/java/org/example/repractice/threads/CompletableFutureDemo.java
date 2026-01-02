@@ -19,5 +19,19 @@ public class CompletableFutureDemo {
         CompletableFuture<String> returnsValue = CompletableFuture.supplyAsync(() -> "returns value");
         CompletableFuture<Void> returnsNothing = CompletableFuture.runAsync(() -> System.out.println("returns nothing"));
         System.out.println(returnsValue.get());
+
+        CompletableFuture<Void> allTasks = CompletableFuture.allOf(
+                CompletableFuture.runAsync(() -> System.out.println("Task-1")),
+                CompletableFuture.runAsync(() -> System.out.println("Task-2")),
+                CompletableFuture.runAsync(() -> System.out.println("Task-3")));
+        allTasks.join();
+
+        CompletableFuture.supplyAsync(() -> {
+            if (true) {
+                throw new RuntimeException();
+            }
+            return "Hi";
+        }).exceptionally(ex -> "Recovered from exception: " + ex.getMessage())
+                .thenAccept(System.out::println);
     }
 }
