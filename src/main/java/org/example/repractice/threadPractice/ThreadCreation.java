@@ -24,13 +24,19 @@ public class ThreadCreation {
     public static void main(String[] args) {
         Thread a = new A();
         Thread b = new Thread(new B());
-
+        Thread c = new Thread( () -> {
+            for (int i = 0; i < 1000; i++) {
+                System.out.println("method from C is running: " + i);
+            }
+        });
         a.start();
         b.start();
+        c.start();
 
         try {
             a.join();
             b.join();
+            c.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
