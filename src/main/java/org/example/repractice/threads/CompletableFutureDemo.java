@@ -16,5 +16,8 @@ public class CompletableFutureDemo {
 
         System.out.println(combineFuture.get());
 
+        CompletableFuture<String> returnsValue = CompletableFuture.supplyAsync(() -> "returns value");
+        CompletableFuture<Void> returnsNothing = CompletableFuture.runAsync(() -> System.out.println("returns nothing"));
+        System.out.println(returnsValue.get());
     }
 }
