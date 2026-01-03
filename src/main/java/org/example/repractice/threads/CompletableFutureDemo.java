@@ -33,5 +33,11 @@ public class CompletableFutureDemo {
             return "Hi";
         }).exceptionally(ex -> "Recovered from exception: " + ex.getMessage())
                 .thenAccept(System.out::println);
+
+        CompletableFuture<String> finalResult = CompletableFuture.supplyAsync(() -> "User123")
+                .thenCompose(user -> CompletableFuture.supplyAsync(() -> "Profile of " + user));
+
+        System.out.println(finalResult.join());
+
     }
 }
