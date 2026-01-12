@@ -36,6 +36,12 @@ class Student {
                 '}';
     }
 }
+
+record StudentRecord (Integer id, String name, List<String> skills) {
+    public StudentRecord{
+        skills = List.copyOf(skills);
+    }
+}
 public class ImmutableClassDemo {
 
     public static void main(String[] args) {
@@ -45,5 +51,9 @@ public class ImmutableClassDemo {
         skills.add("AWS");
         student.getSkills().add("GenAI");
         System.out.println(student);
+
+        StudentRecord studentRecord = new StudentRecord(1, "Prasad", skills);
+        skills.add("GenAI");
+        System.out.println(studentRecord);
     }
 }
