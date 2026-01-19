@@ -1,4 +1,4 @@
-package org.example.repractice.solid.singleton;
+package org.example.repractice.singleton;
 
 public class BillPughSingleton {
     public static class SingletonHelper {

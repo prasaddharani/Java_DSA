@@ -27,3 +27,21 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignore IDE config XML files
+*.iml
+*.ipr
+*.iws
+*.xml
+
+
+# Ignore specific IntelliJ IDEA project files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+
+# Ignore Maven target directory
+target/

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38e26ec7-ad55-45c0-b57f-62b9da078a75" name="Changes" comment="" />
+    <list default="true" id="38e26ec7-ad55-45c0-b57f-62b9da078a75" name="Changes" comment="Lazy Singleton class">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +19,35 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;prasaddharani&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/prasaddharani/Java_DSA.git&quot;,
+    &quot;accountId&quot;: &quot;c45828ff-5c5e-4052-b730-815ef9af4564&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-17/lib/src.zip!/java.base/java/util/Collection.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/6.1.6/spring-beans-6.1.6.jar!/org/springframework/beans/factory/support/BeanDefinitionRegistry.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/6.1.6/spring-context-6.1.6.jar!/org/springframework/context/ApplicationContext.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/6.1.6/spring-context-6.1.6.jar!/org/springframework/context/annotation/AnnotationConfigApplicationContext.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/6.1.6/spring-context-6.1.6.jar!/org/springframework/context/support/AbstractApplicationContext.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/6.1.6/spring-context-6.1.6.jar!/org/springframework/context/support/GenericApplicationContext.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.1.6/spring-web-6.1.6.jar!/org/springframework/web/context/support/HttpRequestHandlerServlet.class" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -25,27 +57,164 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ArrayProblems.executor": "Run",
-    "Application.CodeSnippets.executor": "Run",
-    "Application.ExecutionFlow.executor": "Run",
-    "Application.JavaBasics.executor": "Run",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "C:/Users/dhara/IdeaProjects/javaPractice/src/Main.java",
-    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Array.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ArrayProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Backtrack.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BinarySearchProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BinarySearchProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BitManipulation.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BitManipulations.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BlockingQueueDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BuiltInFunctionalInterface.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CacheThreadPoolExecutorService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CalendarProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CallableDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CodeSnippets.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CollectionDemo$CollectionRemove.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CollectionDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ComparableDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ComparatorDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CompletableFutureDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CompletableFutureExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Constructor.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CountDownLatchDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CountDownLatchExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CustomParallelism.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CyclicBarrierDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CyclicBarrierExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DataExchanger.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DependencyInjection.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DutchAlg.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DynamicProgramming.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DynamicSize.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DynamicSizeSlidingWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ExchangerDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ExecutionFlow.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ExecutorDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ExecutorServiceDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ExecutorTypes.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FibonacciTask.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FixedSizeSlidingWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FixedThreadPool.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FixedThreadPoolExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FixedWindow.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForEachOrderedWithThreads.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForkJoinActionExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForkJoinExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForkJoinSumDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ForkJoinTaskExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FunctionalInterfaceImpl.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Geometry.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GraphProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GreedyProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HashTables.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HeapProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ImmutableClassDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.IntervalProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Java8.executor&quot;: &quot;Run&quot;,
+    &quot;Application.JavaBasics.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KadaneAlg.executor&quot;: &quot;Run&quot;,
+    &quot;Application.KadanesAlgorithm.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LambdaDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LinkedListProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LinkedListProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MatrixProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MatrixProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.OptionalDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ParallelAPICalls.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ParallelStreams.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PhaserDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PhaserExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PrefixSum.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PrefixSumProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PrefixSumProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PrintArrayTask.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PrintTask.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ProducerConsumer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ProducerConsumerDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QueueProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QueueProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RaceConditionDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReentrantLockDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReentrantLockMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunAsyncExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunnableDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunnableExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ScenarioBased.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ScheduledThreadPoolExecutorService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SealedClassDemo.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.SemaphoreDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SemaphoreExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SingleThreadExecutorService.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SingletonTypes.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Sorting.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StackProblem.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StackProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StreamDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StreamRealExamples.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StreamsPractice.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StringProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SupplyAsyncExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SynchronizationTypes.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SynchronizedCounterDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SystemDesign.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadBasics.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadControllers.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadCreation.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadNotify.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadPriorities.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadRaceCondition.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadStates.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadSynchronization.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$DynamicProgramming.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$Geometry.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$Graph$BellmanFordAlgorithm.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$Graph.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$Greedy.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$HeapProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$IntervalProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$MedianFinder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$MyCalendar.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$SystemDesign.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems$Tries.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TreeProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TrieProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TwoPointers.executor&quot;: &quot;Run&quot;,
+    &quot;Application.YieldDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.example.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.example.leetcode.TreeProblems.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.example.repractice.threads.forkJoinPool.ForkJoinActionExample.executor&quot;: &quot;Run&quot;,
+    &quot;Application.streams.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dhara/IdeaProjects/javaPractice/src/main/java/org/example/threads&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/dhara/IdeaProjects/javaPractice/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.ArrayProblems">
-    <configuration name="ArrayProblems" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.leetcode.ArrayProblems" />
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dhara\IdeaProjects\javaPractice\src\main\java\org\example\threads" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="ComparableDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.repractice.ComparableDemo" />
       <module name="javaPractice" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.leetcode.*" />
+          <option name="PATTERN" value="org.example.repractice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -53,12 +222,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CodeSnippets" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.dsa.CodeSnippets" />
+    <configuration name="ComparatorDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.repractice.ComparatorDemo" />
       <module name="javaPractice" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.dsa.*" />
+          <option name="PATTERN" value="org.example.repractice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -66,25 +235,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExecutionFlow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.resources.fundamentals.ExecutionFlow" />
+    <configuration name="ImmutableClassDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.repractice.ImmutableClassDemo" />
       <module name="javaPractice" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.resources.fundamentals.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JavaBasics" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.JavaBasics" />
-      <module name="javaPractice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.*" />
+          <option name="PATTERN" value="org.example.repractice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -93,19 +249,47 @@
       </method>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="org.example.repractice.solid.singleton.Main" />
       <module name="javaPractice" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.repractice.solid.singleton.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SealedClassDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.repractice.sealed.SealedClassDemo" />
+      <module name="javaPractice" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.repractice.sealed.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ArrayProblems" />
-        <item itemvalue="Application.CodeSnippets" />
-        <item itemvalue="Application.ExecutionFlow" />
-        <item itemvalue="Application.JavaBasics" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.ImmutableClassDemo" />
+        <item itemvalue="Application.SealedClassDemo" />
+        <item itemvalue="Application.ComparatorDemo" />
+        <item itemvalue="Application.ComparableDemo" />
       </list>
     </recent_temporary>
   </component>
@@ -118,6 +302,447 @@
       <option name="presentableId" value="Default" />
       <updated>1737802972312</updated>
     </task>
+    <task id="LOCAL-00176" summary="BST InOrder Traversal">
+      <option name="closed" value="true" />
+      <created>1766986749263</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1766986749263</updated>
+    </task>
+    <task id="LOCAL-00177" summary="BST PosOrder Traversal">
+      <option name="closed" value="true" />
+      <created>1766988467180</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1766988467180</updated>
+    </task>
+    <task id="LOCAL-00178" summary="DFS Island Proble">
+      <option name="closed" value="true" />
+      <created>1766989031663</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1766989031663</updated>
+    </task>
+    <task id="LOCAL-00179" summary="DFS Clone Graph">
+      <option name="closed" value="true" />
+      <created>1766990681304</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1766990681304</updated>
+    </task>
+    <task id="LOCAL-00180" summary="BFS Bipartite">
+      <option name="closed" value="true" />
+      <created>1766991256110</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1766991256110</updated>
+    </task>
+    <task id="LOCAL-00181" summary="BFS Orange Rotting">
+      <option name="closed" value="true" />
+      <created>1766992811303</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1766992811303</updated>
+    </task>
+    <task id="LOCAL-00182" summary="Word Ladder">
+      <option name="closed" value="true" />
+      <created>1766994110445</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1766994110445</updated>
+    </task>
+    <task id="LOCAL-00183" summary="Khans alg topological sort">
+      <option name="closed" value="true" />
+      <created>1766996130424</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1766996130424</updated>
+    </task>
+    <task id="LOCAL-00184" summary="Disjoint Union Set">
+      <option name="closed" value="true" />
+      <created>1766997084483</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1766997084483</updated>
+    </task>
+    <task id="LOCAL-00185" summary="Bellman's ford alg">
+      <option name="closed" value="true" />
+      <created>1766998226243</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1766998226243</updated>
+    </task>
+    <task id="LOCAL-00186" summary="Prims alg">
+      <option name="closed" value="true" />
+      <created>1767001263801</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1767001263801</updated>
+    </task>
+    <task id="LOCAL-00187" summary="Tries DS">
+      <option name="closed" value="true" />
+      <created>1767002754022</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1767002754024</updated>
+    </task>
+    <task id="LOCAL-00188" summary="Tries DS FindWords">
+      <option name="closed" value="true" />
+      <created>1767004605383</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1767004605383</updated>
+    </task>
+    <task id="LOCAL-00189" summary="Streams based problems">
+      <option name="closed" value="true" />
+      <created>1767021962417</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1767021962417</updated>
+    </task>
+    <task id="LOCAL-00190" summary="Streams based problems">
+      <option name="closed" value="true" />
+      <created>1767022432446</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1767022432446</updated>
+    </task>
+    <task id="LOCAL-00191" summary="Average of 3 numbers using streams">
+      <option name="closed" value="true" />
+      <created>1767106412808</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1767106412808</updated>
+    </task>
+    <task id="LOCAL-00192" summary="Max word in a string using stream">
+      <option name="closed" value="true" />
+      <created>1767106790842</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1767106790842</updated>
+    </task>
+    <task id="LOCAL-00193" summary="top 3 words in a string using stream">
+      <option name="closed" value="true" />
+      <created>1767107400589</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1767107400589</updated>
+    </task>
+    <task id="LOCAL-00194" summary="Employee by salary range using stream">
+      <option name="closed" value="true" />
+      <created>1767151071143</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1767151071143</updated>
+    </task>
+    <task id="LOCAL-00195" summary="Employee who works in more than 3 dept using stream">
+      <option name="closed" value="true" />
+      <created>1767151742758</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1767151742758</updated>
+    </task>
+    <task id="LOCAL-00196" summary="Flatmap">
+      <option name="closed" value="true" />
+      <created>1767152060501</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1767152060506</updated>
+    </task>
+    <task id="LOCAL-00197" summary="Functional Interface: Function">
+      <option name="closed" value="true" />
+      <created>1767280141360</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1767280141360</updated>
+    </task>
+    <task id="LOCAL-00198" summary="Functional Interface: BiFunction">
+      <option name="closed" value="true" />
+      <created>1767280288912</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1767280288912</updated>
+    </task>
+    <task id="LOCAL-00199" summary="Functional Interface: Consumer">
+      <option name="closed" value="true" />
+      <created>1767280418539</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1767280418539</updated>
+    </task>
+    <task id="LOCAL-00200" summary="Functional Interface: BiConsumer">
+      <option name="closed" value="true" />
+      <created>1767280551673</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1767280551673</updated>
+    </task>
+    <task id="LOCAL-00201" summary="Functional Interface: BiPredicate">
+      <option name="closed" value="true" />
+      <created>1767280802765</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1767280802765</updated>
+    </task>
+    <task id="LOCAL-00202" summary="Functional Interface: Function Chaining">
+      <option name="closed" value="true" />
+      <created>1767281347128</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1767281347128</updated>
+    </task>
+    <task id="LOCAL-00203" summary="Functional Interface: Function Chaining">
+      <option name="closed" value="true" />
+      <created>1767281590872</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1767281590872</updated>
+    </task>
+    <task id="LOCAL-00204" summary="Thread creation ways">
+      <option name="closed" value="true" />
+      <created>1767321997884</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1767321997884</updated>
+    </task>
+    <task id="LOCAL-00205" summary="Thread creation using lambda expression">
+      <option name="closed" value="true" />
+      <created>1767322173884</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1767322173884</updated>
+    </task>
+    <task id="LOCAL-00206" summary="Thread creation using lambda expression">
+      <option name="closed" value="true" />
+      <created>1767322851197</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1767322851197</updated>
+    </task>
+    <task id="LOCAL-00207" summary="Thread Race codition demo">
+      <option name="closed" value="true" />
+      <created>1767323121805</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1767323121805</updated>
+    </task>
+    <task id="LOCAL-00208" summary="Thread Race condition fix with synchronization">
+      <option name="closed" value="true" />
+      <created>1767324269517</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1767324269517</updated>
+    </task>
+    <task id="LOCAL-00209" summary="Producer Consumer Problem">
+      <option name="closed" value="true" />
+      <created>1767324991787</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1767324991787</updated>
+    </task>
+    <task id="LOCAL-00210" summary="Executor Service Framework">
+      <option name="closed" value="true" />
+      <created>1767326948642</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1767326948642</updated>
+    </task>
+    <task id="LOCAL-00211" summary="Reentrant lock">
+      <option name="closed" value="true" />
+      <created>1767327672105</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1767327672105</updated>
+    </task>
+    <task id="LOCAL-00212" summary="Synchorizers concurrent utilities">
+      <option name="closed" value="true" />
+      <created>1767338237113</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1767338237113</updated>
+    </task>
+    <task id="LOCAL-00213" summary="BlockingQueue">
+      <option name="closed" value="true" />
+      <created>1767340360486</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1767340360486</updated>
+    </task>
+    <task id="LOCAL-00214" summary="CompletableFuture">
+      <option name="closed" value="true" />
+      <created>1767342559127</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1767342559127</updated>
+    </task>
+    <task id="LOCAL-00215" summary="CompletableFuture runAsync and SupplyAsync">
+      <option name="closed" value="true" />
+      <created>1767342662111</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1767342662111</updated>
+    </task>
+    <task id="LOCAL-00216" summary="CompletableFuture Exception handling">
+      <option name="closed" value="true" />
+      <created>1767343636612</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1767343636612</updated>
+    </task>
+    <task id="LOCAL-00217" summary="CompletableFuture Exception handling">
+      <option name="closed" value="true" />
+      <created>1767439870387</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1767439870387</updated>
+    </task>
+    <task id="LOCAL-00218" summary="ComparableDemo">
+      <option name="closed" value="true" />
+      <created>1767440319022</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1767440319022</updated>
+    </task>
+    <task id="LOCAL-00219" summary="Sealed class example">
+      <option name="closed" value="true" />
+      <created>1768185561231</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1768185561231</updated>
+    </task>
+    <task id="LOCAL-00220" summary="non-Sealed class example">
+      <option name="closed" value="true" />
+      <created>1768185720387</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1768185720387</updated>
+    </task>
+    <task id="LOCAL-00221" summary="Immutable class Demo example">
+      <option name="closed" value="true" />
+      <created>1768186661241</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1768186661241</updated>
+    </task>
+    <task id="LOCAL-00222" summary="Immutable Record Demo example">
+      <option name="closed" value="true" />
+      <created>1768186879656</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1768186879656</updated>
+    </task>
+    <task id="LOCAL-00223" summary="Eager Singleton class">
+      <option name="closed" value="true" />
+      <created>1768789351886</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1768789351886</updated>
+    </task>
+    <task id="LOCAL-00224" summary="Lazy Singleton class">
+      <option name="closed" value="true" />
+      <created>1768789378148</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1768789378148</updated>
+    </task>
+    <option name="localTasksCounter" value="225" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Functional Interface: Function" />
+    <MESSAGE value="Functional Interface: BiFunction" />
+    <MESSAGE value="Functional Interface: Consumer" />
+    <MESSAGE value="Functional Interface: BiConsumer" />
+    <MESSAGE value="Functional Interface: BiPredicate" />
+    <MESSAGE value="Functional Interface: Function Chaining" />
+    <MESSAGE value="Thread creation ways" />
+    <MESSAGE value="Thread creation using lambda expression" />
+    <MESSAGE value="Thread Race codition demo" />
+    <MESSAGE value="Thread Race condition fix with synchronization" />
+    <MESSAGE value="Producer Consumer Problem" />
+    <MESSAGE value="Executor Service Framework" />
+    <MESSAGE value="Reentrant lock" />
+    <MESSAGE value="Synchorizers concurrent utilities" />
+    <MESSAGE value="BlockingQueue" />
+    <MESSAGE value="CompletableFuture" />
+    <MESSAGE value="CompletableFuture runAsync and SupplyAsync" />
+    <MESSAGE value="CompletableFuture Exception handling" />
+    <MESSAGE value="ComparableDemo" />
+    <MESSAGE value="Sealed class example" />
+    <MESSAGE value="non-Sealed class example" />
+    <MESSAGE value="Immutable class Demo example" />
+    <MESSAGE value="Immutable Record Demo example" />
+    <MESSAGE value="Eager Singleton class" />
+    <MESSAGE value="Lazy Singleton class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lazy Singleton class" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/fundamentals/Constructor.java</url>
+          <line>19</line>
+          <properties class="org.example.fundamentals.Constructor" method="main">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/leetcode/Blind75.java</url>
+          <line>2544</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
