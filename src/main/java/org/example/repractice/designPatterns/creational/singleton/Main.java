@@ -1,4 +1,4 @@
-package org.example.repractice.singleton;
+package org.example.repractice.designPatterns.creational.singleton;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package org.example.repractice.singleton;
+package org.example.repractice.designPatterns.creational.singleton;
 
 public class DoubleLockSingleton {
     private static DoubleLockSingleton INSTANCE = null;
